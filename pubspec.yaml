@@ -39,6 +39,7 @@ dependencies:
   readmore: ^2.1.0
   expansion_card: ^0.1.0
   dio: ^4.0.0
+  flutter_speed_dial: ^4.4.0
 
 dev_dependencies:
   flutter_test:
