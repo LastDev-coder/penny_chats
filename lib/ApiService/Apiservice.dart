@@ -72,5 +72,18 @@ class Apiservice{
 
   }
 
+  Future getprofile() async{
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+    late String url="https://pennychats.com/pennychatapi/users/userdetails/$id";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+
+  }
+
 
   }

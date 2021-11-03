@@ -25,7 +25,11 @@ class AuthServices {
     var responseData = json.decode(response.body);
     if (responseData['status'] == true) {
       print(responseData['response']['token']);
+      print(responseData['response']['pid']);
+
       _prefs.setString('token', responseData['response']['token']);
+      _prefs.setString('id', responseData['response']['pid']);
+
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Mydashboard()));
       print(response.body);

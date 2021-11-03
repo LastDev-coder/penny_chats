@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -89,6 +91,28 @@ class _MydashboardState extends State<Mydashboard> {
     });
     super.initState();
   }
+  Future<bool> onWillPop() async {
+    final shouldPop = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Are you sure?'),
+        content: Text('Do you want to exit from app ?'),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('No'),
+          ),
+          FlatButton(
+            onPressed: () => exit(0),
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+
+    return shouldPop ?? false;
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +180,10 @@ class _MydashboardState extends State<Mydashboard> {
                 )
               ],
             ),
-            body: tabs[_currentIndex],
+            body: WillPopScope(
+                onWillPop: onWillPop,
+                child: tabs[_currentIndex]
+            ),
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: _currentIndex,
               type: BottomNavigationBarType.fixed,

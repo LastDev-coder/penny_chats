@@ -57,143 +57,218 @@ class _NoStocksState extends State<NoStocks> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 1,
-                    child: Center(
-                      child: Text(
-                        "Date",
-                        style: TextStyle(
-                            color: AppColors.STOCKALERT_TEXTBOLD,
-                            fontFamily: 'Gotham',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Center(
-                      child: Text(
-                        "Stock",
-                        style: TextStyle(
-                            color: AppColors.STOCKALERT_TEXTBOLD,
-                            fontFamily: 'Gotham',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Center(
-                      child: Text(
-                        "Price",
-                        style: TextStyle(
-                            color: AppColors.STOCKALERT_TEXTBOLD,
-                            fontFamily: 'Gotham',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Center(
-                      child: Text(
-                        "Gain",
-                        style: TextStyle(
-                            color: AppColors.STOCKALERT_TEXTBOLD,
-                            fontFamily: 'Gotham',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    )),
-              ],
-            ),
-          ),
-          Expanded(
-            child: FutureBuilder(
-              future: getStockDetails(),
-              // initialData: InitialData,
-              builder:
-                  (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                if (snapshot.data == null) {
-                  return Container(
-                    child: Center(
-                        child: CupertinoActivityIndicator(
-                            animating: true, radius: 15)),
-                  );
-                } else {
-                return  snapshot.data.length.toString() != "0" || snapshot.data.length.toString() != "null" ?       ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int i) {
-                      return   Padding(
-                        padding: const EdgeInsets.all(8.0),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 5,left: 5,right: 5,bottom: 0),
+        child: Card(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
+                  children: [
+                    Card(
+                      color: AppColors.WeeklyWatch_SORTBUTTON,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10,
+                            right: 10,
+                            top: 5,
+                            bottom: 5),
                         child: Row(
                           children: [
-                            Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: Text(
-                                    snapshot.data[i].created,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Gotham',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                )),
-                            Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: Text(
-                                    snapshot.data[i].stock,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Gotham',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                )),
-                            Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: Text(
-                                    snapshot.data[i].price_start,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Gotham',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                )),
-                            Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: Text(
-                                    "${snapshot.data[i].gain} %",
-                                    style: TextStyle(
-                                        color: snapshot.data[i].effect=="Up" ? Colors.green : Colors.red,
-                                        fontFamily: 'Gotham',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                )),
+                            Text('Sort by A-Z',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors
+                                        .STOCK_ADD_SEARCH,
+                                    fontFamily: 'Gotham',
+                                    fontWeight:
+                                    FontWeight.w500)),
+                            Icon(Icons.arrow_drop_down)
                           ],
                         ),
-                      ) ;
-                    },
-                  ) :  NoStock();
-                }
-              },
-            ),
+                      ),
+                    ),
+                    Card(
+                      color: AppColors.WeeklyWatch_SORTBUTTON,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 10,
+                            right: 10,
+                            top: 5,
+                            bottom: 5),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.edit,
+                              color: AppColors.WeeklyWatch_SAVEBUTTON,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text('Edit',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.WeeklyWatch_SAVEBUTTON,
+                                    fontFamily: 'Gotham',
+                                    fontWeight:
+                                    FontWeight.w500)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: Center(
+                          child: Text(
+                            "Date",
+                            style: TextStyle(
+                                color: AppColors.STOCKALERT_TEXTBOLD,
+                                fontFamily: 'Gotham',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: Center(
+                          child: Text(
+                            "Stock",
+                            style: TextStyle(
+                                color: AppColors.STOCKALERT_TEXTBOLD,
+                                fontFamily: 'Gotham',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: Center(
+                          child: Text(
+                            "Price",
+                            style: TextStyle(
+                                color: AppColors.STOCKALERT_TEXTBOLD,
+                                fontFamily: 'Gotham',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        )),
+                    Expanded(
+                        flex: 1,
+                        child: Center(
+                          child: Text(
+                            "Gain",
+                            style: TextStyle(
+                                color: AppColors.STOCKALERT_TEXTBOLD,
+                                fontFamily: 'Gotham',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        )),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: FutureBuilder(
+                  future: getStockDetails(),
+                  // initialData: InitialData,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                    if (snapshot.data == null) {
+                      return Container(
+                        child: Center(
+                            child: CupertinoActivityIndicator(
+                                animating: true, radius: 15)),
+                      );
+                    } else {
+                    return  snapshot.data.length.toString() != "0" || snapshot.data.length.toString() != "null" ?
+                    ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (BuildContext context, int i) {
+                          return   Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data[i].created,
+                                            style: TextStyle(
+                                                color: AppColors.STOCKALERT_TEXTBOLD,
+                                                fontFamily: 'Gotham',
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        )),
+                                    Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data[i].stock,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontFamily: 'Gotham',
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        )),
+                                    Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data[i].price_start,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontFamily: 'Gotham',
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        )),
+                                    Expanded(
+                                        flex: 1,
+                                        child: Center(
+                                          child: Text(
+                                            "${snapshot.data[i].gain} %",
+                                            style: TextStyle(
+                                                color: snapshot.data[i].effect=="Up" ? Colors.green : Colors.red,
+                                                fontFamily: 'Gotham',
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                             SizedBox(height: 5,),
+                             Divider()
+                              ],
+                            ),
+                          ) ;
+                        },
+                      ) :  NoStock();
+                    }
+                  },
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
