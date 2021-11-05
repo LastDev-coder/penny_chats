@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 
 import '../appdrawer.dart';
@@ -11,6 +12,11 @@ class ManageTestimonial extends StatefulWidget {
 }
 
 class _ManageTestimonialState extends State<ManageTestimonial> {
+  TextEditingController textController = TextEditingController();
+   String myTestimonial = "null" ;
+  final _formKey = GlobalKey<FormState>();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,55 +38,76 @@ class _ManageTestimonialState extends State<ManageTestimonial> {
           title: Text("Add Testimonial"),
         ),
         body: Center(
-          child: Container(
-            height: 300,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Card(
-                color: Colors.white70,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        color: Colors.white,
-                        child: TextFormField(
-                          keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration(
-                              //  isDense: true,
-                              border: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white)),
-                              focusedBorder: InputBorder.none),
-                          style: TextStyle(
-                              color: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                              fontFamily: 'Gotham',
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400),
-                          maxLines: 20,
-                          minLines: 9,
+          child: Form(
+            key: _formKey,
+            child: Container(
+              height: 300,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Card(
+                  color: Colors.white70,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          color: Colors.white,
+                          child: TextFormField(
+                            controller: textController,
+                            keyboardType: TextInputType.multiline,
+                            decoration: InputDecoration(
+                                //  isDense: true,
+                                border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white)),
+                                focusedBorder: InputBorder.none),
+                            style: TextStyle(
+                                color: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                fontFamily: 'Gotham',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400),
+                            maxLines: 20,
+                            minLines: 9,
+
+
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: 50,
-                        width: 200,
-                        child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50)),
-                            color: AppColors.LOGIN_PAGE_LOGINBOX,
-                            onPressed: () {},
-                            child: Text(
-                              'Add Testimonial',
-                              style: TextStyle(
-                                  color: AppColors.white,
-                                  fontFamily: 'Gotham',
-                                  fontWeight: FontWeight.bold),
-                            )),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 50,
+                          width: 200,
+                          child: FlatButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              color: AppColors.LOGIN_PAGE_LOGINBOX,
+                              onPressed: () async {
+    if (textController.text.toString() == null
+        || textController.text.toString().isEmpty
+        || textController.text.toString()== '') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content:
+          Text('Testimonial should not be blanked.')));
+    }else{
+      print("not null --------> "+textController.text.toString());
+      var data= await Apiservice().postTestimonial(textController.text.toString());
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content:
+          Text(data["response"].toString())));
+      textController.clear();
+    }
+                              },
+                              child: Text(
+                                'Add Testimonial',
+                                style: TextStyle(
+                                    color: AppColors.white,
+                                    fontFamily: 'Gotham',
+                                    fontWeight: FontWeight.bold),
+                              )),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

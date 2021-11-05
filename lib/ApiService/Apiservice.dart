@@ -67,7 +67,6 @@ class Apiservice{
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
-    print(response.data);
     return response.data;
 
   }
@@ -85,5 +84,33 @@ class Apiservice{
 
   }
 
+  Future postTestimonial(String text) async{
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+    Dio dio = new Dio();
+    clint.Response response;
+    var _data = new Map<String, dynamic>();
+    _data['content'] = '$text';
+    try {
+
+      response = await dio.post("https://pennychats.com/pennychatapi/testimonial/add_testimonial/$id",
+          data: _data,
+          options: Options(
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authentication-token" : token
+          }
+      ));
+
+      print('response : ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('Error : $e');
+    }
+
+  }
 
   }
