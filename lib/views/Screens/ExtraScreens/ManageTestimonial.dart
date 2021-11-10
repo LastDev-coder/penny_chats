@@ -13,9 +13,9 @@ class ManageTestimonial extends StatefulWidget {
 
 class _ManageTestimonialState extends State<ManageTestimonial> {
   TextEditingController textController = TextEditingController();
-   String myTestimonial = "null" ;
-  final _formKey = GlobalKey<FormState>();
+  String myTestimonial = "null";
 
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,8 @@ class _ManageTestimonialState extends State<ManageTestimonial> {
                             decoration: InputDecoration(
                                 //  isDense: true,
                                 border: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white)),
+                                    borderSide:
+                                        BorderSide(color: Colors.white)),
                                 focusedBorder: InputBorder.none),
                             style: TextStyle(
                                 color: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
@@ -68,8 +69,6 @@ class _ManageTestimonialState extends State<ManageTestimonial> {
                                 fontWeight: FontWeight.w400),
                             maxLines: 20,
                             minLines: 9,
-
-
                           ),
                         ),
                         SizedBox(
@@ -83,20 +82,24 @@ class _ManageTestimonialState extends State<ManageTestimonial> {
                                   borderRadius: BorderRadius.circular(50)),
                               color: AppColors.LOGIN_PAGE_LOGINBOX,
                               onPressed: () async {
-    if (textController.text.toString() == null
-        || textController.text.toString().isEmpty
-        || textController.text.toString()== '') {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content:
-          Text('Testimonial should not be blanked.')));
-    }else{
-      print("not null --------> "+textController.text.toString());
-      var data= await Apiservice().postTestimonial(textController.text.toString());
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content:
-          Text(data["response"].toString())));
-      textController.clear();
-    }
+                                if (textController.text.toString() == null ||
+                                    textController.text.toString().isEmpty ||
+                                    textController.text.toString() == '') {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Testimonial should not be blanked.')));
+                                } else {
+                                  print("not null --------> " +
+                                      textController.text.toString());
+                                  var data = await Apiservice().postTestimonial(
+                                      textController.text.toString());
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              data["response"].toString())));
+                                  textController.clear();
+                                }
                               },
                               child: Text(
                                 'Add Testimonial',

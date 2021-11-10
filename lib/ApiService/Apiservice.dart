@@ -113,4 +113,34 @@ class Apiservice{
 
   }
 
+
+  Future ContactUs(var _data) async{
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+    Dio dio = new Dio();
+    clint.Response response;
+
+    try {
+
+      response = await dio.post("https://pennychats.com/pennychatapi/contact/contact_us",
+          data: _data,
+          options: Options(
+              headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "authentication-token" : token
+              }
+          ));
+
+      print('response : ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('Error : $e');
+    }
+
   }
+
+
+}

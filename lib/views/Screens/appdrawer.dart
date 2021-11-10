@@ -7,6 +7,7 @@ import 'package:penny_chats/views/Screens/ExtraScreens/FAQ.dart';
 import 'package:penny_chats/views/Screens/ExtraScreens/ManageTestimonial.dart';
 import 'package:penny_chats/views/Screens/ExtraScreens/MyTestimonials.dart';
 import 'package:penny_chats/views/Screens/ExtraScreens/StocksToWatch.dart';
+import 'package:penny_chats/views/Screens/ExtraScreens/contact.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'ExtraScreens/Tradng.dart';
@@ -273,6 +274,10 @@ class _appdrawerState extends State<appdrawer> {
                                 onTap: () {
                                   // Update the state of the app.
                                   // ...
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => contact()));
                                 },
                               ),
                               ListTile(

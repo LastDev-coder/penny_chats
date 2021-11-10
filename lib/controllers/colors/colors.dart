@@ -83,4 +83,17 @@ class AppColors {
   // Stock Alert
   static const STOCKALERT_TEXTBOLD = Color(0xFF6c819f);
 
+  //Contact us
+  static const FORM_CONTAINER = Color(0xffdde3e8);
+  static const FORM_INPUTTEXT = Color(0xFF495057);
+
+  //Percent Calculator
+  static const FROMTO_TEXT = Color(0xFF658699);
+  static const INPUT_BOX = Color(0xFFE6EEF3);
+  static const INPUT_TEXT = Color(0xFFbbd4e3);
+  static const RESULT_TEXT = Color(0xFF6EC68D);
+  static const CLEAR_BOX = Color(0xFFE6EEF3);
+  static const CLEAR_BOXTEXT = Color(0xFF658699);
+
+
 }
