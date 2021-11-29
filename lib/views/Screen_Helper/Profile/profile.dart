@@ -1,9 +1,15 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/ProfileModel.dart';
 import 'package:penny_chats/views/Screen_Helper/Notification/notification_setting.dart';
+import 'package:penny_chats/views/Screens/mydashboard.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
@@ -13,9 +19,149 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  void initState() {
-    super.initState();
+  Dio dio = new Dio();
+
+
+
+
+  callActivity(){
+   return ;
   }
+
+  Future<bool> AddName() async{
+    TextEditingController nameController = TextEditingController();
+
+    final shouldPop = await showDialog(
+      context: context,
+      builder: (context) {
+
+        return  AlertDialog(
+          title: Text('Update Name'),
+          content: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+
+                return Container(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 0, right: 0),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                                color: AppColors.INPUT_BOX,
+                                borderRadius: new BorderRadius.only(
+                                  topLeft: const Radius.circular(5.0),
+                                  topRight: const Radius.circular(5.0),
+                                  bottomLeft: const Radius.circular(5.0),
+                                  bottomRight: const Radius.circular(5.0),
+                                )),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: TextFormField(
+                                controller: nameController,
+                                keyboardType: TextInputType.name,
+                                style: TextStyle(color: AppColors.FROMTO_TEXT),
+
+                                decoration:
+                                new InputDecoration.collapsed(hintText: 'Enter your name',
+                                  hintStyle: TextStyle( color: AppColors.FROMTO_TEXT),
+
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10,),
+
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            FlatButton(
+                              // onPressed: () => exit(0),
+                              color: AppColors.RESULT_TEXT,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              onPressed: () async {
+
+                               Navigator.of(context).pop();
+
+                              },
+                              child: Text('Close',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Gotham',
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal)
+                              ),
+                            ),
+                            SizedBox(width: 10,),
+                            FlatButton(
+                              color: AppColors.RESULT_TEXT,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              onPressed: () async {
+
+                                  if (nameController.text.toString() == null ||
+                                      nameController.text.toString().isEmpty ||
+                                      nameController.text.toString() == ''
+                                  ) {
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content: Text(
+                                            'Name field should be fill up. Please try again.')));
+                                  }
+                                  else{
+                                    var _data = new Map<String, dynamic>();
+                                    _data['name'] = nameController.text.toString();
+
+                                    print(_data);
+
+                                    var data = await Apiservice().postUsername(_data);
+                                    Navigator.of(context).pop();
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                data['response'].toString())));
+                                    nameController.clear();
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Mydashboard(number: 4,)));
+
+                                  }
+
+
+
+                              },
+                              child: Text('Update',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Gotham',
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.normal)
+                              ),
+                            ),
+
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+          ),
+
+        );
+      },
+    );
+
+    return shouldPop ?? false;
+  }
+
 
   getprofile() async {
     var data;
@@ -44,349 +190,381 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return profilemodel;
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Form(
-          child: FutureBuilder(
-        future: getprofile(),
-        // initialData: InitialData,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.data == null) {
-            return Container(
-              child: Center(
-                  child:
-                      CupertinoActivityIndicator(animating: true, radius: 15)),
-            );
-          } else {
-            return ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, int i) {
-             return  SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                        color: Colors.green,
-                        height: 260,
-                        child: Stack(
-                          children: [
-                            Image.asset(
-                              'assets/images/profile-bg.jpg',
+      body: Container(
+        child: FutureBuilder(
+          future: getprofile(),
+          // initialData: InitialData,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.data == null) {
+              return Container(
+                child: Center(
+                    child:
+                    CupertinoActivityIndicator(animating: true, radius: 15)),
+              );
+            } else {
+              return ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int i) {
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
+                              color: Colors.green,
                               height: 260,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
-                            Container(
-                              height: double.infinity,
-                              child: Center(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColors.white,
-                                    borderRadius: BorderRadius.circular(100),
+                              child: Stack(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/profile-bg.jpg',
+                                    height: 260,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(3.0),
-                                    child: CircleAvatar(
-                                      radius: 65,
-                                      backgroundImage: NetworkImage(
-                                          'https://www.pennychats.com/beta/uploads/profile_pictures/${snapshot.data[i].profile_pic}'),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 120, bottom: 80),
-                                  child: Container(
-                                    height: 40,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(3.0),
-                                      child: Icon(
-                                        Icons.camera_alt,
-                                        size: 25,
-                                        color: AppColors
-                                            .PROFILE_TAB_CAMERA_ICON_COLOR,
+                                  Container(
+                                    height: double.infinity,
+                                    child: Center(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          borderRadius:
+                                          BorderRadius.circular(100),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(3.0),
+                                          child: CircleAvatar(
+                                            radius: 65,
+                                            backgroundImage: NetworkImage(
+                                                'https://www.pennychats.com/beta/uploads/profile_pictures/${snapshot.data[i].profile_pic}'),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            )
-                          ],
-                        )),
-                    Container(
-                      height: 100,
-                      color: AppColors.PROFILE_TAB_CONTAINER1_COLOR,
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 30, right: 30),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('GENERAL',
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color:
-                                          AppColors.PROFILE_TAB_GENERALTEXT_COLOR,
-                                      fontFamily: 'Gotham',
-                                      fontWeight: FontWeight.bold)),
-                              TextButton(
-                                onPressed: () => {},
-
-                                // padding: EdgeInsets.all(10.0),
-                                child: Row(
-                                  // Replace with a Row for horizontal icon + text
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.edit,
-                                      size: 20,
-                                      color: AppColors.LOGIN_PAGE_LOGINBOX,
+                                  GestureDetector(
+                                    onTap: () async {
+                                      // print("tapped");
+                                      //
+                                      // final ImagePicker _picker = ImagePicker();
+                                      // var imagePicker = await _picker.pickImage(
+                                      //     source: ImageSource.gallery);
+                                      //
+                                      // File image = imagePicker as File;
+                                      //
+                                      // var mydata =
+                                      //     await Apiservice().postPicture(image);
+                                      // var dataresponse = mydata["response"];
+                                      // print("============> $dataresponse");
+                                    },
+                                    child: Container(
+                                      child: Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 120, bottom: 80),
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              color: AppColors.white,
+                                              borderRadius:
+                                              BorderRadius.circular(100),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(3.0),
+                                              child: Icon(
+                                                Icons.camera_alt,
+                                                size: 25,
+                                                color: AppColors
+                                                    .PROFILE_TAB_CAMERA_ICON_COLOR,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5),
-                                      child: Text("Edit",
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              color:
-                                                  AppColors.LOGIN_PAGE_LOGINBOX,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.bold)),
-                                    )
+                                  )
+                                ],
+                              )),
+                          Container(
+                            height: 100,
+                            color: AppColors.PROFILE_TAB_CONTAINER1_COLOR,
+                            child: Center(
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.only(left: 30, right: 30),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('GENERAL',
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: AppColors
+                                                .PROFILE_TAB_GENERALTEXT_COLOR,
+                                            fontFamily: 'Gotham',
+                                            fontWeight: FontWeight.bold)),
+                                    TextButton(
+                                      onPressed: () => {
+                                        AddName()
+                                      },
+
+                                      // padding: EdgeInsets.all(10.0),
+                                      child: Row(
+                                        // Replace with a Row for horizontal icon + text
+                                        children: <Widget>[
+                                          Icon(
+                                            Icons.edit,
+                                            size: 20,
+                                            color: AppColors.LOGIN_PAGE_LOGINBOX,
+                                          ),
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.only(left: 5),
+                                            child: Text("Edit",
+                                                style: TextStyle(
+                                                    fontSize: 13,
+                                                    color: AppColors
+                                                        .LOGIN_PAGE_LOGINBOX,
+                                                    fontFamily: 'Gotham',
+                                                    fontWeight: FontWeight.bold)),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, top: 40, right: 30, bottom: 30),
-                          child: Column(
-                            children: [
-                              Container(
-                                  width: double.infinity,
-                                  child: Text(
-                                    'Name',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        color: AppColors.PROFILE_TAB_LABEL_TEXT,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.w500),
-                                  )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                  width: double.infinity,
-                                  child: Text(
-                                    snapshot.data[i].name,
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: AppColors.PROFILE_TAB_NORMAL_TEXT,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.w500),
-                                  )),
-                            ],
+                          Container(
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 30, top: 40, right: 30, bottom: 30),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        width: double.infinity,
+                                        child: Text(
+                                          'Name',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: AppColors
+                                                  .PROFILE_TAB_LABEL_TEXT,
+                                              fontFamily: 'Gotham',
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                        width: double.infinity,
+                                        child: Text(
+                                          snapshot.data[i].name,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColors
+                                                  .PROFILE_TAB_NORMAL_TEXT,
+                                              fontFamily: 'Gotham',
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                  ],
+                                ),
+                              )),
+                          Divider(
+                            thickness: 1,
+                            color: AppColors.PROFILE_TAB_DIVIDER,
                           ),
-                        )),
-                    Divider(
-                      thickness: 1,
-                      color: AppColors.PROFILE_TAB_DIVIDER,
-                    ),
-                    Container(
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, top: 40, right: 30, bottom: 30),
-                          child: Column(
-                            children: [
-                              Container(
-                                  width: double.infinity,
-                                  child: Text(
-                                    'Email',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        color: AppColors.PROFILE_TAB_LABEL_TEXT,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.w500),
-                                  )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                  width: double.infinity,
-                                  child: Text(
-                                    snapshot.data[i].email,
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: AppColors.PROFILE_TAB_NORMAL_TEXT,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.w500),
-                                  )),
-                            ],
+                          Container(
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 30, top: 40, right: 30, bottom: 30),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        width: double.infinity,
+                                        child: Text(
+                                          'Email',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: AppColors
+                                                  .PROFILE_TAB_LABEL_TEXT,
+                                              fontFamily: 'Gotham',
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                        width: double.infinity,
+                                        child: Text(
+                                          snapshot.data[i].email,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColors
+                                                  .PROFILE_TAB_NORMAL_TEXT,
+                                              fontFamily: 'Gotham',
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                  ],
+                                ),
+                              )),
+                          Divider(
+                            thickness: 1,
+                            color: AppColors.PROFILE_TAB_DIVIDER,
                           ),
-                        )),
-                    Divider(
-                      thickness: 1,
-                      color: AppColors.PROFILE_TAB_DIVIDER,
-                    ),
-                    Container(
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, top: 40, right: 30, bottom: 30),
-                          child: Column(
-                            children: [
-                              Container(
-                                  width: double.infinity,
+                          Container(
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 30, top: 40, right: 30, bottom: 30),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        width: double.infinity,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Password',
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: AppColors
+                                                      .PROFILE_TAB_LABEL_TEXT,
+                                                  fontFamily: 'Gotham',
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Text(
+                                              'Change password',
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color: AppColors
+                                                      .LOGIN_PAGE_LOGINBOX,
+                                                  fontFamily: 'Gotham',
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        )),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                        width: double.infinity,
+                                        child: Text(
+                                          "................",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColors
+                                                  .PROFILE_TAB_NORMAL_TEXT,
+                                              fontFamily: 'Gotham',
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                  ],
+                                ),
+                              )),
+                          Divider(
+                            thickness: 1,
+                            color: AppColors.PROFILE_TAB_DIVIDER,
+                          ),
+                          Container(
+                              width: double.infinity,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 30, top: 40, right: 30, bottom: 30),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        width: double.infinity,
+                                        child: Text(
+                                          'Birthday',
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: AppColors
+                                                  .PROFILE_TAB_LABEL_TEXT,
+                                              fontFamily: 'Gotham',
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Container(
+                                        width: double.infinity,
+                                        child: Text(
+                                          'January 12, 1990',
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: AppColors
+                                                  .PROFILE_TAB_NORMAL_TEXT,
+                                              fontFamily: 'Gotham',
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                  ],
+                                ),
+                              )),
+                          Container(
+                            width: double.infinity,
+                            color: AppColors.PROFILE_TAB_CONTAINER1_COLOR,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 30, right: 30, top: 30, bottom: 30),
+                              child: Text('GENERAL',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color:
+                                      AppColors.PROFILE_TAB_GENERALTEXT_COLOR,
+                                      fontFamily: 'Gotham',
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          NotificationSetting()));
+                            },
+                            splashColor: Colors.black38,
+                            child: Container(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 30, top: 40, right: 30, bottom: 30),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Password',
+                                        'Chat Settings',
                                         style: TextStyle(
-                                            fontSize: 13,
-                                            color:
-                                                AppColors.PROFILE_TAB_LABEL_TEXT,
+                                            fontSize: 14,
+                                            color: AppColors.PROFILE_TAB_NORMAL_TEXT,
                                             fontFamily: 'Gotham',
                                             fontWeight: FontWeight.w500),
                                       ),
-                                      Text(
-                                        'Change password',
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color: AppColors.LOGIN_PAGE_LOGINBOX,
-                                            fontFamily: 'Gotham',
-                                            fontWeight: FontWeight.w500),
-                                      ),
+                                      Icon(
+                                        Icons.chevron_right,
+                                        size: 25,
+                                        color: AppColors.PROFILE_TAB_NORMAL_TEXT,
+                                      )
                                     ],
-                                  )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                  width: double.infinity,
-                                  child: Text(
-                                    "................",
-                                    style: TextStyle(
-
-                                        fontSize: 14,
-                                        color: AppColors.PROFILE_TAB_NORMAL_TEXT,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.w500),
-                                  )),
-                            ],
+                                  ),
+                                )),
                           ),
-                        )),
-                    Divider(
-                      thickness: 1,
-                      color: AppColors.PROFILE_TAB_DIVIDER,
-                    ),
-                    Container(
-                        width: double.infinity,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, top: 40, right: 30, bottom: 30),
-                          child: Column(
-                            children: [
-                              Container(
-                                  width: double.infinity,
-                                  child: Text(
-                                    'Birthday',
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        color: AppColors.PROFILE_TAB_LABEL_TEXT,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.w500),
-                                  )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                  width: double.infinity,
-                                  child: Text(
-                                    'January 12, 1990',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: AppColors.PROFILE_TAB_NORMAL_TEXT,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.w500),
-                                  )),
-                            ],
-                          ),
-                        )),
-                    Container(
-                      width: double.infinity,
-                      color: AppColors.PROFILE_TAB_CONTAINER1_COLOR,
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 30, right: 30, top: 30, bottom: 30),
-                        child: Text('GENERAL',
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.PROFILE_TAB_GENERALTEXT_COLOR,
-                                fontFamily: 'Gotham',
-                                fontWeight: FontWeight.bold)),
+                        ],
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => NotificationSetting()));
-                      },
-                      splashColor: Colors.black38,
-                      child: Container(
-                          child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 30, top: 40, right: 30, bottom: 30),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Chat Settings',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: AppColors.PROFILE_TAB_NORMAL_TEXT,
-                                  fontFamily: 'Gotham',
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            Icon(
-                              Icons.chevron_right,
-                              size: 25,
-                              color: AppColors.PROFILE_TAB_NORMAL_TEXT,
-                            )
-                          ],
-                        ),
-                      )),
-                    ),
-                  ],
-                ),
-              );
-
-    }
-            );
-          }
-        },
-      )),
+                    );
+                  });
+            }
+          },
+        )
+      )
     );
   }
 }

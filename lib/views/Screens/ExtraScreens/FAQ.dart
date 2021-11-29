@@ -79,7 +79,6 @@ class _FAQState extends State<FAQ> {
         ),
         title: Text("FAQs"),
       ),
-      
       body: FutureBuilder(
         future: getfaq(),
         // initialData: InitialData,
@@ -146,9 +145,11 @@ class _FAQState extends State<FAQ> {
                                   child: Text(
                                     '${snapshot.data[i].ans}',
                                     style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.w600),
+                                      fontSize: 14,
+                                      height: 1.4,
+                                      color: AppColors.POST_TAB_COMMENTS_COLOR,
+                                      fontFamily: 'Gotham',
+                                    ),
                                   ),
                                 ),
                               ],

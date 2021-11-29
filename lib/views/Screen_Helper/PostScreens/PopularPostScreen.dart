@@ -158,10 +158,11 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                         _post.content.toString())
                                     : "${AppStrings.parseHtmlString(_post.content.toString().substring(0, 150))}.....",
                                 style: TextStyle(
-                                    fontSize: 14,
-                                    color: AppColors.POST_TAB_COMMENTS_COLOR,
-                                    fontFamily: 'Gotham',
-                                    fontWeight: FontWeight.w500),
+                                  fontSize: 14,
+                                  height: 1.4,
+                                  color: AppColors.POST_TAB_COMMENTS_COLOR,
+                                  fontFamily: 'Gotham',
+                                ),
                               ),
                             ),
                             Padding(

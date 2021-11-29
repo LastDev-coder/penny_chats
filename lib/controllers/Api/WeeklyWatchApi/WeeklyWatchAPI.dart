@@ -16,6 +16,8 @@ class WeeklyWatchApi {
     print(responseBody);
     if (responseBody['status'] = true) {
       weeklyWatchList = weeklyWatchModelFromJson(response.body);
+      print(weeklyWatchList);
+
       return weeklyWatchList;
     } else {
       showAlertDialog(context);

@@ -1,90 +1,84 @@
+import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart' as clint;
 
-class Apiservice{
-  
+class Apiservice {
   Dio dio = new Dio();
 
-  Future getfaqs() async{
-  late String url="https://pennychats.com/pennychatapi/cms/faq";
-  final prefs = await SharedPreferences.getInstance();
-  final token = prefs.getString('token') ?? '';
-  
-     
-    Dio dio = new Dio();
-    dio.options.headers["authentication-token"] = token;
-    clint.Response response = await dio.get(url);
-    return response.data;
-
-  }
-  Future getTrading() async{
-    late String url="https://pennychats.com/pennychatapi/cms/trading";
+  Future getfaqs() async {
+    late String url = "https://pennychats.com/pennychatapi/cms/faq";
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
 
-
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
     return response.data;
-
   }
 
-  Future getStocktoWatch(String id) async{
-    late String url="https://pennychats.com/pennychatapi/pennystocks/lists/$id";
+  Future getTrading() async {
+    late String url = "https://pennychats.com/pennychatapi/cms/trading";
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
 
-
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
     return response.data;
-
   }
 
-  Future StockAlert() async{
-    late String url="https://pennychats.com/pennychatapi/dashboard/stocktrade";
+  Future getStocktoWatch(String id) async {
+    late String url =
+        "https://pennychats.com/pennychatapi/pennystocks/lists/$id";
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
 
-
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
     return response.data;
-
   }
 
-  Future getTestimonial() async{
-    late String url="https://pennychats.com/pennychatapi/cms/testimonial";
+  Future StockAlert() async {
+    late String url =
+        "https://pennychats.com/pennychatapi/dashboard/stocktrade";
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
 
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+
+  Future getTestimonial() async {
+    late String url = "https://pennychats.com/pennychatapi/cms/testimonial";
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
 
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
     return response.data;
-
   }
 
-  Future getprofile() async{
+  Future getprofile() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final id = prefs.getString('id') ?? '';
     print("id => $id ");
-    late String url="https://pennychats.com/pennychatapi/users/userdetails/$id";
+    late String url =
+        "https://pennychats.com/pennychatapi/users/userdetails/$id";
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
     return response.data;
-
   }
 
-  Future postTestimonial(String text) async{
+  Future postTestimonial(String text) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final id = prefs.getString('id') ?? '';
@@ -94,27 +88,46 @@ class Apiservice{
     var _data = new Map<String, dynamic>();
     _data['content'] = '$text';
     try {
-
-      response = await dio.post("https://pennychats.com/pennychatapi/testimonial/add_testimonial/$id",
+      response = await dio.post(
+          "https://pennychats.com/pennychatapi/testimonial/add_testimonial/$id",
           data: _data,
-          options: Options(
-          headers: {
+          options: Options(headers: {
             "Accept": "application/json",
             "Content-Type": "application/x-www-form-urlencoded",
-            "authentication-token" : token
-          }
-      ));
+            "authentication-token": token
+          }));
 
       print('response : ${response.data}');
       return response.data;
     } catch (e) {
       print('Error : $e');
     }
-
   }
 
+  Future postUsername(var _data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+    Dio dio = new Dio();
+    clint.Response response;
+    try {
+    response = await dio.post(
+        "https://pennychats.com/pennychatapi/users/edit_profile/$id",
+    data: _data,
+    options: Options(headers: {
+    "Accept": "application/json",
+    "Content-Type": "application/x-www-form-urlencoded",
+    "authentication-token": token
+    }));
 
-  Future ContactUs(var _data) async{
+      print('response : ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('Error : $e');
+    }
+  }
+  Future AddStock(var _data) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final id = prefs.getString('id') ?? '';
@@ -123,24 +136,68 @@ class Apiservice{
     clint.Response response;
 
     try {
-
-      response = await dio.post("https://pennychats.com/pennychatapi/contact/contact_us",
+      response = await dio.post(
+          "https://pennychats.com/pennychatapi/users/add_stock/$id",
           data: _data,
-          options: Options(
-              headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/x-www-form-urlencoded",
-                "authentication-token" : token
-              }
-          ));
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authentication-token": token
+          }));
 
       print('response : ${response.data}');
       return response.data;
     } catch (e) {
       print('Error : $e');
     }
+  }
+  Future AddWatch(var _data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+    Dio dio = new Dio();
+    clint.Response response;
 
+    try {
+      response = await dio.post(
+          "https://pennychats.com/pennychatapi/users/add_weekly_watch/$id",
+          data: _data,
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authentication-token": token
+          }));
+
+      print('response : ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('Error : $e');
+    }
   }
 
+  Future ContactUs(var _data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+    Dio dio = new Dio();
+    clint.Response response;
 
+    try {
+      response = await dio.post(
+          "https://pennychats.com/pennychatapi/contact/contact_us",
+          data: _data,
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authentication-token": token
+          }));
+
+      print('response : ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('Error : $e');
+    }
+  }
 }

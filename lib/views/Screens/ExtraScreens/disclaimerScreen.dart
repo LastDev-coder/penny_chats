@@ -40,22 +40,29 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: <Color>[
-                    AppColors.REGISTER_PAGE_APPBAR_G1,
-                    AppColors.REGISTER_PAGE_APPBAR_G2
-                  ])),
+                AppColors.REGISTER_PAGE_APPBAR_G1,
+                AppColors.REGISTER_PAGE_APPBAR_G2
+              ])),
         ),
         title: Text("Disclaimer"),
       ),
       body: _disclaimer == null
           ? Center(
-          child:
-          CupertinoActivityIndicator(animating: true, radius: 15))
+              child: CupertinoActivityIndicator(animating: true, radius: 15))
           : SafeArea(
               child: Center(
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: Text(AppStrings.parseHtmlString(_disclaimer!)),
+                    child: Text(
+                      AppStrings.parseHtmlString(_disclaimer!),
+                      style: TextStyle(
+                        fontSize: 15,
+                        height: 1.4,
+                        color: AppColors.POST_TAB_COMMENTS_COLOR,
+                        fontFamily: 'Gotham',
+                      ),
+                    ),
                   ),
                 ),
               ),

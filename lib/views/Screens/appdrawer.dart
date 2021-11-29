@@ -53,7 +53,7 @@ class _appdrawerState extends State<appdrawer> {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => Mydashboard()));
+                                          builder: (context) => Mydashboard(number: 0,)));
                                 },
                               ),
                               ListTile(

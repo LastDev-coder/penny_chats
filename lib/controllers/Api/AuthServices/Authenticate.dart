@@ -17,7 +17,7 @@ class _AuthenticateState extends State<Authenticate> {
     } else {
       print("token => "+_prefs.getString('token').toString());
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Mydashboard()));
+          context, MaterialPageRoute(builder: (context) => Mydashboard(number: 0,)));
     }
   }
 

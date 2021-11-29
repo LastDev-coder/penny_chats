@@ -17,7 +17,6 @@ class Trading extends StatefulWidget {
 }
 
 class _TradingState extends State<Trading> {
-
   String getFormattedDate(String date) {
     var localDate = DateTime.parse(date).toLocal();
     var inputFormat = DateFormat('yyyy-MM-dd');
@@ -33,12 +32,11 @@ class _TradingState extends State<Trading> {
 
   String _parseHtmlString(String htmlString) {
     final document = parse(htmlString);
-    String parsedString="" ;
-    try{
-      parsedString =  parse(document.body!.text).documentElement!.text;
-
-    }catch(e){
-      parsedString="";
+    String parsedString = "";
+    try {
+      parsedString = parse(document.body!.text).documentElement!.text;
+    } catch (e) {
+      parsedString = "";
     }
     return parsedString;
   }
@@ -90,37 +88,36 @@ class _TradingState extends State<Trading> {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, top: 10,bottom: 10),
+            padding:
+                const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
             child: Container(
               width: double.infinity,
               height: 150,
-
               child: Stack(
-
                 children: [
                   Center(
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(5.0),
-                        child: Image.network("https://pennychats.com/assets/images/list-img.png")),
+                        child: Image.network(
+                            "https://pennychats.com/assets/images/list-img.png")),
                   ),
                   Center(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.black.withOpacity(0.2),
-
                       ),
                       height: double.infinity,
                       width: double.infinity,
                     ),
                   ),
-                  Center(child: Text("Trading Tips By Our Experts",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'Gotham',
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)
-                  )),
+                  Center(
+                      child: Text("Trading Tips By Our Experts",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Gotham',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold))),
                 ],
               ),
             ),
@@ -133,8 +130,8 @@ class _TradingState extends State<Trading> {
                 if (snapshot.data == null) {
                   return Container(
                     child: Center(
-                        child:
-                        CupertinoActivityIndicator(animating: true, radius: 15)),
+                        child: CupertinoActivityIndicator(
+                            animating: true, radius: 15)),
                   );
                 } else {
                   return ListView.builder(
@@ -146,7 +143,10 @@ class _TradingState extends State<Trading> {
                         child: Card(
                           child: Padding(
                             padding: EdgeInsets.only(
-                                top: 10.0, left: 10.0, right: 10.0, bottom: 10.0),
+                                top: 10.0,
+                                left: 10.0,
+                                right: 10.0,
+                                bottom: 10.0),
                             child: Theme(
                               data: theme,
                               child: Column(
@@ -165,7 +165,8 @@ class _TradingState extends State<Trading> {
                                                     color: Colors.white,
                                                     fontFamily: 'Gotham',
                                                     fontSize: 15,
-                                                    fontWeight: FontWeight.bold)),
+                                                    fontWeight:
+                                                        FontWeight.bold)),
                                           ),
                                         ),
                                         SizedBox(
@@ -173,7 +174,8 @@ class _TradingState extends State<Trading> {
                                         ),
                                         Expanded(
                                           child: Padding(
-                                            padding: const EdgeInsets.only(right: 15),
+                                            padding: const EdgeInsets.only(
+                                                right: 15),
                                             child: Text(
                                               '${snapshot.data[i].title}',
                                               style: TextStyle(
@@ -192,18 +194,22 @@ class _TradingState extends State<Trading> {
                                         child: Text(
                                           '${snapshot.data[i].ans}',
                                           style: TextStyle(
-                                              color: Colors.black,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.w600),
+                                            fontSize: 14,
+                                            height: 1.4,
+                                            color: AppColors
+                                                .POST_TAB_COMMENTS_COLOR,
+                                            fontFamily: 'Gotham',
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
                                   Padding(
-                                    padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
                                     child: Divider(
-                                      color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                                      color: AppColors
+                                          .POST_TAB_FAVOURITE_TIME_COLOR,
                                       thickness: 1,
                                     ),
                                   ),
@@ -216,7 +222,7 @@ class _TradingState extends State<Trading> {
                                             elevation: 0,
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                BorderRadius.circular(50)),
+                                                    BorderRadius.circular(50)),
                                             child: CircleAvatar(
                                                 radius: 15,
                                                 backgroundImage: NetworkImage(
@@ -248,10 +254,12 @@ class _TradingState extends State<Trading> {
                                             height: 18,
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.only(left: 10),
+                                            padding:
+                                                const EdgeInsets.only(left: 10),
                                             child: Container(
-                                              width:
-                                              MediaQuery.of(context).size.width *
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
                                                   0.3,
                                               child: Text(
                                                 '${snapshot.data[i].created}',
@@ -260,7 +268,8 @@ class _TradingState extends State<Trading> {
                                                         .POST_TAB_FAVOURITE_TIME_COLOR,
                                                     fontFamily: 'Gotham',
                                                     fontSize: 12,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
                                             ),
                                           ),

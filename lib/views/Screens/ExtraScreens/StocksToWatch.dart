@@ -122,13 +122,12 @@ class _StocksToWatchState extends State<StocksToWatch> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => NewsDetails(
-                                id: widget.id,
-                                title: snapshot.data[i].title,
-                                content: snapshot.data[i].content,
-                                time: snapshot.data[i].created,
-                              )));
+                                    id: widget.id,
+                                    title: snapshot.data[i].title,
+                                    content: snapshot.data[i].content,
+                                    time: snapshot.data[i].created,
+                                  )));
                     },
-
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,
                       elevation: 2,
@@ -144,7 +143,6 @@ class _StocksToWatchState extends State<StocksToWatch> {
                           height: 10,
                         ),
                         ClipRRect(
-
                             borderRadius: BorderRadius.circular(5.0),
                             child: Image.network(
                                 "https://www.pennychats.com/beta/uploads/stocknews/${snapshot.data[i].img_news}")),
@@ -184,10 +182,11 @@ class _StocksToWatchState extends State<StocksToWatch> {
                           child: Text(
                             '${snapshot.data[i].created}',
                             style: TextStyle(
-                                color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
-                                fontFamily: 'Gotham',
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400),
+                              fontSize: 14,
+                              height: 1.4,
+                              color: AppColors.POST_TAB_COMMENTS_COLOR,
+                              fontFamily: 'Gotham',
+                            ),
                           ),
                         ),
                         SizedBox(

@@ -1,15 +1,19 @@
 import 'dart:io';
 
 import 'package:badges/badges.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/Api/NotificationsApi.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/NotificationsModel.dart';
+import 'package:penny_chats/models/ProfileModel.dart';
 import 'package:penny_chats/views/Screen_Helper/ChatScreens/chat.dart';
 import 'package:penny_chats/views/Screen_Helper/Drawer/Navigation_Drawer.dart';
 import 'package:penny_chats/views/Screen_Helper/Notification/notification.dart';
+import 'package:penny_chats/views/Screen_Helper/Notification/notification_setting.dart';
 import 'package:penny_chats/views/Screen_Helper/PostScreens/post.dart';
 import 'package:penny_chats/views/Screen_Helper/Profile/profile.dart';
 import 'package:penny_chats/views/Screen_Helper/Stock/WeeklyWatch.dart';
@@ -20,7 +24,8 @@ import 'package:penny_chats/views/Screens/appdrawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Mydashboard extends StatefulWidget {
-  Mydashboard({Key? key}) : super(key: key);
+  final int number;
+  Mydashboard({Key? key, required this.number}) : super(key: key);
 
   @override
   _MydashboardState createState() => _MydashboardState();
@@ -79,6 +84,8 @@ class _MydashboardState extends State<Mydashboard> {
     ),
   ];
 
+
+
   NotificationsModel? _notificationData;
 
   @override
@@ -87,6 +94,7 @@ class _MydashboardState extends State<Mydashboard> {
         .then((value) {
       setState(() {
         _notificationData = value;
+        _currentIndex = widget.number;
       });
     });
     super.initState();

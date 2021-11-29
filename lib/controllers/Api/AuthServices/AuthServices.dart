@@ -31,7 +31,7 @@ class AuthServices {
       _prefs.setString('id', responseData['response']['pid']);
 
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Mydashboard()));
+          context, MaterialPageRoute(builder: (context) => Mydashboard(number: 0,)));
       print(response.body);
     } else {
       print(response.body);
