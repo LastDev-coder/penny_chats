@@ -30,7 +30,8 @@ class _WelcomeFirstState extends State<WelcomeFirst> {
                 right: 40,
               ),
               child: Container(
-                height: 246.5,
+                height: 183.5,
+                // color: Colors.red,
                 child: Card(
                   elevation: 2,
                   child: Center(
@@ -58,19 +59,19 @@ class _WelcomeFirstState extends State<WelcomeFirst> {
                             fontStyle: FontStyle.normal,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 20),
-                          child: Text(
-                            'Sign up to create your account It take less than 1 minute',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: AppColors.FADE_TEXT_COLOR,
-                                fontFamily: 'Gotham',
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(
+                        //       left: 25.0, right: 25.0, top: 20),
+                        //   child: Text(
+                        //     'Sign up to create your account It take less than 1 minute',
+                        //     textAlign: TextAlign.center,
+                        //     style: TextStyle(
+                        //         fontSize: 15,
+                        //         color: AppColors.FADE_TEXT_COLOR,
+                        //         fontFamily: 'Gotham',
+                        //         fontWeight: FontWeight.w400),
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Container(

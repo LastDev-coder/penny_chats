@@ -5,6 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/views/Screen_Helper/ChatScreens/chat_member.dart';
 import 'package:penny_chats/views/Screen_Helper/ChatScreens/chat_room.dart';
+import 'package:penny_chats/views/Screen_Helper/PostScreens/post.dart';
+import 'package:penny_chats/views/Screens/ExtraScreens/Post.dart';
 
 class Chat extends StatefulWidget {
   Chat({Key? key}) : super(key: key);
@@ -346,6 +348,10 @@ class _ChatState extends State<Chat> with SingleTickerProviderStateMixin {
             child: Visibility(
               visible: isBottomCollapsed,
               child: GestureDetector(
+                onTap: (){
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => MyPost()));
+                },
                 child: Container(
                   height: 30,
                   width: 70,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/Api/PostAPI/LatestPostApi.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/LatestPostModel.dart';
+import 'package:penny_chats/models/Likemodel.dart';
 import 'package:penny_chats/views/Screen_Helper/PostScreens/PostDetailsScreen.dart';
 
 class LatestPostScreen extends StatefulWidget {
@@ -17,7 +19,8 @@ class LatestPostScreen extends StatefulWidget {
 class _LatestPostScreenState extends State<LatestPostScreen> {
   LatestPostModel? _latestPostModel;
   DateFormat dateFormat = DateFormat('yyyy-MM-dd – kk:mm');
-
+String isLike="true";
+var data;
   @override
   void initState() {
     LatestPostApi.getLatestPost(context, AppStrings.getLatestPostApi)
@@ -27,6 +30,36 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
       });
     });
     super.initState();
+  }
+  makelike(String postid) async {
+    print(postid);
+    data = await Apiservice().getlike(postid);
+   if(data["status"]==true){
+     isLike = "true";
+   }else {
+     isLike = "false";
+   }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            'You liked this post')));
+    print(data);
+   print("post id -> $postid , like -> $isLike");
+
+  }
+  makedislike(String postid) async {
+    print(postid);
+    data = await Apiservice().getlike(postid);
+    if(data["status"]==true){
+      isLike = "true";
+    }else {
+      isLike = "false";
+    }
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            'You disliked this post')));
+    print(data);
+    print("post id -> $postid , like -> $isLike");
+
   }
 
   @override
@@ -40,7 +73,10 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
           : ListView.builder(
               itemCount: _latestPostModel?.response?.length,
               itemBuilder: (context, int index) {
+
                 var _post = _latestPostModel!.response![index];
+                print(_post.id.toString());
+     //           makelike(_post.id.toString());
                 return Container(
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -50,6 +86,7 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => PostDetails(
+                                id: _post.id,
                                     name: _post.name,
                                     time: dateFormat.format(_post.created!),
                                     desc: AppStrings.parseHtmlString(
@@ -84,7 +121,9 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
                                           backgroundImage: _post.profilePic ==
                                                   ''
                                               ? NetworkImage(
-                                                  'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg')
+                                              'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
+                                                  'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
+                                          )
                                               : NetworkImage(
                                                   'https://www.pennychats.com/uploads/profile_pictures/${_post.profilePic}'),
                                         ),
@@ -181,11 +220,30 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
                                   Container(
                                     child: Row(
                                       children: [
-                                        SvgPicture.asset(
-                                          'assets/icon/heart.svg',
-                                          height: 20,
-                                          color: AppColors.POST_TAB_LIKE_COLOR,
-                                        ),
+                                GestureDetector(
+
+                                  child: SvgPicture.asset(
+                                    'assets/icon/heart.svg',
+                                    height: 20,
+                                    color: AppColors.POST_TAB_LIKE_COLOR,
+
+                                  ),
+                                  onTap: (){
+                                    makelike(_post.id.toString());
+                          //          makedislike(_post.id.toString());
+                                  },
+                                ),
+                                      //   data["status"]==true ? SvgPicture.asset(
+                                      //   'assets/icon/heart.svg',
+                                      //   height: 20,
+                                      //   color: AppColors.POST_TAB_LIKE_COLOR,
+                                      //
+                                      // ) :  SvgPicture.asset(
+                                      //     'assets/icon/heart.svg',
+                                      //     height: 20,
+                                      //   color: Colors.red,
+                                      //
+                                      // ),
                                         SizedBox(
                                           width: 10,
                                         ),

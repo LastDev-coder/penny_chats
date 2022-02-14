@@ -116,9 +116,7 @@ class _NoStocksState extends State<NoStocks> {
                                     onTap: () async {
                                       await  _pickDateDialog();
                                       setState(() {
-                                        //for rebuilding the ui
-                                        // var data = _pickDateDialog();
-                                        // print(data);
+
                                         print(dateController.text.toString());
                                       });
                                     }
@@ -387,6 +385,7 @@ class _NoStocksState extends State<NoStocks> {
           ),
 
         );
+     
       },
     );
 
@@ -440,49 +439,49 @@ class _NoStocksState extends State<NoStocks> {
         child: Card(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Row(
-                  mainAxisAlignment:
-                  MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                //      color: AppColors.WeeklyWatch_SORTBUTTON,
-                      onPressed: () {
-                        AddAlert();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                            top: 5,
-                            bottom: 5),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.add_circle_outline,
-                              color: AppColors.STOCKALERT_TEXTBOLD,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text('ADD',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: AppColors.STOCKALERT_TEXTBOLD,
-                                    fontFamily: 'Gotham',
-                                    fontWeight:
-                                    FontWeight.w500)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(5.0),
+              //   child: Row(
+              //     mainAxisAlignment:
+              //     MainAxisAlignment.end,
+              //     children: [
+              //       TextButton(
+              //   //      color: AppColors.WeeklyWatch_SORTBUTTON,
+              //         onPressed: () {
+              //           AddAlert();
+              //         },
+              //         child: Padding(
+              //           padding: const EdgeInsets.only(
+              //               left: 10,
+              //               right: 10,
+              //               top: 5,
+              //               bottom: 5),
+              //           child: Row(
+              //             children: [
+              //               Icon(
+              //                 Icons.add_circle_outline,
+              //                 color: AppColors.STOCKALERT_TEXTBOLD,
+              //               ),
+              //               SizedBox(
+              //                 width: 5,
+              //               ),
+              //               Text('ADD',
+              //                   style: TextStyle(
+              //                       fontSize: 12,
+              //                       color: AppColors.STOCKALERT_TEXTBOLD,
+              //                       fontFamily: 'Gotham',
+              //                       fontWeight:
+              //                       FontWeight.w500)),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 5,
+              // ),
               Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Row(

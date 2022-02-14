@@ -48,6 +48,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => PostDetails(
+                                id: _post.id,
                                     name: _post.name,
                                     time: AppStrings.dateFormat
                                         .format(_post.created!),

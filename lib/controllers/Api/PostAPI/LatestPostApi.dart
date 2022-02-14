@@ -13,7 +13,10 @@ class LatestPostApi {
     var response = await http
         .get(Uri.parse(api), headers: {"authentication-token": "$token"});
     var responseBody = json.decode(response.body);
+    print("--------------latest post-------------");
     print(responseBody);
+    print("--------------------------------------");
+
     if (responseBody['status'] = true) {
       latestPostData = latestPostModelFromJson(response.body);
       return latestPostData;
