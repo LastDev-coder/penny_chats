@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
@@ -359,11 +360,11 @@ class _WeeklyWatchScreenState extends State<WeeklyWatchScreen> {
                 children: [
                     Container(
                     height: MediaQuery.of(context).size.height,
-                    color: AppColors.WeeklyWatch_BACKGROUND,
+                    color: Get.isDarkMode ? Colors.transparent : AppColors.WeeklyWatch_BACKGROUND,
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Card(
-                        color: AppColors.white,
+                        // color: AppColors.white,
                         child: Container(
                           height: MediaQuery.of(context).size.height,
                           child: Padding(
@@ -518,7 +519,7 @@ class _WeeklyWatchScreenState extends State<WeeklyWatchScreen> {
                                                       child: Text(_data.stock!,
                                                           style: TextStyle(
                                                               fontSize: 12,
-                                                              color:
+                                                              color:Get.isDarkMode ? Colors.white38 :
                                                                   Colors.black,
                                                               fontFamily:
                                                                   'Gotham',
@@ -555,14 +556,14 @@ class _WeeklyWatchScreenState extends State<WeeklyWatchScreen> {
                                                                       FontWeight
                                                                           .w500)),
                                                         ),
-                                                        SizedBox(
-                                                          width: 20,
-                                                        ),
-                                                        Icon(
-                                                          Icons.remove_circle,
-                                                          size: 12,
-                                                          color: Colors.red,
-                                                        )
+                                                        // SizedBox(
+                                                        //   width: 20,
+                                                        // ),
+                                                        // Icon(
+                                                        //   Icons.remove_circle,
+                                                        //   size: 12,
+                                                        //   color: Colors.red,
+                                                        // )
                                                       ],
                                                     ),
                                                   ),

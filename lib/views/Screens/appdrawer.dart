@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/views/Screen_Helper/Drawer/Navigation_Drawer.dart';
 import 'package:penny_chats/views/Screens/Auth/splash.dart';
@@ -43,12 +44,14 @@ class _appdrawerState extends State<appdrawer> {
                                   'Dashboard',
                                   style: TextStyle(
                                       color:
-                                      AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                      Get.isDarkMode
+                                          ?Colors.white:  AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                       fontFamily: 'Gotham',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400),
                                 ),
-                                leading: Icon(Icons.dashboard_outlined,size: 28,color: Colors.black,),
+                                leading: Icon(Icons.dashboard_outlined,size: 28,color:  Get.isDarkMode
+                                ?Colors.white: Colors.black,),
                                 onTap: () {
                                   Navigator.pushReplacement(
                                       context,
@@ -61,7 +64,8 @@ class _appdrawerState extends State<appdrawer> {
                                   'Tools',
                                   style: TextStyle(
                                       color:
-                                          AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                      Get.isDarkMode
+                                          ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                       fontFamily: 'Gotham',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400),
@@ -69,6 +73,8 @@ class _appdrawerState extends State<appdrawer> {
                                 leading: SvgPicture.asset(
                                   "assets/icon/wrench.svg",
                                   height: 28,
+                                  color: Get.isDarkMode
+                                      ?Colors.white: Colors.black,
                                 ),
                                 onTap: () {
                                   // Update the state of the app.
@@ -84,13 +90,16 @@ class _appdrawerState extends State<appdrawer> {
                                          SvgPicture.asset(
                                           "assets/icon/bar.svg",
                                           height: 28,
+                                           color: Get.isDarkMode
+                                               ?Colors.white: Colors.black,
                                         ),
                                         SizedBox(width: 30,),
                                         Text(
                                           'Penny Stocks',
                                           style: TextStyle(
                                               color:
-                                              AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                              Get.isDarkMode
+                                                  ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                               fontFamily: 'Gotham',
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400),
@@ -111,7 +120,8 @@ class _appdrawerState extends State<appdrawer> {
                                             'Penny Stocks To Watch',
                                             style: TextStyle(
                                                 color:
-                                                AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                Get.isDarkMode
+                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                                 fontFamily: 'Gotham',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
@@ -132,7 +142,8 @@ class _appdrawerState extends State<appdrawer> {
                                             'Penny Stocks Help',
                                             style: TextStyle(
                                                 color:
-                                                AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                Get.isDarkMode
+                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                                 fontFamily: 'Gotham',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
@@ -153,7 +164,8 @@ class _appdrawerState extends State<appdrawer> {
                                             'Upcoming IPO Stocks',
                                             style: TextStyle(
                                                 color:
-                                                AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                Get.isDarkMode
+                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                                 fontFamily: 'Gotham',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
@@ -171,7 +183,8 @@ class _appdrawerState extends State<appdrawer> {
                                   'Trading 101',
                                   style: TextStyle(
                                       color:
-                                          AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                      Get.isDarkMode
+                                          ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                       fontFamily: 'Gotham',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400),
@@ -179,6 +192,8 @@ class _appdrawerState extends State<appdrawer> {
                                 leading: SvgPicture.asset(
                                   "assets/icon/exchange.svg",
                                   height: 28,
+                                  color: Get.isDarkMode
+                                      ?Colors.white: Colors.black,
                                 ),
                                 onTap: () {
                                   Navigator.push(
@@ -199,7 +214,8 @@ class _appdrawerState extends State<appdrawer> {
                                           'Testimonials',
                                           style: TextStyle(
                                               color:
-                                              AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                              Get.isDarkMode
+                                                  ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                               fontFamily: 'Gotham',
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400),
@@ -220,7 +236,8 @@ class _appdrawerState extends State<appdrawer> {
                                             'Add Testimonial',
                                             style: TextStyle(
                                                 color:
-                                                AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                Get.isDarkMode
+                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                                 fontFamily: 'Gotham',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
@@ -241,7 +258,8 @@ class _appdrawerState extends State<appdrawer> {
                                             'My Testimonials',
                                             style: TextStyle(
                                                 color:
-                                                AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                Get.isDarkMode
+                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                                 fontFamily: 'Gotham',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w400),
@@ -262,7 +280,8 @@ class _appdrawerState extends State<appdrawer> {
                                   'Contact Us',
                                   style: TextStyle(
                                       color:
-                                          AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                      Get.isDarkMode
+                                          ?Colors.white:  AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                       fontFamily: 'Gotham',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400),
@@ -270,6 +289,8 @@ class _appdrawerState extends State<appdrawer> {
                                 leading: SvgPicture.asset(
                                   "assets/icon/envelope.svg",
                                   height: 28,
+                                  color: Get.isDarkMode
+                                      ?Colors.white: Colors.black,
                                 ),
                                 onTap: () {
                                   // Update the state of the app.
@@ -285,7 +306,8 @@ class _appdrawerState extends State<appdrawer> {
                                   'FAQs',
                                   style: TextStyle(
                                       color:
-                                          AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                      Get.isDarkMode
+                                          ?Colors.white:  AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                       fontFamily: 'Gotham',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400),
@@ -293,6 +315,8 @@ class _appdrawerState extends State<appdrawer> {
                                 leading: SvgPicture.asset(
                                   "assets/icon/faq.svg",
                                   height: 28,
+                                  color: Get.isDarkMode
+                                      ?Colors.white: Colors.black,
                                 ),
                                 onTap: () {
                                  Navigator.push(
@@ -306,7 +330,8 @@ class _appdrawerState extends State<appdrawer> {
                                   'Disclaimer',
                                   style: TextStyle(
                                       color:
-                                          AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                      Get.isDarkMode
+                                          ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                       fontFamily: 'Gotham',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400),
@@ -314,6 +339,8 @@ class _appdrawerState extends State<appdrawer> {
                                 leading: SvgPicture.asset(
                                   "assets/icon/faq.svg",
                                   height: 28,
+                                  color: Get.isDarkMode
+                                      ?Colors.white: Colors.black,
                                 ),
                                 onTap: () {
                                   Navigator.push(
@@ -323,28 +350,28 @@ class _appdrawerState extends State<appdrawer> {
                                               DisclaimerScreen()));
                                 },
                               ),
-                              ListTile(
-                                title: Text(
-                                  'About',
-                                  style: TextStyle(
-                                      color:
-                                          AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                                      fontFamily: 'Gotham',
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                                leading: Text('ⓘ',
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        color: AppColors
-                                            .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.normal)),
-                                onTap: () {
-                                  // Update the state of the app.
-                                  // ...
-                                },
-                              ),
+                              // ListTile(
+                              //   title: Text(
+                              //     'About',
+                              //     style: TextStyle(
+                              //         color:
+                              //             AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                              //         fontFamily: 'Gotham',
+                              //         fontSize: 16,
+                              //         fontWeight: FontWeight.w400),
+                              //   ),
+                              //   leading: Text('ⓘ',
+                              //       style: TextStyle(
+                              //           fontSize: 25,
+                              //           color: AppColors
+                              //               .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                              //           fontFamily: 'Gotham',
+                              //           fontWeight: FontWeight.normal)),
+                              //   onTap: () {
+                              //     // Update the state of the app.
+                              //     // ...
+                              //   },
+                              // ),
                             ],
                           ),
                         ),
@@ -377,7 +404,7 @@ class _appdrawerState extends State<appdrawer> {
                                   Text(
                                     'Log Out',
                                     style: TextStyle(
-                                        color: AppColors
+                                        color:Get.isDarkMode ? Colors.white : AppColors
                                             .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                         fontFamily: 'Gotham',
                                         fontSize: 16,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/Api/NotificationsApi.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
@@ -29,7 +30,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: Get.isDarkMode ? Colors.white12 :AppColors.white,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: true,
@@ -64,7 +65,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 children: [
                   Container(
                     width: double.infinity,
-                    color: AppColors.NOTIFICATION_BLACKSHADE,
+                    color: Get.isDarkMode ? Colors.black12 :AppColors.NOTIFICATION_BLACKSHADE,
                     child: Padding(
                       padding: const EdgeInsets.only(
                           left: 30, right: 30, top: 30, bottom: 30),
@@ -98,7 +99,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     Text('ⓘ',
                                         style: TextStyle(
                                             fontSize: 25,
-                                            color: AppColors
+                                            color:Get.isDarkMode ? Colors.white : AppColors
                                                 .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                             fontFamily: 'Gotham',
                                             fontWeight: FontWeight.normal)),
@@ -108,7 +109,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     Text(_notification.topic.toString(),
                                         style: TextStyle(
                                             fontSize: 13,
-                                            color:
+                                            color:Get.isDarkMode ? Colors.white70 :
                                                 AppColors.NOTIFICATION_HEADING,
                                             fontFamily: 'Gotham',
                                             fontWeight: FontWeight.bold)),
@@ -120,7 +121,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     trimLines: 2,
                                     style: TextStyle(
                                         fontSize: 12,
-                                        color:
+                                        color:Get.isDarkMode ? Colors.white38 :
                                             AppColors.NOTIFICATION_NEWSDETAILS,
                                         fontFamily: 'Gotham',
                                         fontWeight: FontWeight.w500),

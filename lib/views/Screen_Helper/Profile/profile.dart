@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -510,7 +511,7 @@ print(dataresponse["profile_pic"].toString());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.white,
+        backgroundColor: Get.isDarkMode ? Colors.transparent : AppColors.white,
         body: Container(
             child: FutureBuilder(
           future: getprofile(),
@@ -713,7 +714,7 @@ print(dataresponse["profile_pic"].toString());
                               )),
                           Container(
                             height: 100,
-                            color: AppColors.PROFILE_TAB_CONTAINER1_COLOR,
+                            color: Get.isDarkMode ? Colors.black12 : AppColors.PROFILE_TAB_CONTAINER1_COLOR,
                             child: Center(
                               child: Padding(
                                 padding:
@@ -789,7 +790,7 @@ print(dataresponse["profile_pic"].toString());
                                           snapshot.data[i].name,
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: AppColors
+                                              color:Get.isDarkMode ? Colors.white : AppColors
                                                   .PROFILE_TAB_NORMAL_TEXT,
                                               fontFamily: 'Gotham',
                                               fontWeight: FontWeight.w500),
@@ -828,7 +829,7 @@ print(dataresponse["profile_pic"].toString());
                                           snapshot.data[i].email,
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: AppColors
+                                              color: Get.isDarkMode ? Colors.white :AppColors
                                                   .PROFILE_TAB_NORMAL_TEXT,
                                               fontFamily: 'Gotham',
                                               fontWeight: FontWeight.w500),
@@ -887,7 +888,7 @@ print(dataresponse["profile_pic"].toString());
                                           "................",
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: AppColors
+                                              color: Get.isDarkMode ? Colors.white : AppColors
                                                   .PROFILE_TAB_NORMAL_TEXT,
                                               fontFamily: 'Gotham',
                                               fontWeight: FontWeight.w500),
@@ -926,7 +927,7 @@ print(dataresponse["profile_pic"].toString());
                                           'January 12, 1990',
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: AppColors
+                                              color: Get.isDarkMode ? Colors.white : AppColors
                                                   .PROFILE_TAB_NORMAL_TEXT,
                                               fontFamily: 'Gotham',
                                               fontWeight: FontWeight.w500),
@@ -936,7 +937,7 @@ print(dataresponse["profile_pic"].toString());
                               )),
                           Container(
                             width: double.infinity,
-                            color: AppColors.PROFILE_TAB_CONTAINER1_COLOR,
+                            color: Get.isDarkMode ? Colors.black12 : AppColors.PROFILE_TAB_CONTAINER1_COLOR,
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   left: 30, right: 30, top: 30, bottom: 30),
@@ -971,7 +972,7 @@ print(dataresponse["profile_pic"].toString());
                                     'Chat Settings',
                                     style: TextStyle(
                                         fontSize: 14,
-                                        color:
+                                        color:Get.isDarkMode ? Colors.white :
                                             AppColors.PROFILE_TAB_NORMAL_TEXT,
                                         fontFamily: 'Gotham',
                                         fontWeight: FontWeight.w500),

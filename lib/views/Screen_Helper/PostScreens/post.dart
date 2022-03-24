@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/views/Screen_Helper/PostScreens/FavouritePostScreen.dart';
 import 'package:penny_chats/views/Screen_Helper/PostScreens/LatestPostScreen.dart';
@@ -15,7 +16,7 @@ class _PostState extends State<Post> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.POST_BACKGROUND_COLOR,
+      // backgroundColor: AppColors.POST_BACKGROUND_COLOR,
       body: DefaultTabController(
         length: 3,
         child: Column(
@@ -28,7 +29,7 @@ class _PostState extends State<Post> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: AppColors.POST_TAB_BACKGROUND_COLOR,
+                  color: Get.isDarkMode ? Colors.white24 : AppColors.POST_TAB_BACKGROUND_COLOR,
                 ),
                 child: TabBar(
                   indicator: BoxDecoration(
@@ -52,7 +53,6 @@ class _PostState extends State<Post> {
             ),
             Expanded(
               child: Container(
-                color: Colors.red,
                 height: double.infinity,
                 child: TabBarView(
                   children: [

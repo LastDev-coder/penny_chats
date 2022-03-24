@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/Api/Extras/DisclaimerApi.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
@@ -59,7 +60,7 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
                       style: TextStyle(
                         fontSize: 15,
                         height: 1.4,
-                        color: AppColors.POST_TAB_COMMENTS_COLOR,
+                        color: Get.isDarkMode ? Colors.white38 :AppColors.POST_TAB_COMMENTS_COLOR,
                         fontFamily: 'Gotham',
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
@@ -568,7 +569,7 @@ class _NoStocksState extends State<NoStocks> {
                                           child: Text(
                                             snapshot.data[i].created,
                                             style: TextStyle(
-                                                color: AppColors.STOCKALERT_TEXTBOLD,
+                                                color:  AppColors.STOCKALERT_TEXTBOLD,
                                                 fontFamily: 'Gotham',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600),
@@ -580,7 +581,7 @@ class _NoStocksState extends State<NoStocks> {
                                           child: Text(
                                             snapshot.data[i].stock,
                                             style: TextStyle(
-                                                color: Colors.black,
+                                                color: Get.isDarkMode ? Colors.white38 : Colors.black,
                                                 fontFamily: 'Gotham',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600),
@@ -592,7 +593,8 @@ class _NoStocksState extends State<NoStocks> {
                                           child: Text(
                                             snapshot.data[i].price_start,
                                             style: TextStyle(
-                                                color: Colors.black,
+                                                color: Get.isDarkMode
+                                                     ? Colors.white38 : Colors.black,
                                                 fontFamily: 'Gotham',
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600),

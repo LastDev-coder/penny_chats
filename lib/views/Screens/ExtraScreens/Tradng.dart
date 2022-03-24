@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
@@ -179,7 +180,7 @@ class _TradingState extends State<Trading> {
                                             child: Text(
                                               '${snapshot.data[i].title}',
                                               style: TextStyle(
-                                                  color: Colors.black,
+                                                  color:Get.isDarkMode ? Colors.white : Colors.black,
                                                   fontFamily: 'Gotham',
                                                   fontWeight: FontWeight.bold),
                                             ),
@@ -196,7 +197,7 @@ class _TradingState extends State<Trading> {
                                           style: TextStyle(
                                             fontSize: 14,
                                             height: 1.4,
-                                            color: AppColors
+                                            color: Get.isDarkMode ? Colors.white38 : AppColors
                                                 .POST_TAB_COMMENTS_COLOR,
                                             fontFamily: 'Gotham',
                                           ),
@@ -225,8 +226,11 @@ class _TradingState extends State<Trading> {
                                                     BorderRadius.circular(50)),
                                             child: CircleAvatar(
                                                 radius: 15,
-                                                backgroundImage: NetworkImage(
-                                                    'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg')),
+                                                backgroundImage: AssetImage(
+                                                  'assets/images/_logo.png',
+
+                                                )
+                                            ),
                                           ),
                                           SizedBox(
                                             width: 5,

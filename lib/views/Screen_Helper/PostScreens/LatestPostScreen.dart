@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
@@ -65,7 +66,8 @@ var data;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.POST_BACKGROUND_COLOR,
+      backgroundColor: Get.isDarkMode
+          ?Colors.transparent: AppColors.POST_BACKGROUND_COLOR,
       body: _latestPostModel == null
           ? Center(
               child: CircularProgressIndicator(),
@@ -199,7 +201,7 @@ var data;
                                 style: TextStyle(
                                   fontSize: 14,
                                   height: 1.4,
-                                  color: AppColors.POST_TAB_COMMENTS_COLOR,
+                                  color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
                                   fontFamily: 'Gotham',
                                 ),
                               ),

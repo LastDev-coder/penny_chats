@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 
 class NewsDetails extends StatefulWidget {
@@ -49,7 +50,7 @@ class _NewsDetailsState extends State<NewsDetails> {
               child: Text(
                 "${widget.title}",
                 style: TextStyle(
-                    color: AppColors.PROFILE_TAB_NORMAL_TEXT,
+                    color: Get.isDarkMode ? Colors.white70 :AppColors.PROFILE_TAB_NORMAL_TEXT,
                     fontFamily: 'Gotham',
                     fontSize: 20,
                     fontWeight: FontWeight.w600),
@@ -107,7 +108,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                 style: TextStyle(
                   fontSize: 14,
                   height: 1.4,
-                  color: AppColors.POST_TAB_COMMENTS_COLOR,
+                  color:Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
                   fontFamily: 'Gotham',
                 ),
               ),

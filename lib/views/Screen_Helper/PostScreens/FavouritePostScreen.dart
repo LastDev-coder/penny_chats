@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/Api/PostAPI/LatestPostApi.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
@@ -30,7 +31,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.POST_BACKGROUND_COLOR,
+      // backgroundColor: AppColors.POST_BACKGROUND_COLOR,
       body: _favouritePostList == null
           ? Center(
               child: CircularProgressIndicator(),
@@ -161,7 +162,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                 style: TextStyle(
                                   fontSize: 14,
                                   height: 1.4,
-                                  color: AppColors.POST_TAB_COMMENTS_COLOR,
+                                  color:Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
                                   fontFamily: 'Gotham',
                                 ),
                               ),

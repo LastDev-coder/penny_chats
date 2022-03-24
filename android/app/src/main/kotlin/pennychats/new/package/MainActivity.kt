@@ -1,4 +1,4 @@
-package com.example.penny_chats
+package pennychats.new.package
 
 import io.flutter.embedding.android.FlutterActivity
 

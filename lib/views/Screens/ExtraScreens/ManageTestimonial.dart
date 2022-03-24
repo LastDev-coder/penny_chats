@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 
@@ -45,25 +46,26 @@ class _ManageTestimonialState extends State<ManageTestimonial> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Card(
-                  color: Colors.white70,
+                  color: Get.isDarkMode ? Colors.white10 :Colors.white70,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          color: Colors.white,
+                          color:Get.isDarkMode ? Colors.black : Colors.white,
                           child: TextFormField(
                             controller: textController,
                             keyboardType: TextInputType.multiline,
                             decoration: InputDecoration(
                                 //  isDense: true,
+                              hintText: "write here...",
                                 border: OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.white)),
                                 focusedBorder: InputBorder.none),
                             style: TextStyle(
-                                color: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                color: Get.isDarkMode ? Colors.white : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                 fontFamily: 'Gotham',
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400),

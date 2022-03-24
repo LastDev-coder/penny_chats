@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/MyTestimonialsModel.dart';
@@ -97,11 +98,11 @@ print(data);
                                         Text(
                                           " ${snapshot.data[i].content}",
                                           style: TextStyle(
-                                              color: AppColors
+                                              color:Get.isDarkMode ? Colors.white38 : AppColors
                                                   .CHAT_SCREEN_BLACK_TEXT,
                                               fontFamily: 'Gotham',
                                               fontSize: 14,
-                                              fontWeight: FontWeight.w600),
+                                              fontWeight: FontWeight.w400),
                                         ),
                                         SizedBox(
                                           height: 10,

@@ -4,6 +4,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/Api/NotificationsApi.dart';
@@ -197,7 +198,7 @@ class _MydashboardState extends State<Mydashboard> {
               type: BottomNavigationBarType.fixed,
               selectedFontSize: 7,
               unselectedFontSize: 7,
-              selectedItemColor: AppColors.DASHBOARD_SELECTED_ICON_COLOR,
+              selectedItemColor:  AppColors.DASHBOARD_SELECTED_ICON_COLOR,
               unselectedItemColor: AppColors.DASHBOARD_UNSELECTED_ICON_COLOR,
               items: [
                 BottomNavigationBarItem(
@@ -209,7 +210,7 @@ class _MydashboardState extends State<Mydashboard> {
                   activeIcon: Image.asset(
                     "assets/images/chat-solid.png",
                     height: 28,
-                    color: AppColors.DASHBOARD_SELECTED_ICON_COLOR,
+                    color:  AppColors.DASHBOARD_SELECTED_ICON_COLOR,
                   ),
                 ),
                 BottomNavigationBarItem(
@@ -265,6 +266,7 @@ class _MydashboardState extends State<Mydashboard> {
                 setState(() {
                   _currentIndex = index;
                 });
+
               },
             ),
           );

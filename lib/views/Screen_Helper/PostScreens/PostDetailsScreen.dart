@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/PostDetailsModel.dart';
@@ -100,6 +101,111 @@ int i =0;
   return postmodel;
 }
 
+  Future<bool> ShowProfile(String userId) async {
+
+  var  data = await Apiservice().getOthersprofile(userId);
+    var dataresponse = data["response"];
+    print("profile ================ $dataresponse ");
+
+    final shouldPop = await showDialog(
+      context: context,
+
+      builder: (context) {
+        return AlertDialog(
+          // title: Text('Percent gain calculator'),
+          content: StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+                return Container(
+                  // color: Colors.red,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                  data["response"]['profile_pic'].toString()==''?
+                                  'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
+
+                                      : 'https://pennychats.com/pennychatapi/uploads/${data["response"]['profile_pic'].toString()}'),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10,),
+
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(Icons.supervised_user_circle_sharp,size: 20,
+                            color: Get.isDarkMode ? Colors.white70 : Colors.black,
+                            ),
+                            SizedBox(width: 10,),
+                            Text(
+                              'Name :',
+                              style: TextStyle(
+                                  color: Get.isDarkMode ? Colors.white70 :Colors.black,
+                                  fontFamily: 'Gotham',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(width: 10,),
+                            Text(
+                              data["response"]["name"].toString(),
+                              style: TextStyle(
+                                  color:Get.isDarkMode ? Colors.white70 : Colors.black,
+                                  fontFamily: 'Gotham',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(Icons.email_rounded,size: 20,
+                            color: Get.isDarkMode ? Colors.white70 : Colors.black,
+                            ),
+                            SizedBox(width: 10,),
+                            Text(
+                              'Email Id :',
+                              style: TextStyle(
+                                  color: Get.isDarkMode ? Colors.white70 : Colors.black,
+                                  fontFamily: 'Gotham',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            SizedBox(width: 10,),
+                            Expanded(
+                              child: Text(
+                                data["response"]["email"].toString(),
+                                style: TextStyle(
+                                    color: Get.isDarkMode ? Colors.white70 : Colors.black,
+                                    fontFamily: 'Gotham',
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ),
+                          ],
+                        )
+
+                      ],
+                    ),
+                  ),
+                );
+              }),
+        );
+      },
+    );
+
+    return shouldPop ?? false;
+  }
 
 @override
   void initState() {
@@ -256,7 +362,7 @@ int i =0;
                       widget.desc.toString(),
                       style: TextStyle(
                           fontSize: 14,
-                          color: AppColors.POST_TAB_COMMENTS_COLOR,
+                          color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
                           fontFamily: 'Gotham',
                           fontWeight: FontWeight.w500),
                     ),
@@ -345,26 +451,27 @@ int i =0;
                     ),
                     child: Row(
                       children: [
-                        Card(
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.0),
-                            child: CircleAvatar(
-                              radius: 25,
-                              backgroundImage: NetworkImage(
-                                  'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg'),
-                            ),
-                          ),
-                        ),
+                        // Card(
+                        //   elevation: 2,
+                        //   shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(50)),
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(2.0),
+                        //     child: CircleAvatar(
+                        //       radius: 25,
+                        //       backgroundImage: NetworkImage(
+                        //           'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg'),
+                        //     ),
+                        //   ),
+                        // ),
                         Expanded(
                           child: Container(
                             // height: 20,
                             margin: EdgeInsets.only(left: 5),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.0),
-                              color: AppColors.POST_DETAILS_COMMENTBOX,
+                              color: Get.isDarkMode
+                                  ?Colors.black:AppColors.POST_DETAILS_COMMENTBOX,
                             ),
 
                             width: MediaQuery.of(context).size.width,
@@ -375,7 +482,8 @@ int i =0;
                                 controller: textController,
                                 maxLines: 2,
                                 style: TextStyle(
-                                    color:
+                                    color:Get.isDarkMode
+                                        ?Colors.white:
                                         AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                     fontFamily: 'Gotham',
                                     fontSize: 11,
@@ -471,16 +579,21 @@ int i =0;
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50)),
-                            child: Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: CircleAvatar(
-                                radius: 25,
-                                backgroundImage: NetworkImage(
-                                    'https://www.pennychats.com/beta/uploads/profile_pictures/${snapshot.data[i].profile_pic}'),
+                          GestureDetector(
+                            onTap:(){
+                              ShowProfile(snapshot.data[i].user_id);
+                    },
+                            child: Card(
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(2.0),
+                                child: CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage: NetworkImage(
+                                      'https://www.pennychats.com/beta/uploads/profile_pictures/${snapshot.data[i].profile_pic}'),
+                                ),
                               ),
                             ),
                           ),
@@ -600,7 +713,7 @@ int i =0;
                                           margin: EdgeInsets.only(right: 10),
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10.0),
-                                            color: AppColors.POST_DETAILS_COMMENTBOX,
+                                            color: Get.isDarkMode ? Colors.black : AppColors.POST_DETAILS_COMMENTBOX,
                                           ),
                                           width: MediaQuery.of(context).size.width,
                                           child: Padding(
@@ -610,7 +723,8 @@ int i =0;
                                               keyboardType: TextInputType.multiline,
                                               maxLines: 1,
                                               style: TextStyle(
-                                                  color: AppColors
+                                                  color: Get.isDarkMode
+                                                      ?Colors.white:AppColors
                                                       .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                                   fontFamily: 'Gotham',
                                                   fontSize: 11,

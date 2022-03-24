@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:penny_chats/views/Screens/mydashboard.dart';
 
 class NavigationDrawer extends StatefulWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
@@ -11,10 +13,11 @@ class NavigationDrawer extends StatefulWidget {
 }
 
 class _NavigationDrawerState extends State<NavigationDrawer> {
- String name='',image='';
+  String name = '', image = '';
 
+ static bool _SwitchValue = false;
 
-    getprofile() async {
+  getprofile() async {
     var data;
     // List<ProfileModel> profilemodel = [];
 
@@ -25,7 +28,6 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
       setState(() {
         name = dataresponse["name"].toString();
         image = dataresponse["profile_pic"].toString();
-
       });
     }
     // setState(() {
@@ -34,7 +36,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     // });
     print("profile ================ ${name} ");
 
-      // print("profile ================ ${dataresponse["profile_pic"]} ");
+    // print("profile ================ ${dataresponse["profile_pic"]} ");
 
     // ProfileModel model = ProfileModel(
     //   dataresponse["id"],
@@ -55,11 +57,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     // return profilemodel;
   }
 
-@override
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     getprofile();
@@ -90,11 +93,9 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                         padding: const EdgeInsets.all(3.0),
                         child: CircleAvatar(
                           radius: 25,
-                          backgroundImage: NetworkImage(
-                             image == '' ?
-                             'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
-                          : 'https://pennychats.com/pennychatapi/uploads/${image}'
-                          ),
+                          backgroundImage: NetworkImage(image == ''
+                              ? 'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
+                              : 'https://pennychats.com/pennychatapi/uploads/${image}'),
                         ),
                       ),
                     ),
@@ -103,6 +104,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Container(
@@ -116,9 +118,35 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                                   fontWeight: FontWeight.w400),
                             ),
                           ),
-                          // SizedBox(
-                          //   height: 5,
-                          // ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Container(
+                            // color: Colors.red,
+                            height: 30, //set desired REAL HEIGHT
+                            width: 30, //set desired REAL WIDTH
+                            child: Transform.scale(
+                              transformHitTests: false,
+                              scale: .7,
+                              child: CupertinoSwitch(
+                                value: _SwitchValue,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _SwitchValue = value;
+                                    Get.isDarkMode
+                                        ? Get.changeTheme(ThemeData.light())
+                                        : Get.changeTheme(ThemeData.dark());
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Mydashboard(number: 0,)));
+                                  });
+                                },
+                                activeColor: Colors.black,
+                                trackColor: Colors.white,
+                              ),
+                            ),
+                          ),
                           // Row(
                           //   children: [
                           //     Text(
@@ -163,7 +191,6 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     );
   }
 }
-
 
 // class NavigationDrawer extends StatelessWidget {
 //  late String name,image;

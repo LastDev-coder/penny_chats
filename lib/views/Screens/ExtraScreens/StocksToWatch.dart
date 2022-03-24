@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
@@ -129,7 +130,7 @@ class _StocksToWatchState extends State<StocksToWatch> {
                                   )));
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
+                      primary: Get.isDarkMode ? Colors.transparent : Colors.white,
                       elevation: 2,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -168,7 +169,7 @@ class _StocksToWatchState extends State<StocksToWatch> {
                           child: Text(
                             'PennyChats',
                             style: TextStyle(
-                                color: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                color: Get.isDarkMode ? Colors.white : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                 fontFamily: 'Gotham',
                                 fontSize: 17,
                                 fontWeight: FontWeight.w400),
@@ -184,7 +185,7 @@ class _StocksToWatchState extends State<StocksToWatch> {
                             style: TextStyle(
                               fontSize: 14,
                               height: 1.4,
-                              color: AppColors.POST_TAB_COMMENTS_COLOR,
+                              color: Get.isDarkMode ? Colors.white38 :AppColors.POST_TAB_COMMENTS_COLOR,
                               fontFamily: 'Gotham',
                             ),
                           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/views/Screen_Helper/ChatScreens/chat_room_personal.dart';
 
@@ -14,7 +15,7 @@ class _ChatMemberState extends State<ChatMember> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.POST_BACKGROUND_COLOR,
+      backgroundColor: Get.isDarkMode ? Colors.transparent : AppColors.POST_BACKGROUND_COLOR,
       body: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, int index) => Container(
@@ -85,7 +86,7 @@ class _ChatMemberState extends State<ChatMember> {
                                         'Thus much I thought proper to tell you in relation to yourself,and ...',
                                         style: TextStyle(
                                             fontSize: 14.09,
-                                            color: AppColors
+                                            color: Get.isDarkMode ? Colors.white :AppColors
                                                 .CHAT_SCREEN_BLACK_TEXT,
                                             fontFamily: 'Gotham',
                                             fontWeight: FontWeight.w400),

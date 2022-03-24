@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 
@@ -72,7 +73,7 @@ class _contactState extends State<contact> {
                     ),
                     Text("Call us :",
                         style: TextStyle(
-                            color: AppColors.Button_TEXT_COLOR,
+                            color:Get.isDarkMode ? Colors.white38 : AppColors.Button_TEXT_COLOR,
                             fontFamily: 'Gotham',
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
@@ -86,7 +87,7 @@ class _contactState extends State<contact> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text("Contact us",
                     style: TextStyle(
-                        color: AppColors.Button_TEXT_COLOR,
+                        color: Get.isDarkMode ? Colors.white38 : AppColors.Button_TEXT_COLOR,
                         fontFamily: 'Gotham',
                         fontSize: 25,
                         fontWeight: FontWeight.bold)),
@@ -96,7 +97,7 @@ class _contactState extends State<contact> {
                     left: 10, bottom: 10, top: 10, right: 10),
                 child: Text("First Name",
                     style: TextStyle(
-                        color: AppColors.Button_TEXT_COLOR,
+                        color: Get.isDarkMode ? Colors.white38 :AppColors.Button_TEXT_COLOR,
                         fontFamily: 'Gotham',
                         fontSize: 15,
                         fontWeight: FontWeight.normal)),
@@ -105,7 +106,7 @@ class _contactState extends State<contact> {
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Container(
                   decoration: new BoxDecoration(
-                      color: AppColors.FORM_CONTAINER,
+                      color: Get.isDarkMode ? Colors.black :AppColors.FORM_CONTAINER,
                       borderRadius: new BorderRadius.only(
                         topLeft: const Radius.circular(50.0),
                         topRight: const Radius.circular(50.0),
@@ -128,7 +129,7 @@ class _contactState extends State<contact> {
                     left: 10, bottom: 10, top: 10, right: 10),
                 child: Text("Last Name",
                     style: TextStyle(
-                        color: AppColors.Button_TEXT_COLOR,
+                        color: Get.isDarkMode ? Colors.white38 :AppColors.Button_TEXT_COLOR,
                         fontFamily: 'Gotham',
                         fontSize: 15,
                         fontWeight: FontWeight.normal)),
@@ -137,7 +138,7 @@ class _contactState extends State<contact> {
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Container(
                   decoration: new BoxDecoration(
-                      color: AppColors.FORM_CONTAINER,
+                      color: Get.isDarkMode ? Colors.black :AppColors.FORM_CONTAINER,
                       borderRadius: new BorderRadius.only(
                         topLeft: const Radius.circular(50.0),
                         topRight: const Radius.circular(50.0),
@@ -160,7 +161,7 @@ class _contactState extends State<contact> {
                     left: 10, bottom: 10, top: 10, right: 10),
                 child: Text("Email",
                     style: TextStyle(
-                        color: AppColors.Button_TEXT_COLOR,
+                        color: Get.isDarkMode ? Colors.white38 :AppColors.Button_TEXT_COLOR,
                         fontFamily: 'Gotham',
                         fontSize: 15,
                         fontWeight: FontWeight.normal)),
@@ -169,7 +170,7 @@ class _contactState extends State<contact> {
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Container(
                   decoration: new BoxDecoration(
-                      color: AppColors.FORM_CONTAINER,
+                      color: Get.isDarkMode ? Colors.black :AppColors.FORM_CONTAINER,
                       borderRadius: new BorderRadius.only(
                         topLeft: const Radius.circular(50.0),
                         topRight: const Radius.circular(50.0),
@@ -192,7 +193,7 @@ class _contactState extends State<contact> {
                     left: 10, bottom: 10, top: 10, right: 10),
                 child: Text("Topic",
                     style: TextStyle(
-                        color: AppColors.Button_TEXT_COLOR,
+                        color: Get.isDarkMode ? Colors.white38 :AppColors.Button_TEXT_COLOR,
                         fontFamily: 'Gotham',
                         fontSize: 15,
                         fontWeight: FontWeight.normal)),
@@ -202,7 +203,7 @@ class _contactState extends State<contact> {
                 child: Container(
                   width: double.infinity,
                   decoration: new BoxDecoration(
-                      color: AppColors.FORM_CONTAINER,
+                      color: Get.isDarkMode ? Colors.black :AppColors.FORM_CONTAINER,
                       borderRadius: new BorderRadius.only(
                         topLeft: const Radius.circular(50.0),
                         topRight: const Radius.circular(50.0),
@@ -243,7 +244,7 @@ class _contactState extends State<contact> {
                     left: 10, bottom: 10, top: 10, right: 10),
                 child: Text("Query",
                     style: TextStyle(
-                        color: AppColors.Button_TEXT_COLOR,
+                        color: Get.isDarkMode ? Colors.white38 :AppColors.Button_TEXT_COLOR,
                         fontFamily: 'Gotham',
                         fontSize: 15,
                         fontWeight: FontWeight.normal)),
@@ -252,7 +253,7 @@ class _contactState extends State<contact> {
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Container(
                   decoration: new BoxDecoration(
-                      color: AppColors.FORM_CONTAINER,
+                      color: Get.isDarkMode ? Colors.black :AppColors.FORM_CONTAINER,
                       borderRadius: new BorderRadius.only(
                         topLeft: const Radius.circular(5.0),
                         topRight: const Radius.circular(5.0),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 
 class NotificationSetting extends StatefulWidget {
@@ -16,7 +17,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor:Get.isDarkMode ? Colors.white24 : AppColors.white,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: true,
@@ -47,7 +48,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
           children: [
             Container(
               width: double.infinity,
-              color: AppColors.NOTIFICATION_BLACKSHADE,
+              color: Get.isDarkMode ? Colors.black12 :AppColors.NOTIFICATION_BLACKSHADE,
               child: Padding(
                 padding: const EdgeInsets.only(
                     left: 30, right: 30, top: 30, bottom: 30),
@@ -71,7 +72,7 @@ class _NotificationSettingState extends State<NotificationSetting> {
                     'Email Notification',
                     style: TextStyle(
                         fontSize: 14,
-                        color: AppColors.PROFILE_TAB_NORMAL_TEXT,
+                        color:Get.isDarkMode ? Colors.white : AppColors.PROFILE_TAB_NORMAL_TEXT,
                         fontFamily: 'Gotham',
                         fontWeight: FontWeight.w500),
                   ),
@@ -97,12 +98,13 @@ class _NotificationSettingState extends State<NotificationSetting> {
                     'Phone Notification',
                     style: TextStyle(
                         fontSize: 14,
-                        color: AppColors.PROFILE_TAB_NORMAL_TEXT,
+                        color:Get.isDarkMode ? Colors.white : AppColors.PROFILE_TAB_NORMAL_TEXT,
                         fontFamily: 'Gotham',
                         fontWeight: FontWeight.w500),
                   ),
                   CupertinoSwitch(
                     value: _phoneSwitchValue,
+
                     onChanged: (value) {
                       setState(() {
                         _phoneSwitchValue = value;
