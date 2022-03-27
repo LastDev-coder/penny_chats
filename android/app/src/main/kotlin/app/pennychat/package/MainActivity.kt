@@ -1,4 +1,4 @@
-package pennychats.new.package
+package app.pennychat.package
 
 import io.flutter.embedding.android.FlutterActivity
 
