@@ -193,6 +193,8 @@ class _MydashboardState extends State<Mydashboard> {
                 onWillPop: onWillPop,
                 child: tabs[_currentIndex]
             ),
+
+
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: _currentIndex,
               type: BottomNavigationBarType.fixed,
