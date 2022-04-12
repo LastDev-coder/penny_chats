@@ -19,7 +19,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
 
   @override
   void initState() {
-    LatestPostApi.getLatestPost(context, AppStrings.getPopularPostApi)
+    LatestPostApi.getLatestPost(context, AppStrings.getFavouritePostApi)
         .then((value) {
       setState(() {
         _favouritePostList = value;
@@ -87,7 +87,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                               ? NetworkImage(
                                                   'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg')
                                               : NetworkImage(
-                                                  'https://www.pennychats.com/uploads/profile_pictures/${_post.profilePic}'),
+                                                  '${AppStrings.profilePictureApi}/${_post.profilePic}'),
                                         ),
                                       ),
                                     ),

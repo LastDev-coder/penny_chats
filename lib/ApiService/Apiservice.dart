@@ -258,7 +258,7 @@ class Apiservice {
   Future getPostDetails(String postid) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
-    // final id = prefs.getString('id') ?? '';
+    final id = prefs.getString('id') ?? '';
     // print("id => $id ");
     late String url =
         "https://pennychats.com/pennychatapi/post/details/$postid";
@@ -355,6 +355,42 @@ print("id -> $id");
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
     return response.data;
+  }
+  Future getPostDetailsPennyPlay(String posttitle) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    // print("id => $id ");
+    late String url =
+        "https://pennychats.com/pennychatapi/pennystocks/details/$posttitle";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+  Future PostCommentPennyPlay(var _data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+    Dio dio = new Dio();
+    clint.Response response;
+
+    try {
+      response = await dio.post(
+          "https://pennychats.com/pennychatapi/post/add_comments/",
+          data: _data,
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authentication-token": token
+          }));
+
+      print('response : ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('Error : $e');
+    }
   }
 
 }

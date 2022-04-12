@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/Api/PostAPI/LatestPostApi.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
@@ -16,6 +17,7 @@ class PopularPostScreen extends StatefulWidget {
 
 class _PopularPostScreenState extends State<PopularPostScreen> {
   LatestPostModel? _popularPostList;
+  DateFormat dateFormat = DateFormat('yyyy-MM-dd – kk:mm');
 
   @override
   void initState() {
@@ -40,6 +42,8 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
               itemCount: _popularPostList?.response?.length,
               itemBuilder: (context, int index) {
                 var _post = _popularPostList!.response![index];
+                print(_post.id.toString());
+
                 return Container(
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -49,16 +53,16 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => PostDetails(
-                                    name: _post.name,
-                                    time: AppStrings.dateFormat
-                                        .format(_post.created!),
-                                    desc: AppStrings.parseHtmlString(
-                                        _post.content!),
-                                    likes: _post.votes,
-                                    comments: _post.comments,
-                                    image: _post.profilePic,
-                                    postUserId: _post.userId,
-                                  )));
+                                id: _post.id,
+                                name: _post.name,
+                                time: dateFormat.format(_post.created!),
+                                desc: AppStrings.parseHtmlString(
+                                    _post.content!),
+                                likes: _post.votes,
+                                comments: _post.comments,
+                                image: _post.profilePic,
+                                postUserId: _post.userId,
+                              )));
                     },
                     // splashColor: AppColors.DASHBOARD_SELECTED_ICON_COLOR,
                     child: Card(
@@ -86,7 +90,7 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                               ? NetworkImage(
                                                   'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg')
                                               : NetworkImage(
-                                                  'https://www.pennychats.com/uploads/profile_pictures/${_post.profilePic}'),
+                                                  '${AppStrings.profilePictureApi}/${_post.profilePic}'),
                                         ),
                                       ),
                                     ),

@@ -32,36 +32,7 @@ var data;
     });
     super.initState();
   }
-  makelike(String postid) async {
-    print(postid);
-    data = await Apiservice().getlike(postid);
-   if(data["status"]==true){
-     isLike = "true";
-   }else {
-     isLike = "false";
-   }
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-            'You liked this post')));
-    print(data);
-   print("post id -> $postid , like -> $isLike");
 
-  }
-  makedislike(String postid) async {
-    print(postid);
-    data = await Apiservice().getlike(postid);
-    if(data["status"]==true){
-      isLike = "true";
-    }else {
-      isLike = "false";
-    }
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-            'You disliked this post')));
-    print(data);
-    print("post id -> $postid , like -> $isLike");
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,10 +95,9 @@ var data;
                                                   ''
                                               ? NetworkImage(
                                               'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
-                                                  'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
                                           )
                                               : NetworkImage(
-                                                  'https://www.pennychats.com/uploads/profile_pictures/${_post.profilePic}'),
+                                                  '${AppStrings.profilePictureApi}/${_post.profilePic}'),
                                         ),
                                       ),
                                     ),
@@ -231,7 +201,7 @@ var data;
 
                                   ),
                                   onTap: (){
-                                    makelike(_post.id.toString());
+                                    // makelike(_post.id.toString());
                           //          makedislike(_post.id.toString());
                                   },
                                 ),

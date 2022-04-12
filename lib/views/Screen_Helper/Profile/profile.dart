@@ -14,6 +14,8 @@ import 'package:penny_chats/models/ProfileModel.dart';
 import 'package:penny_chats/views/Screen_Helper/Notification/notification_setting.dart';
 import 'package:penny_chats/views/Screens/mydashboard.dart';
 
+import '../../../controllers/AppStrings.dart';
+
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
@@ -560,7 +562,7 @@ print(dataresponse["profile_pic"].toString());
                                                 snapshot.data[i].profile_pic==''?
                                                 'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
 
-                                              : 'https://pennychats.com/pennychatapi/uploads/${snapshot.data[i].profile_pic}'),
+                                              : '${AppStrings.profilePictureApi}/${snapshot.data[i].profile_pic}'),
                                           ),
                                         ),
                                       ),

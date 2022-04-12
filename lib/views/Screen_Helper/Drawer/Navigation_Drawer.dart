@@ -5,6 +5,8 @@ import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/views/Screens/mydashboard.dart';
 
+import '../../../controllers/AppStrings.dart';
+
 class NavigationDrawer extends StatefulWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
 
@@ -34,7 +36,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     //
     //
     // });
-    print("profile ================ ${name} ");
+    print("profile ================ ${dataresponse} ");
 
     // print("profile ================ ${dataresponse["profile_pic"]} ");
 
@@ -61,11 +63,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getprofile();
   }
 
   @override
   Widget build(BuildContext context) {
-    getprofile();
+
     return SafeArea(
       child: Container(
         width: double.infinity,
@@ -95,7 +98,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           radius: 25,
                           backgroundImage: NetworkImage(image == ''
                               ? 'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
-                              : 'https://pennychats.com/pennychatapi/uploads/${image}'),
+                              : '${AppStrings.profilePictureApi}/${image}'),
                         ),
                       ),
                     ),
