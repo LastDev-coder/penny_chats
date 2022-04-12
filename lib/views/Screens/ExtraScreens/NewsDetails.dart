@@ -36,7 +36,8 @@ class _NewsDetailsState extends State<NewsDetails> {
     _data['comment'] = comment;
     // print("$title");
     print(_data);
-
+nameController.clear();
+commentController.clear();
     var data = await Apiservice().PostCommentPennyPlay(_data);
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(data["response"].toString())));

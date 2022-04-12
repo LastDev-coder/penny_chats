@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -5,10 +8,10 @@ import 'package:get/get.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/PostDetailsModel.dart';
+import 'package:penny_chats/views/Screen_Helper/Profile/PostUserScreen.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../controllers/AppStrings.dart';
-import '../Profile/PostUserScreen.dart';
 
 class PostDetails extends StatefulWidget {
   final String? id;
@@ -22,8 +25,8 @@ class PostDetails extends StatefulWidget {
 
   PostDetails(
       {Key? key,
-      this.id,
-      this.name,
+        this.id,
+        this.name,
       this.time,
       this.likes,
       this.comments,
@@ -39,25 +42,35 @@ class PostDetails extends StatefulWidget {
 class _PostDetailsState extends State<PostDetails> {
   TextEditingController textController = TextEditingController();
   TextEditingController stextController = TextEditingController();
-  String postLikes = "0", postComment = "0";
-
-  String isLike = "false";
-  late String postTitle;
-
+ String postLikes ="0", postComment="0";
+  String isLike="false";
+  Future<List<PostDetailsModel>>? list;
+  bool currentPostLike = false;
   makelike(String postid) async {
     print(postid);
-    var data = await Apiservice().getlike(postid);
-    if (data["status"] == true) {
-      isLike = "true";
-    } else {
-      isLike = "false";
+   var data = await Apiservice().getlike(postid);
+   print(data);
+    if(data["status"]==true){
+      currentPostLike=!currentPostLike;
     }
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text('You liked this post')));
+
+  String  msg= "";
+    if(currentPostLike){
+      msg= 'You liked this post';
+    }else{
+       msg=   'You disliked this post';
+    }
+    setState(() {
+
+    });
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+            msg)));
+    print("=============================");
     print(data);
     print("post id -> $postid , like -> $isLike");
-  }
 
+  }
   MyComment(String postId, String comment) async {
     var _data = new Map<String, dynamic>();
     _data['post_id'] = postId;
@@ -65,173 +78,164 @@ class _PostDetailsState extends State<PostDetails> {
 
     print(_data);
 
-    var data = await Apiservice().PostCommentPennyPlay(_data);
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(data["response"].toString())));
-    PostDetail();
+    var data = await Apiservice().PostComment(_data);
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content:
+            Text(data["response"].toString())));
     // Navigator.of(context).pop();
   }
 
-  PostDetail() async {
-    List<PostDetailsModel> postmodel = [];
+PostDetail() async {
+  List<PostDetailsModel> postmodel = [];
 
-    var data = await Apiservice().getPostDetails(widget.id.toString());
-    if(data["response"]["post_liked"].toString()=="0"){
-      isLike = "false";
-    }else{
-      isLike = "true";
-    }
-    // postTitle = data["response"]["title"];
-    var commentdata = data["response"]["comment"];
-    print(commentdata);
-    int i = 0;
-    for (var x in data["response"]["comment"]) {
-      // date = getFormattedDate(dataresponse[i]["created"]);
+  var data = await Apiservice().getPostDetails(widget.id.toString());
 
-      PostDetailsModel model = PostDetailsModel(
-          data["response"]["comment"][i]["id"],
-          data["response"]["comment"][i]["post_id"],
-          data["response"]["comment"][i]["user_id"],
-          data["response"]["comment"][i]["comment"],
-          data["response"]["comment"][i]["created"],
-          data["response"]["comment"][i]["modified"],
-          data["response"]["comment"][i]["is_active"],
-          data["response"]["comment"][i]["name"],
-          data["response"]["comment"][i]["profile_pic"]);
-      postmodel.add(model);
-      i++;
-    }
-    print("i ----> $i");
-    postLikes = data["response"]["post_liked"].toString();
+  var commentdata = data["response"]["comment"];
+  // name = data["response"]["name"];
+  print("---------------------------------");
+  print(jsonEncode(data).toString());
+  print("---------------------------------");
+int i =0;
 
-    postComment = i.toString();
-    // setComment(i.toString());
+  // setState(() {
+  //   postComment  = data["response"]["comment"].length.toString();
+  // });
+  print("==================$postComment");
+  for (var x in data["response"]["comment"]) {
+    // date = getFormattedDate(dataresponse[i]["created"]);
 
-    print("likes -> $postLikes  comment -> $postComment");
-// setState(() {
-//
-// });
-    return postmodel;
+    PostDetailsModel model = PostDetailsModel(
+        data["response"]["comment"][i]["id"],
+        data["response"]["comment"][i]["post_id"],
+        data["response"]["comment"][i]["user_id"],
+        data["response"]["comment"][i]["comment"],
+        data["response"]["comment"][i]["created"],
+        data["response"]["comment"][i]["modified"],
+        data["response"]["comment"][i]["is_active"],
+        data["response"]["comment"][i]["name"],
+        data["response"]["comment"][i]["profile_pic"] );
+    postmodel.add(model);
+    i++;
   }
 
+  list= Future.value(postmodel);
+
+
+  postComment = data["response"]["comment"].length.toString();
+    postLikes = data["response"]["favourites"].toString();
+    print("==================================ff==");
+    print( data["response"]["post_liked"] );
+  currentPostLike = data["response"]["post_liked"] ==1;
+    print("likes -> $postLikes  comment -> $postComment");
+
+
+setState(() {
+
+});
+
+
+}
+
   // Future<bool> ShowProfile(String userId) async {
-  //   DateFormat dateFormat = DateFormat('yyyy');
   //
-  //   var data = await Apiservice().getOthersprofile(userId);
+  // var  data = await Apiservice().getOthersprofile(userId);
   //   var dataresponse = data["response"];
   //   print("profile ================ $dataresponse ");
   //
   //   final shouldPop = await showDialog(
   //     context: context,
+  //
   //     builder: (context) {
   //       return AlertDialog(
   //         // title: Text('Percent gain calculator'),
   //         content: StatefulBuilder(
   //             builder: (BuildContext context, StateSetter setState) {
-  //           return Container(
-  //             // color: Colors.red,
-  //             child: SingleChildScrollView(
-  //               child: Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                   Container(
-  //                     width: MediaQuery.of(context).size.width,
-  //                     height: 200,
-  //                     decoration: BoxDecoration(
-  //                       image: DecorationImage(
-  //                         fit: BoxFit.cover,
-  //                         image: NetworkImage(data["response"]['profile_pic']
-  //                                     .toString() ==
-  //                                 ''
-  //                             ? 'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
-  //                             : '${AppStrings.profilePictureApi}/${data["response"]['profile_pic'].toString()}'),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                   SizedBox(
-  //                     height: 10,
-  //                   ),
-  //                   Row(
+  //               return Container(
+  //                 // color: Colors.red,
+  //                 child: SingleChildScrollView(
+  //                   child: Column(
   //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     mainAxisAlignment: MainAxisAlignment.start,
   //                     children: [
-  //                       Icon(
-  //                         Icons.supervised_user_circle_sharp,
-  //                         size: 20,
-  //                         color: Get.isDarkMode ? Colors.white70 : Colors.black,
-  //                       ),
-  //                       SizedBox(
-  //                         width: 10,
-  //                       ),
-  //                       Text(
-  //                         'Name :',
-  //                         style: TextStyle(
-  //                             color: Get.isDarkMode
-  //                                 ? Colors.white70
-  //                                 : Colors.black,
-  //                             fontFamily: 'Gotham',
-  //                             fontSize: 15,
-  //                             fontWeight: FontWeight.w700),
-  //                       ),
-  //                       SizedBox(
-  //                         width: 10,
-  //                       ),
-  //                       Text(
-  //                         data["response"]["name"].toString(),
-  //                         style: TextStyle(
-  //                             color: Get.isDarkMode
-  //                                 ? Colors.white70
-  //                                 : Colors.black,
-  //                             fontFamily: 'Gotham',
-  //                             fontSize: 15,
-  //                             fontWeight: FontWeight.normal),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                   Row(
-  //                     crossAxisAlignment: CrossAxisAlignment.start,
-  //                     mainAxisAlignment: MainAxisAlignment.start,
-  //                     children: [
-  //                       Icon(
-  //                         Icons.email_rounded,
-  //                         size: 20,
-  //                         color: Get.isDarkMode ? Colors.white70 : Colors.black,
-  //                       ),
-  //                       SizedBox(
-  //                         width: 10,
-  //                       ),
-  //                       Text(
-  //                         'Email Id :',
-  //                         style: TextStyle(
-  //                             color: Get.isDarkMode
-  //                                 ? Colors.white70
-  //                                 : Colors.black,
-  //                             fontFamily: 'Gotham',
-  //                             fontSize: 15,
-  //                             fontWeight: FontWeight.w700),
-  //                       ),
-  //                       SizedBox(
-  //                         width: 10,
-  //                       ),
-  //                       Expanded(
-  //                         child: Text(
-  //                           data["response"]["email"].toString(),
-  //                           style: TextStyle(
-  //                               color: Get.isDarkMode
-  //                                   ? Colors.white70
-  //                                   : Colors.black,
-  //                               fontFamily: 'Gotham',
-  //                               fontSize: 15,
-  //                               fontWeight: FontWeight.normal),
+  //
+  //                       Container(
+  //                         width: MediaQuery.of(context).size.width,
+  //                         height: 100,
+  //                         decoration: BoxDecoration(
+  //                           image: DecorationImage(
+  //                             fit: BoxFit.cover,
+  //                             image: NetworkImage(
+  //                                 data["response"]['profile_pic'].toString()==''?
+  //                                 'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
+  //
+  //                                     : 'https://pennychats.com/pennychatapi/uploads/${data["response"]['profile_pic'].toString()}'),
+  //                           ),
   //                         ),
   //                       ),
+  //                       SizedBox(height: 10,),
+  //
+  //                       Row(
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //                         mainAxisAlignment: MainAxisAlignment.start,
+  //                         children: [
+  //                           Icon(Icons.supervised_user_circle_sharp,size: 20,
+  //                           color: Get.isDarkMode ? Colors.white70 : Colors.black,
+  //                           ),
+  //                           SizedBox(width: 10,),
+  //                           Text(
+  //                             'Name :',
+  //                             style: TextStyle(
+  //                                 color: Get.isDarkMode ? Colors.white70 :Colors.black,
+  //                                 fontFamily: 'Gotham',
+  //                                 fontSize: 15,
+  //                                 fontWeight: FontWeight.w700),
+  //                           ),
+  //                           SizedBox(width: 10,),
+  //                           Text(
+  //                             data["response"]["name"].toString(),
+  //                             style: TextStyle(
+  //                                 color:Get.isDarkMode ? Colors.white70 : Colors.black,
+  //                                 fontFamily: 'Gotham',
+  //                                 fontSize: 15,
+  //                                 fontWeight: FontWeight.normal),
+  //                           ),
+  //                         ],
+  //                       ),
+  //                       Row(
+  //                         crossAxisAlignment: CrossAxisAlignment.start,
+  //                         mainAxisAlignment: MainAxisAlignment.start,
+  //                         children: [
+  //                           Icon(Icons.email_rounded,size: 20,
+  //                           color: Get.isDarkMode ? Colors.white70 : Colors.black,
+  //                           ),
+  //                           SizedBox(width: 10,),
+  //                           Text(
+  //                             'Email Id :',
+  //                             style: TextStyle(
+  //                                 color: Get.isDarkMode ? Colors.white70 : Colors.black,
+  //                                 fontFamily: 'Gotham',
+  //                                 fontSize: 15,
+  //                                 fontWeight: FontWeight.w700),
+  //                           ),
+  //                           SizedBox(width: 10,),
+  //                           Expanded(
+  //                             child: Text(
+  //                               data["response"]["email"].toString(),
+  //                               style: TextStyle(
+  //                                   color: Get.isDarkMode ? Colors.white70 : Colors.black,
+  //                                   fontFamily: 'Gotham',
+  //                                   fontSize: 15,
+  //                                   fontWeight: FontWeight.normal),
+  //                             ),
+  //                           ),
+  //                         ],
+  //                       )
+  //
   //                     ],
   //                   ),
-  //                 ],
-  //               ),
-  //             ),
-  //           );
-  //         }),
+  //                 ),
+  //               );
+  //             }),
   //       );
   //     },
   //   );
@@ -239,19 +243,19 @@ class _PostDetailsState extends State<PostDetails> {
   //   return shouldPop ?? false;
   // }
 
-  @override
+@override
   void initState() {
     // TODO: implement initState
     super.initState();
-    postLikes = widget.likes.toString();
-    postComment = widget.comments.toString();
+
     PostDetail();
+
   }
 
   @override
   Widget build(BuildContext context) {
-    // postComment = i.toString();
-    // postLikes = widget.likes.toString();
+
+      postLikes = widget.likes.toString();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -279,10 +283,8 @@ class _PostDetailsState extends State<PostDetails> {
         ),
         actions: [
           GestureDetector(
-            onTap: () {
-              Share.share(
-                  'PennyChats post by ${widget.name}\n\n ${widget.desc}',
-                  subject: '${widget.desc}');
+            onTap: (){
+              Share.share('PennyChats post by ${widget.name}\n\n ${widget.desc}', subject: '${widget.desc}');
             },
             child: Padding(
               padding: const EdgeInsets.only(right: 20),
@@ -305,8 +307,6 @@ class _PostDetailsState extends State<PostDetails> {
                           borderRadius: BorderRadius.circular(50)),
                       child: GestureDetector(
                         onTap: () {
-                          // ShowProfile(widget.postUserId.toString());
-
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -378,7 +378,8 @@ class _PostDetailsState extends State<PostDetails> {
                         child: Text(
                           widget.time.toString(),
                           style: TextStyle(
-                              color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                              color:
+                                  AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                               fontFamily: 'Gotham',
                               fontSize: 14,
                               fontWeight: FontWeight.w400),
@@ -395,9 +396,7 @@ class _PostDetailsState extends State<PostDetails> {
                 widget.desc.toString(),
                 style: TextStyle(
                     fontSize: 14,
-                    color: Get.isDarkMode
-                        ? Colors.white38
-                        : AppColors.POST_TAB_COMMENTS_COLOR,
+                    color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
                     fontFamily: 'Gotham',
                     fontWeight: FontWeight.w500),
               ),
@@ -415,24 +414,27 @@ class _PostDetailsState extends State<PostDetails> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () {
+                    onTap: (){
                       makelike(widget.id.toString());
+
                     },
                     child: Container(
                       child: Row(
                         children: [
-                          SvgPicture.asset(
-                           isLike=="true"? 'assets/icon/heartfull.svg': 'assets/icon/heart.svg',
+                          currentPostLike ?SvgPicture.asset(
+                            'assets/icon/heart-fill.svg',
                             height: 20,
-                            color: isLike=="true"? Colors.red:AppColors.POST_TAB_LIKE_COLOR,
+                            color: Colors.red,
+                          ):  SvgPicture.asset(
+                            'assets/icon/heart.svg',
+                            height: 20,
+                            color: AppColors.POST_TAB_LIKE_COLOR,
                           ),
                           SizedBox(
                             width: 10,
                           ),
                           Text(
-                            (postLikes == "0" || postLikes == "1")
-                                ? '${postLikes} Like'
-                                : '${postLikes} Likes',
+                            (postLikes=="0" ||postLikes=="1") ? '${postLikes} Like' :   '${postLikes} Likes',
                             style: TextStyle(
                                 fontSize: 12,
                                 color: AppColors.POST_TAB_LIKE_COLOR,
@@ -455,9 +457,7 @@ class _PostDetailsState extends State<PostDetails> {
                           width: 10,
                         ),
                         Text(
-                          (postComment == "0" || postComment == "1")
-                              ? '${postComment} comment'
-                              : '${postComment} comments',
+                          (postComment=="0" || postComment=="1")?'${postComment} comment':    '${postComment} comments',
                           style: TextStyle(
                               fontSize: 12,
                               color: AppColors.POST_TAB_LIKE_COLOR,
@@ -509,8 +509,7 @@ class _PostDetailsState extends State<PostDetails> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.0),
                         color: Get.isDarkMode
-                            ? Colors.black
-                            : AppColors.POST_DETAILS_COMMENTBOX,
+                            ?Colors.black:AppColors.POST_DETAILS_COMMENTBOX,
                       ),
 
                       width: MediaQuery.of(context).size.width,
@@ -521,9 +520,9 @@ class _PostDetailsState extends State<PostDetails> {
                           controller: textController,
                           maxLines: 2,
                           style: TextStyle(
-                              color: Get.isDarkMode
-                                  ? Colors.white
-                                  : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                              color:Get.isDarkMode
+                                  ?Colors.white:
+                                  AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                               fontFamily: 'Gotham',
                               fontSize: 11,
                               fontWeight: FontWeight.w400),
@@ -536,7 +535,8 @@ class _PostDetailsState extends State<PostDetails> {
                               hintText: 'Write your comments',
                               hintStyle: TextStyle(
                                 fontSize: 11.0,
-                                color: AppColors.POST_DETAILS_COMMENTBOX_HINT,
+                                color: AppColors
+                                    .POST_DETAILS_COMMENTBOX_HINT,
                                 fontWeight: FontWeight.w500,
                               )),
                           validator: (value) {},
@@ -544,45 +544,41 @@ class _PostDetailsState extends State<PostDetails> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 5,
-                  ),
+                  SizedBox(width: 5,),
                   Container(
-                      height: 40,
+                    height: 40,
                       width: 40,
+
                       child: RaisedButton(
                         // textColor: Colors.white,
-                        color: AppColors.POST_DETAILS_ICONCOLOR,
-                        child: Icon(
-                          Icons.send,
-                          size: 15,
-                          color: Colors.white,
-                        ),
+                        color: AppColors
+                            .POST_DETAILS_ICONCOLOR,
+                        child: Icon(Icons.send, size: 15,color: Colors.white,),
                         onPressed: () async {
-                          if (textController.text.isNotEmpty &&
-                              textController.text.toString() != '') {
-                            await MyComment(widget.id.toString(),
-                                textController.text.toString());
-                            textController.clear();
+                          if(textController.text.isNotEmpty && textController.text.toString() !=''){
+                        await    MyComment(widget.id.toString(),textController.text.toString());
+                        textController.clear();
 
-                            Navigator.of(context).pop();
-                            Navigator.of(context).push(new MaterialPageRoute(
-                                builder: (context) => PostDetails(
-                                      id: widget.id,
-                                      name: widget.name,
-                                      time: widget.time,
-                                      desc: widget.desc,
-                                      likes: widget.likes,
-                                      comments: postComment,
-                                      image: widget.image,
-                                      postUserId: widget.postUserId,
-                                    )));
+                        Navigator.of(context).pop();
+                            Navigator.of(context).push(new MaterialPageRoute(builder: (context) => PostDetails(
+                              id: widget.id,
+                              name: widget.name,
+                              time: widget.time,
+                              desc: widget.desc,
+                              likes: widget.likes,
+                              comments: postComment,
+                              image: widget.image,
+                              postUserId: widget.postUserId,
+                            )));
                           }
+
                         },
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(100.0),
                         ),
-                      ))
+                      )
+
+                  )
                 ],
               ),
             ),
@@ -593,10 +589,12 @@ class _PostDetailsState extends State<PostDetails> {
                 color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
               ),
             ),
+
             FutureBuilder(
-              future: PostDetail(),
+              future:list,
               // initialData: InitialData,
-              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              builder:
+                  (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.data == null) {
                   return Container(
                     child: Center(
@@ -604,397 +602,399 @@ class _PostDetailsState extends State<PostDetails> {
                             animating: true, radius: 15)),
                   );
                 } else {
-                  return snapshot.data.length.toString() != "0" ||
-                          snapshot.data.length.toString() != "null"
-                      ? ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (BuildContext context, int i) {
-                            // postComment = snapshot.data.length.toString();
-                            // print("***********"+postComment);
+                  return  snapshot.data.length.toString() != "0" || snapshot.data.length.toString() != "null" ?
+                  ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int i) {
+                      // postComment = snapshot.data.length.toString();
+                      // print("***********"+postComment);
 
-                            return Column(
+                      return Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 15, right: 15),
+                            child: Row(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 15, right: 15),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      PostUserScreen(
-                                                        postUserId: snapshot
-                                                            .data[i].user_id,
-                                                      )));
-                                          // ShowProfile(snapshot.data[i].user_id);
-                                        },
-                                        child: Card(
-                                          elevation: 2,
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(2.0),
-                                            child: CircleAvatar(
-                                              radius: 25,
-                                              backgroundImage: NetworkImage(
-                                                  '${AppStrings.profilePictureApi}/${snapshot.data[i].profile_pic}'),
-                                            ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                PostUserScreen(
+                                                  postUserId: snapshot
+                                                      .data[i].user_id,
+                                                )));
+                                    // ShowProfile(snapshot.data[i].user_id);
+                                  },
+                                  child: Card(
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(50)),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: CircleAvatar(
+                                        radius: 25,
+                                        backgroundImage: NetworkImage(
+                                            '${AppStrings.profilePictureApi}/${snapshot.data[i].profile_pic}'),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width,
+                                          child: Text(
+                                            '${snapshot.data[i].name}',
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: AppColors
+                                                    .LOGIN_PAGE_LOGINBOX,
+                                                fontFamily: 'Gotham',
+                                                fontWeight:
+                                                FontWeight.bold),
                                           ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Column(
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          '${snapshot.data[i].comment}',
+                                          textAlign: TextAlign.start,
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: AppColors
+                                                  .POST_TAB_COMMENTS_COLOR,
+                                              fontFamily: 'Gotham',
+                                              fontWeight:
+                                              FontWeight.w500),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 15,
+                                              top: 10,
+                                              bottom: 10),
+                                          child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            MainAxisAlignment
+                                                .spaceBetween,
                                             children: [
-                                              Container(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                                child: Text(
-                                                  '${snapshot.data[i].name}',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: AppColors
-                                                          .LOGIN_PAGE_LOGINBOX,
-                                                      fontFamily: 'Gotham',
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                '${snapshot.data[i].comment}',
-                                                textAlign: TextAlign.start,
-                                                style: TextStyle(
-                                                    fontSize: 12,
+                                              Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    'assets/icon/clock.svg',
                                                     color: AppColors
-                                                        .POST_TAB_COMMENTS_COLOR,
-                                                    fontFamily: 'Gotham',
-                                                    fontWeight:
-                                                        FontWeight.w500),
+                                                        .POST_DETAILS_ICONCOLOR,
+                                                    height: 15,
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                    const EdgeInsets
+                                                        .only(
+                                                        left: 5),
+                                                    child: Text(
+                                                      '${snapshot.data[i].created}',
+                                                      style: TextStyle(
+                                                          color: AppColors
+                                                              .POST_DETAILS_ICONTEXT,
+                                                          fontFamily:
+                                                          'Gotham',
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                          FontWeight
+                                                              .w400),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 15,
-                                                    top: 10,
-                                                    bottom: 10),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                          'assets/icon/clock.svg',
-                                                          color: AppColors
-                                                              .POST_DETAILS_ICONCOLOR,
-                                                          height: 15,
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 5),
-                                                          child: Text(
-                                                            '${snapshot.data[i].created}',
-                                                            style: TextStyle(
-                                                                color: AppColors
-                                                                    .POST_DETAILS_ICONTEXT,
-                                                                fontFamily:
-                                                                    'Gotham',
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                          'assets/icon/heart.svg',
-                                                          color: AppColors
-                                                              .POST_DETAILS_ICONCOLOR,
-                                                          height: 15,
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 5),
-                                                          child: Text(
-                                                            (postLikes == "0" ||
-                                                                    postLikes ==
-                                                                        "1")
-                                                                ? '${postLikes} Like'
-                                                                : '${postLikes} Likes',
-                                                            style: TextStyle(
-                                                                color: AppColors
-                                                                    .POST_DETAILS_ICONTEXT,
-                                                                fontFamily:
-                                                                    'Gotham',
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    GestureDetector(
-                                                      onTap: () {
-                                                        showModalBottomSheet(
-                                                            context: context,
-                                                            backgroundColor: Colors.transparent,
-                                                            builder:
-                                                                (BuildContext
-                                                                    context) {
-                                                              return Container(
-                                                                height: double.infinity,
-                                                                width: double
-                                                                    .infinity,
-                                                                color: Colors
-                                                                    .transparent,
-                                                                child: Align(
-                                                                  alignment: Alignment.topCenter,
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Container(
-                                                                        margin: EdgeInsets.only(
-                                                                            right: 10,left: 10),
-                                                                        decoration: BoxDecoration(
-                                                                          borderRadius:
-                                                                          BorderRadius
-                                                                              .circular(10.0),
-                                                                          color: Get.isDarkMode
-                                                                              ? Colors.black
+                                              // Row(
+                                              //   children: [
+                                              //     SvgPicture.asset(
+                                              //       'assets/icon/heart.svg',
+                                              //       color: AppColors
+                                              //           .POST_DETAILS_ICONCOLOR,
+                                              //       height: 15,
+                                              //     ),
+                                              //     Padding(
+                                              //       padding:
+                                              //       const EdgeInsets
+                                              //           .only(
+                                              //           left: 5),
+                                              //       child: Text(
+                                              //         (postLikes == "0" ||
+                                              //             postLikes ==
+                                              //                 "1")
+                                              //             ? '${postLikes} Like'
+                                              //             : '${postLikes} Likes',
+                                              //         style: TextStyle(
+                                              //             color: AppColors
+                                              //                 .POST_DETAILS_ICONTEXT,
+                                              //             fontFamily:
+                                              //             'Gotham',
+                                              //             fontSize: 12,
+                                              //             fontWeight:
+                                              //             FontWeight
+                                              //                 .w400),
+                                              //       ),
+                                              //     ),
+                                              //   ],
+                                              // ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  showModalBottomSheet(
+                                                      context: context,
+                                                      backgroundColor: Colors.transparent,
+                                                      builder:
+                                                          (BuildContext
+                                                      context) {
+                                                        return Container(
+                                                          height: double.infinity,
+                                                          width: double
+                                                              .infinity,
+                                                          color: Colors
+                                                              .transparent,
+                                                          child: Align(
+                                                            alignment: Alignment.topCenter,
+                                                            child: Column(
+                                                              children: [
+                                                                Container(
+                                                                  margin: EdgeInsets.only(
+                                                                      right: 10,left: 10),
+                                                                  decoration: BoxDecoration(
+                                                                    borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(10.0),
+                                                                    color: Get.isDarkMode
+                                                                        ? Colors.black
+                                                                        : AppColors
+                                                                        .POST_DETAILS_COMMENTBOX,
+                                                                  ),
+                                                                  width:
+                                                                  MediaQuery.of(context)
+                                                                      .size
+                                                                      .width,
+                                                                  child: Padding(
+                                                                    padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left: 8,
+                                                                        right: 8),
+                                                                    child: TextFormField(
+                                                                      controller:
+                                                                      stextController,
+                                                                      keyboardType:
+                                                                      TextInputType
+                                                                          .multiline,
+                                                                      maxLines: 10,
+                                                                      style: TextStyle(
+                                                                          color: Get
+                                                                              .isDarkMode
+                                                                              ? Colors.white
                                                                               : AppColors
-                                                                              .POST_DETAILS_COMMENTBOX,
-                                                                        ),
-                                                                        width:
-                                                                        MediaQuery.of(context)
-                                                                            .size
-                                                                            .width,
-                                                                        child: Padding(
-                                                                          padding:
-                                                                          const EdgeInsets
-                                                                              .only(
-                                                                              left: 8,
-                                                                              right: 8),
-                                                                          child: TextFormField(
-                                                                            controller:
-                                                                            stextController,
-                                                                            keyboardType:
-                                                                            TextInputType
-                                                                                .multiline,
-                                                                            maxLines: 10,
-                                                                            style: TextStyle(
-                                                                                color: Get
-                                                                                    .isDarkMode
-                                                                                    ? Colors.white
-                                                                                    : AppColors
-                                                                                    .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                                                                                fontFamily:
-                                                                                'Gotham',
-                                                                                fontSize: 11,
-                                                                                fontWeight:
-                                                                                FontWeight
-                                                                                    .w400),
-                                                                            decoration:
-                                                                            const InputDecoration(
-                                                                              border: InputBorder
-                                                                                  .none,
-                                                                              focusedBorder:
-                                                                              InputBorder
-                                                                                  .none,
-                                                                              enabledBorder:
-                                                                              InputBorder
-                                                                                  .none,
-                                                                              errorBorder:
-                                                                              InputBorder
-                                                                                  .none,
-                                                                              disabledBorder:
-                                                                              InputBorder
-                                                                                  .none,
-                                                                              hintText:
-                                                                              'Write your comments',
-                                                                              hintStyle:
-                                                                              TextStyle(
-                                                                                fontSize: 14.0,
-                                                                                color: AppColors
-                                                                                    .POST_DETAILS_COMMENTBOX_HINT,
-                                                                                fontWeight:
-                                                                                FontWeight
-                                                                                    .w500,
-                                                                              ),
-                                                                            ),
-                                                                            validator: (value) {},
-                                                                          ),
+                                                                              .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                                          fontFamily:
+                                                                          'Gotham',
+                                                                          fontSize: 11,
+                                                                          fontWeight:
+                                                                          FontWeight
+                                                                              .w400),
+                                                                      decoration:
+                                                                      const InputDecoration(
+                                                                        border: InputBorder
+                                                                            .none,
+                                                                        focusedBorder:
+                                                                        InputBorder
+                                                                            .none,
+                                                                        enabledBorder:
+                                                                        InputBorder
+                                                                            .none,
+                                                                        errorBorder:
+                                                                        InputBorder
+                                                                            .none,
+                                                                        disabledBorder:
+                                                                        InputBorder
+                                                                            .none,
+                                                                        hintText:
+                                                                        'Write your comments',
+                                                                        hintStyle:
+                                                                        TextStyle(
+                                                                          fontSize: 14.0,
+                                                                          color: AppColors
+                                                                              .POST_DETAILS_COMMENTBOX_HINT,
+                                                                          fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
                                                                         ),
                                                                       ),
-                                                                      Padding(
-                                                                        padding: const EdgeInsets.only(top: 20,left: 10,right: 10),
-                                                                        child: Container(
-                                                                            height: 40,
-                                                                            width: double.infinity,
-                                                                            child: Row(
-                                                                              children: [
-                                                                                Expanded(
-                                                                                  child: RaisedButton(
-                                                                                    // textColor: Colors.white,
-                                                                                    color: AppColors
-                                                                                        .POST_DETAILS_ICONCOLOR,
-                                                                                    child: Icon(
-                                                                                      Icons.close,
-                                                                                      size: 15,
-                                                                                      color: Colors.white,
-                                                                                    ),
-                                                                                    onPressed: () async {
-                                                                                      Navigator.of(context).pop();
-                                                                                    },
-                                                                                    shape:
-                                                                                    new RoundedRectangleBorder(
-                                                                                      borderRadius:
-                                                                                      new BorderRadius
-                                                                                          .circular(
-                                                                                          100.0),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                                SizedBox(width: 10,),
-                                                                                Expanded(
-                                                                                  child: RaisedButton(
-                                                                                    // textColor: Colors.white,
-                                                                                    color: AppColors
-                                                                                        .POST_DETAILS_ICONCOLOR,
-                                                                                    child: Icon(
-                                                                                      Icons.send,
-                                                                                      size: 15,
-                                                                                      color: Colors.white,
-                                                                                    ),
-                                                                                    onPressed: () async {
-                                                                                      if (stextController
-                                                                                          .text
-                                                                                          .isNotEmpty &&
-                                                                                          stextController
-                                                                                              .text
-                                                                                              .toString() !=
-                                                                                              '') {
-                                                                                        await MyComment(
-                                                                                            widget.id
-                                                                                                .toString(),
-                                                                                            stextController
-                                                                                                .text
-                                                                                                .toString());
-                                                                                        stextController
-                                                                                            .clear();
-
-                                                                                        Navigator.of(
-                                                                                            context)
-                                                                                            .pop();
-                                                                                        Navigator.of(context).push(
-                                                                                            new MaterialPageRoute(
-                                                                                                builder:
-                                                                                                    (context) =>
-                                                                                                    PostDetails(
-                                                                                                      id: widget.id,
-                                                                                                      name: widget.name,
-                                                                                                      time: widget.time,
-                                                                                                      desc: widget.desc,
-                                                                                                      likes: postLikes,
-                                                                                                      comments: postComment,
-                                                                                                      image: widget.image,
-                                                                                                      postUserId: widget.postUserId,
-                                                                                                    )));
-                                                                                      }
-                                                                                    },
-                                                                                    shape:
-                                                                                    new RoundedRectangleBorder(
-                                                                                      borderRadius:
-                                                                                      new BorderRadius
-                                                                                          .circular(
-                                                                                          100.0),
-                                                                                    ),
-                                                                                  ),
-                                                                                ),
-                                                                              ],
-                                                                            )),
-                                                                      )
-                                                                    ],
+                                                                      validator: (value) {},
+                                                                    ),
                                                                   ),
                                                                 ),
-                                                              );
-                                                            });
-                                                      },
-                                                      child: Row(
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                            'assets/icon/reply.svg',
-                                                            color: AppColors
-                                                                .POST_DETAILS_ICONCOLOR,
-                                                            height: 25,
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    left: 5),
-                                                            child: Text(
-                                                              'Reply',
-                                                              style: TextStyle(
-                                                                  color: AppColors
-                                                                      .POST_DETAILS_ICONTEXT,
-                                                                  fontFamily:
-                                                                      'Gotham',
-                                                                  fontSize: 12,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400),
+                                                                Padding(
+                                                                  padding: const EdgeInsets.only(top: 20,left: 10,right: 10),
+                                                                  child: Container(
+                                                                      height: 40,
+                                                                      width: double.infinity,
+                                                                      child: Row(
+                                                                        children: [
+                                                                          Expanded(
+                                                                            child: RaisedButton(
+                                                                              // textColor: Colors.white,
+                                                                              color: AppColors
+                                                                                  .POST_DETAILS_ICONCOLOR,
+                                                                              child: Icon(
+                                                                                Icons.close,
+                                                                                size: 15,
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                              onPressed: () async {
+                                                                                Navigator.of(context).pop();
+                                                                              },
+                                                                              shape:
+                                                                              new RoundedRectangleBorder(
+                                                                                borderRadius:
+                                                                                new BorderRadius
+                                                                                    .circular(
+                                                                                    100.0),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(width: 10,),
+                                                                          Expanded(
+                                                                            child: RaisedButton(
+                                                                              // textColor: Colors.white,
+                                                                              color: AppColors
+                                                                                  .POST_DETAILS_ICONCOLOR,
+                                                                              child: Icon(
+                                                                                Icons.send,
+                                                                                size: 15,
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                              onPressed: () async {
+                                                                                if (stextController
+                                                                                    .text
+                                                                                    .isNotEmpty &&
+                                                                                    stextController
+                                                                                        .text
+                                                                                        .toString() !=
+                                                                                        '') {
+                                                                                  await MyComment(
+                                                                                      widget.id
+                                                                                          .toString(),
+                                                                                      stextController
+                                                                                          .text
+                                                                                          .toString());
+                                                                                  stextController
+                                                                                      .clear();
+
+                                                                                  Navigator.of(
+                                                                                      context)
+                                                                                      .pop();
+                                                                                  Navigator.of(context).push(
+                                                                                      new MaterialPageRoute(
+                                                                                          builder:
+                                                                                              (context) =>
+                                                                                              PostDetails(
+                                                                                                id: widget.id,
+                                                                                                name: widget.name,
+                                                                                                time: widget.time,
+                                                                                                desc: widget.desc,
+                                                                                                likes: postLikes,
+                                                                                                comments: postComment,
+                                                                                                image: widget.image,
+                                                                                                postUserId: widget.postUserId,
+                                                                                              )));
+                                                                                }
+                                                                              },
+                                                                              shape:
+                                                                              new RoundedRectangleBorder(
+                                                                                borderRadius:
+                                                                                new BorderRadius
+                                                                                    .circular(
+                                                                                    100.0),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      )),
+                                                                )
+                                                              ],
                                                             ),
                                                           ),
-                                                        ],
+                                                        );
+                                                      });
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      'assets/icon/reply.svg',
+                                                      color: AppColors
+                                                          .POST_DETAILS_ICONCOLOR,
+                                                      height: 25,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                      const EdgeInsets
+                                                          .only(
+                                                          left: 5),
+                                                      child: Text(
+                                                        'Reply',
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .POST_DETAILS_ICONTEXT,
+                                                            fontFamily:
+                                                            'Gotham',
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w400),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-
                                             ],
                                           ),
                                         ),
-                                      )
-                                    ],
+
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                )
                               ],
-                            );
-                          },
-                        )
-                      : Container();
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  )
+                       : Container();
                 }
               },
             ),
+
           ],
         ),
       ),
     );
   }
+
+
 }

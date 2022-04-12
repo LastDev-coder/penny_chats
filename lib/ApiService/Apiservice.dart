@@ -261,7 +261,7 @@ class Apiservice {
     final id = prefs.getString('id') ?? '';
     // print("id => $id ");
     late String url =
-        "https://pennychats.com/pennychatapi/post/details/$postid";
+        "https://pennychats.com/pennychatapi/post/details/$postid/$id";
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
@@ -378,7 +378,7 @@ print("id -> $id");
 
     try {
       response = await dio.post(
-          "https://pennychats.com/pennychatapi/post/add_comments/",
+          "https://pennychats.com/pennychatapi/pennystocks/add_comments",
           data: _data,
           options: Options(headers: {
             "Accept": "application/json",

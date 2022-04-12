@@ -604,7 +604,7 @@ class _NoStocksState extends State<NoStocks> {
                                         flex: 1,
                                         child: Center(
                                           child: Text(
-                                            "${snapshot.data[i].gain} %",
+                                            getGain(snapshot.data[i].gain),
                                             style: TextStyle(
                                                 color: snapshot.data[i].effect=="Up" ? Colors.green : Colors.red,
                                                 fontFamily: 'Gotham',
@@ -631,6 +631,18 @@ class _NoStocksState extends State<NoStocks> {
       ),
     );
   }
+
+
+ String getGain(var ga){
+    String dd = ga.toString().trim();
+
+  if(dd.contains("%")){
+    dd.replaceAll("%", "");
+  }
+
+    return "$dd%";
+  }
+
 
   NoStock() {
     return SingleChildScrollView(
