@@ -14,14 +14,16 @@ class AuthServices {
     var _data = new Map<String, dynamic>();
     _data['username'] = '$userName';
     _data['password'] = '$password';
-
+print("-------------------");
     var response = await http.post(
-      Uri.https(
-        AppStrings.baseUrl,
-        AppStrings.loginApi,
+      Uri.parse(
+        'https://pennychats.com/pennychatapi/login/index',
       ),
       body: _data,
     );
+    print("++++++++++++++++++");
+
+    print("=========================>>${response.body}");
     var responseData = json.decode(response.body);
     if (responseData['status'] == true) {
       print(responseData['response']['token']);
@@ -42,9 +44,9 @@ class AuthServices {
 
   static Future createAccount(context,
       {required String userName,
-      required String password,
-      required String email,
-      required String fullName}) async {
+        required String password,
+        required String email,
+        required String fullName}) async {
     var _data = new Map<String, dynamic>();
     _data['full_name'] = '$fullName';
     _data['email'] = '$email';
@@ -52,9 +54,9 @@ class AuthServices {
     _data['password'] = '$password';
 
     var response = await http.post(
-      Uri.https(
-        AppStrings.baseUrl,
-        AppStrings.regApi,
+      Uri.parse(
+        'https://pennychats.com/pennychatapi/login/registration',
+
       ),
       body: _data,
     );

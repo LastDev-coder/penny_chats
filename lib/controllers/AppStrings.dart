@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 class AppStrings {
   static const String baseUrl = 'https://pennychats.com/pennychatapi';
-  static const String loginApi = '/pennychatapi/login/index';
+  static const String loginApi = '/login/index';
   static const String regApi = '/pennychatapi/login/registration';
   static const String disclaimerApi =
       '$baseUrl/cms/disclaimer';

@@ -270,6 +270,7 @@ class _LoginState extends State<Login> {
                                               _password.clear();
                                             });
                                           }).onError((error, stackTrace) {
+                                            print(error.toString());
                                             setState(() {
                                               _isLoading = false;
                                             });
