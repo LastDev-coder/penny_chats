@@ -60,6 +60,8 @@ print("-------------------");
       ),
       body: _data,
     );
+
+    print("=========================>>${response.body}");
     var responseData = json.decode(response.body);
     if (responseData['status'] == true) {
       Navigator.pushReplacement(

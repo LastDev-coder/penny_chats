@@ -8,6 +8,7 @@ class AppColors {
   static const WELCOME_TEXT_COLOR = Color(0xFF4c4c4c);
   static const FADE_TEXT_COLOR = Color(0xFF969696);
   static const Button_TEXT_COLOR = Color(0xFF212121);
+  static const red = Color(0xFFFC3C3C);
 
   // login screen
   static const LOGIN_PAGE_INPUTBOX_UNDERLINE = Color(0xFFc6a28b);
@@ -38,6 +39,7 @@ class AppColors {
   static const POST_TAB_BACKGROUND_COLOR = Color(0xFFe7f0ea);
   static const POST_TAB_FAVOURITE_TIME_COLOR = Color(0xFFc1c1c1);
   static const POST_TAB_COMMENTS_COLOR = Color(0xFF323232);
+  static const POST_TAB_COMMENTS_COLOR_1 = Color(0xFF535353);
   static const POST_TAB_LIKE_COLOR = Color(0xFF767676);
 
   // profile screen

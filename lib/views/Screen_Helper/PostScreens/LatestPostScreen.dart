@@ -68,6 +68,7 @@ var data;
                                     comments: _post.comments,
                                     image: _post.profilePic,
                                     postUserId: _post.userId,
+                                title: _post.title,
                                   )));
                     },
                     // splashColor: AppColors.DASHBOARD_SELECTED_ICON_COLOR,
@@ -76,6 +77,7 @@ var data;
                           borderRadius: BorderRadius.circular(10)),
                       child: Container(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(15.0),
@@ -160,6 +162,20 @@ var data;
                                 ),
                               ),
                             ),
+
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15, right: 15),
+                              child: Text(
+                                _post.title.toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
+                                    fontFamily: 'Gotham',
+                                    fontWeight: FontWeight.w600),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(height: 10,),
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 15, right: 15),
@@ -189,46 +205,35 @@ var data;
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                GestureDetector(
-
-                                  child: SvgPicture.asset(
+                                  GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: (){
+                                      likePost(_post.);
+                                    },
+                                    child: Container(
+                                      child: Row(
+                                        children: [
+                                SvgPicture.asset(
                                     'assets/icon/heart.svg',
                                     height: 20,
                                     color: AppColors.POST_TAB_LIKE_COLOR,
 
-                                  ),
-                                  onTap: (){
-                                    // makelike(_post.id.toString());
-                          //          makedislike(_post.id.toString());
-                                  },
                                 ),
-                                      //   data["status"]==true ? SvgPicture.asset(
-                                      //   'assets/icon/heart.svg',
-                                      //   height: 20,
-                                      //   color: AppColors.POST_TAB_LIKE_COLOR,
-                                      //
-                                      // ) :  SvgPicture.asset(
-                                      //     'assets/icon/heart.svg',
-                                      //     height: 20,
-                                      //   color: Colors.red,
-                                      //
-                                      // ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          _post.votes.toString(),
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color:
-                                                  AppColors.POST_TAB_LIKE_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            _post.votes.toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    AppColors.POST_TAB_LIKE_COLOR,
+                                                fontFamily: 'Gotham',
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Container(
@@ -267,4 +272,10 @@ var data;
             ),
     );
   }
+
+  likePost(){
+
+
+  }
+
 }

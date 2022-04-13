@@ -94,6 +94,8 @@ class Apiservice {
     clint.Response response = await dio.get(url);
     return response.data;
   }
+
+
   Future getdislike(String postid) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
@@ -259,7 +261,7 @@ class Apiservice {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final id = prefs.getString('id') ?? '';
-    // print("id => $id ");
+  print("=============p==========");
     late String url =
         "https://pennychats.com/pennychatapi/post/details/$postid/$id";
     Dio dio = new Dio();

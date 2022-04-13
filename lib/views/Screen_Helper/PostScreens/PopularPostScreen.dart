@@ -62,6 +62,7 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                 comments: _post.comments,
                                 image: _post.profilePic,
                                 postUserId: _post.userId,
+                                title: _post.title,
                               )));
                     },
                     // splashColor: AppColors.DASHBOARD_SELECTED_ICON_COLOR,
@@ -70,6 +71,7 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                           borderRadius: BorderRadius.circular(10)),
                       child: Container(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(15.0),
@@ -154,6 +156,20 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                 ),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 15, right: 15),
+                              child: Text(
+                                _post.title.toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
+                                    fontFamily: 'Gotham',
+                                    fontWeight: FontWeight.w600),
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                            SizedBox(height: 10,),
+
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 15, right: 15),
