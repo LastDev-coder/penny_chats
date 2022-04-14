@@ -178,7 +178,6 @@ class _PostState extends State<Post>  with SingleTickerProviderStateMixin{
                                   _data['title'] = spController.text.toString();
                                   _data['content'] = epController.text.toString();
                                   var data = await Apiservice().UploadPost(_data);
-                                  Navigator.of(context, rootNavigator: true).pop();
 
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(
@@ -188,6 +187,8 @@ class _PostState extends State<Post>  with SingleTickerProviderStateMixin{
                                     ),
                                     backgroundColor: Colors.green,
                                   ));
+                                  Navigator.of(context, rootNavigator: true).pop();
+
                                   spController.clear();
                                   epController.clear();
                                   Navigator.pushReplacement(

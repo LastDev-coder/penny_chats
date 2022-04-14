@@ -360,7 +360,7 @@ class _appdrawerState extends State<appdrawer> {
                                         ),
                                         SizedBox(width: 30,),
                                         Text(
-                                          'Penny Stocks',
+                                          'Penny Play',
                                           style: TextStyle(
                                               color:
                                               Get.isDarkMode
@@ -382,7 +382,7 @@ class _appdrawerState extends State<appdrawer> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(6.0),
                                           child: Text(
-                                            'Penny Stocks To Watch',
+                                            'Penny Play To Watch',
                                             style: TextStyle(
                                                 color:
                                                 Get.isDarkMode
@@ -404,7 +404,7 @@ class _appdrawerState extends State<appdrawer> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(6.0),
                                           child: Text(
-                                            'Penny Stocks Help',
+                                            'Penny Play Help',
                                             style: TextStyle(
                                                 color:
                                                 Get.isDarkMode
