@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/Api/User/UserDataApi.dart';
+import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/PostUserDataModel.dart';
 
 class PostUserScreen extends StatefulWidget {
   final String? postUserId;
+
   PostUserScreen({Key? key, this.postUserId}) : super(key: key);
 
   @override
@@ -19,6 +20,7 @@ class _PostUserScreenState extends State<PostUserScreen> {
   DateFormat dateFormat = DateFormat('yyyy');
 
   PostUserDataModel? _postUserData;
+
   void initState() {
     UserDataApi.getUserData(
             context, '${AppStrings.getUserDataApi}${widget.postUserId}')
@@ -33,19 +35,19 @@ class _PostUserScreenState extends State<PostUserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Get.isDarkMode ? Colors.black : AppColors
-          .white,
-
+      backgroundColor: Get.isDarkMode ? Colors.black : AppColors.white,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: true,
         centerTitle: true,
         // backgroundColor: Colors.transparent,
         flexibleSpace: Container(
-          child: Image.asset('assets/images/profile-bg.jpg',fit: BoxFit.cover, ),
+          child: Image.asset(
+            'assets/images/profile-bg.jpg',
+            fit: BoxFit.cover,
+          ),
         ),
 
-        // title: Image.asset('assets/images/profile-bg.jpg',fit: BoxFit.contain, ),
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context, 'back');
@@ -55,10 +57,7 @@ class _PostUserScreenState extends State<PostUserScreen> {
             size: 30,
           ),
         ),
-
       ),
-
-
       body: _postUserData == null
           ? Center(
               child: CircularProgressIndicator(),
@@ -95,7 +94,7 @@ class _PostUserScreenState extends State<PostUserScreen> {
                                         ? NetworkImage(
                                             '${AppStrings.profilePictureApi}/${_postUserData!.response!.profilePic}')
                                         : NetworkImage(
-                                            'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg'),
+                                            '${AppStrings.noProfilePicture}'),
                                   ),
                                 ),
                               ),
@@ -157,7 +156,9 @@ class _PostUserScreenState extends State<PostUserScreen> {
                                   _postUserData!.response!.name.toString(),
                                   style: TextStyle(
                                       fontSize: 14,
-                                      color: Get.isDarkMode ? Colors.white :  AppColors.PROFILE_TAB_NORMAL_TEXT,
+                                      color: Get.isDarkMode
+                                          ? Colors.white
+                                          : AppColors.PROFILE_TAB_NORMAL_TEXT,
                                       fontFamily: 'Gotham',
                                       fontWeight: FontWeight.w500),
                                 )),
@@ -177,8 +178,7 @@ class _PostUserScreenState extends State<PostUserScreen> {
                                   'User name',
                                   style: TextStyle(
                                       fontSize: 13,
-                                      color: AppColors
-                                          .PROFILE_TAB_LABEL_TEXT,
+                                      color: AppColors.PROFILE_TAB_LABEL_TEXT,
                                       fontFamily: 'Gotham',
                                       fontWeight: FontWeight.w500),
                                 )),
@@ -191,8 +191,9 @@ class _PostUserScreenState extends State<PostUserScreen> {
                                   _postUserData!.response!.username.toString(),
                                   style: TextStyle(
                                       fontSize: 14,
-                                      color: Get.isDarkMode ? Colors.white : AppColors
-                                          .PROFILE_TAB_NORMAL_TEXT,
+                                      color: Get.isDarkMode
+                                          ? Colors.white
+                                          : AppColors.PROFILE_TAB_NORMAL_TEXT,
                                       fontFamily: 'Gotham',
                                       fontWeight: FontWeight.w500),
                                 )),
@@ -226,7 +227,9 @@ class _PostUserScreenState extends State<PostUserScreen> {
                                       _postUserData!.response!.created!),
                                   style: TextStyle(
                                       fontSize: 14,
-                                      color: Get.isDarkMode ? Colors.white : AppColors.PROFILE_TAB_NORMAL_TEXT,
+                                      color: Get.isDarkMode
+                                          ? Colors.white
+                                          : AppColors.PROFILE_TAB_NORMAL_TEXT,
                                       fontFamily: 'Gotham',
                                       fontWeight: FontWeight.w500),
                                 )),

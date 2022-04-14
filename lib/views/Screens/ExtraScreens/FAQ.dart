@@ -131,7 +131,9 @@ class _FAQState extends State<FAQ> {
                                       child: Text(
                                         '${snapshot.data[i].title}',
                                         style: TextStyle(
-                                            color: Get.isDarkMode ? Colors.white :Colors.black,
+                                            color: Get.isDarkMode
+                                                ? Colors.white
+                                                : Colors.black,
                                             fontFamily: 'Gotham',
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -148,7 +150,9 @@ class _FAQState extends State<FAQ> {
                                     style: TextStyle(
                                       fontSize: 14,
                                       height: 1.4,
-                                      color:Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
+                                      color: Get.isDarkMode
+                                          ? Colors.white38
+                                          : AppColors.POST_TAB_COMMENTS_COLOR,
                                       fontFamily: 'Gotham',
                                     ),
                                   ),
@@ -177,7 +181,6 @@ class _FAQState extends State<FAQ> {
                                           radius: 15,
                                           backgroundImage: AssetImage(
                                             'assets/images/_logo.png',
-
                                           )),
                                     ),
                                     SizedBox(

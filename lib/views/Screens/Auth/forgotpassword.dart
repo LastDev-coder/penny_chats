@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -53,7 +55,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       ),
                       TextFormField(
                         style: TextStyle(
-                            color: AppColors.FORGOT_PAGE_INPUT_TEXT,
+                            color: Get.isDarkMode
+                                ? Colors.white
+                                : AppColors.FORGOT_PAGE_INPUT_TEXT,
                             fontFamily: 'Gotham',
                             fontSize: 16,
                             fontWeight: FontWeight.bold),

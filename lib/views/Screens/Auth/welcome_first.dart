@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/views/Screens/Auth/login.dart';
@@ -42,7 +44,9 @@ class _WelcomeFirstState extends State<WelcomeFirst> {
                           child: Text(
                             'Welcome to',
                             style: GoogleFonts.doHyeon(
-                              color: AppColors.WELCOME_TEXT_COLOR,
+                              color: Get.isDarkMode
+                                  ? Colors.white24
+                                  : AppColors.WELCOME_TEXT_COLOR,
                               fontWeight: FontWeight.w900,
                               fontSize: 20,
                               fontStyle: FontStyle.normal,
@@ -98,7 +102,9 @@ class _WelcomeFirstState extends State<WelcomeFirst> {
                                                   builder: (context) =>
                                                       Register()))
                                         },
-                                        color: AppColors.white,
+                                        color: Get.isDarkMode
+                                            ? Colors.black54
+                                            : AppColors.white,
                                         child: Padding(
                                           padding: const EdgeInsets.all(20.0),
                                           child: Text(
@@ -106,7 +112,9 @@ class _WelcomeFirstState extends State<WelcomeFirst> {
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.roboto(
                                               color:
-                                                  AppColors.Button_TEXT_COLOR,
+                                              Get.isDarkMode
+                                                  ? Colors.white
+                                                  : AppColors.Button_TEXT_COLOR,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18,
                                               fontStyle: FontStyle.normal,
@@ -137,7 +145,9 @@ class _WelcomeFirstState extends State<WelcomeFirst> {
                                                   builder: (context) =>
                                                       Login()))
                                         },
-                                        color: AppColors.white,
+                                        color: Get.isDarkMode
+                                            ? Colors.black54
+                                            : AppColors.white,
                                         child: Padding(
                                           padding: const EdgeInsets.all(20.0),
                                           child: Text(
@@ -145,7 +155,9 @@ class _WelcomeFirstState extends State<WelcomeFirst> {
                                             textAlign: TextAlign.center,
                                             style: GoogleFonts.roboto(
                                               color:
-                                                  AppColors.Button_TEXT_COLOR,
+                                              Get.isDarkMode
+                                                  ? Colors.white
+                                                  : AppColors.Button_TEXT_COLOR,
                                               fontWeight: FontWeight.bold,
                                               fontSize: 18,
                                               fontStyle: FontStyle.normal,

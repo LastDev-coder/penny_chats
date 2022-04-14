@@ -12,6 +12,8 @@ import 'package:penny_chats/models/PostDetailsModel.dart';
 import 'package:penny_chats/views/Screen_Helper/Profile/PostUserScreen.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../../controllers/AppStrings.dart';
+
 class PostDetails extends StatefulWidget {
   final String? id;
   final String? name;
@@ -192,9 +194,9 @@ class _PostDetailsState extends State<PostDetails> {
                               fit: BoxFit.cover,
                               image: NetworkImage(
                                   data["response"]['profile_pic'].toString()==''?
-                                  'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
+                                  '${AppStrings.noProfilePicture}'
 
-                                      : 'https://pennychats.com/pennychatapi/uploads/${data["response"]['profile_pic'].toString()}'),
+                                      : 'https://www.pennychats.com/uploads/profile_pictures/${data["response"]['profile_pic'].toString()}'),
                             ),
                           ),
                         ),
@@ -349,7 +351,7 @@ class _PostDetailsState extends State<PostDetails> {
                                 ? NetworkImage(
                                 'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg')
                                 : NetworkImage(
-                                'https://www.pennychats.com/uploads/profile_pictures/${widget.image}'),
+                                '${AppStrings.profilePictureApi}/${widget.image}'),
                           ),
                         ),
                       ),
@@ -660,7 +662,7 @@ class _PostDetailsState extends State<PostDetails> {
                                   child: CircleAvatar(
                                     radius: 25,
                                     backgroundImage: NetworkImage(
-                                        'https://www.pennychats.com/beta/uploads/profile_pictures/${snapshot.data[i].profile_pic}'),
+                                        '${AppStrings.profilePictureApi}/${snapshot.data[i].profile_pic}'),
                                   ),
                                 ),
                               ),

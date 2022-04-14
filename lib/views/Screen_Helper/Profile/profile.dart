@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
@@ -28,8 +27,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   File? imageFile;
   bool isLoading = false;
 
-
-
   ImageUpload(image) async {
     Directory tempDir = await getApplicationDocumentsDirectory();
     String tempPath = tempDir.path;
@@ -41,16 +38,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       minHeight: 300,
       autoCorrectionAngle: true,
     );
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content:
-            Text('Uploading your photo')));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text('Uploading your photo')));
     print("---------------------------$result");
 
     // print("XXXXXXXXXXXXXXXXXXXXXXXXXXX -- File name --" + image);
     var data = await Apiservice().uploadImage(result!.path);
     if (data["status"].toString() == "true") {
-
       ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
         content: new Text(
           'Image upload complete.',
@@ -62,8 +56,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           context,
           MaterialPageRoute(
               builder: (context) => Mydashboard(
-                number: 4,
-              )));
+                    number: 4,
+                  )));
     }
   }
 
@@ -98,14 +92,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
 
     if (pickedFile != null) {
-
-      setState(()  {
-
+      setState(() {
         imageFile = File(pickedFile.path);
         ImageUpload(imageFile);
-
       });
-
     }
   }
 
@@ -168,39 +158,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 setState(() {
                                   isLoading = true;
                                 });
-                                // var data = await Apiservice().uploadImage();
 
                                 setState(() {
                                   isLoading = false;
                                 });
                                 Navigator.of(context).pop();
 
-                                // ScaffoldMessenger.of(context)
-                                //     .showSnackBar(SnackBar(
-                                //   backgroundColor: Colors.red,
-                                //   content: Text('Upload is not available.',
-                                //       style: TextStyle(
-                                //           // color: Colors.white,
-                                //           fontFamily: 'Gotham',
-                                //           fontSize: 15,
-                                //           fontWeight: FontWeight.normal)),
-                                // ));
+
                               },
-                              child:  isLoading
+                              child: isLoading
                                   ? Container(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
-                                ),
-                              )
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      ),
+                                    )
                                   : Text('Upload',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Gotham',
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal)),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'Gotham',
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.normal)),
                             ),
                           ],
                         ),
@@ -342,146 +322,144 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: Text('Change Password'),
           content: StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-                return Container(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            return Container(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 0, right: 0),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                            color: AppColors.INPUT_BOX,
+                            borderRadius: new BorderRadius.only(
+                              topLeft: const Radius.circular(5.0),
+                              topRight: const Radius.circular(5.0),
+                              bottomLeft: const Radius.circular(5.0),
+                              bottomRight: const Radius.circular(5.0),
+                            )),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: TextFormField(
+                            controller: pController,
+                            keyboardType: TextInputType.name,
+                            style: TextStyle(color: AppColors.FROMTO_TEXT),
+                            decoration: new InputDecoration.collapsed(
+                              hintText: 'Enter your new password',
+                              hintStyle:
+                                  TextStyle(color: AppColors.FROMTO_TEXT),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 0, right: 0),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                            color: AppColors.INPUT_BOX,
+                            borderRadius: new BorderRadius.only(
+                              topLeft: const Radius.circular(5.0),
+                              topRight: const Radius.circular(5.0),
+                              bottomLeft: const Radius.circular(5.0),
+                              bottomRight: const Radius.circular(5.0),
+                            )),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: TextFormField(
+                            controller: confirmpController,
+                            keyboardType: TextInputType.name,
+                            style: TextStyle(color: AppColors.FROMTO_TEXT),
+                            decoration: new InputDecoration.collapsed(
+                              hintText: 'Confirm your new password',
+                              hintStyle:
+                                  TextStyle(color: AppColors.FROMTO_TEXT),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 0, right: 0),
-                          child: Container(
-                            decoration: new BoxDecoration(
-                                color: AppColors.INPUT_BOX,
-                                borderRadius: new BorderRadius.only(
-                                  topLeft: const Radius.circular(5.0),
-                                  topRight: const Radius.circular(5.0),
-                                  bottomLeft: const Radius.circular(5.0),
-                                  bottomRight: const Radius.circular(5.0),
-                                )),
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: TextFormField(
-                                controller: pController,
-                                keyboardType: TextInputType.name,
-                                style: TextStyle(color: AppColors.FROMTO_TEXT),
-                                decoration: new InputDecoration.collapsed(
-                                  hintText: 'Enter your new password',
-                                  hintStyle:
-                                  TextStyle(color: AppColors.FROMTO_TEXT),
-                                ),
-                              ),
-                            ),
-                          ),
+                        FlatButton(
+                          // onPressed: () => exit(0),
+                          color: AppColors.RESULT_TEXT,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
+                          onPressed: () async {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Close',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Gotham',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal)),
                         ),
                         SizedBox(
-                          height: 10,
+                          width: 10,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 0, right: 0),
-                          child: Container(
-                            decoration: new BoxDecoration(
-                                color: AppColors.INPUT_BOX,
-                                borderRadius: new BorderRadius.only(
-                                  topLeft: const Radius.circular(5.0),
-                                  topRight: const Radius.circular(5.0),
-                                  bottomLeft: const Radius.circular(5.0),
-                                  bottomRight: const Radius.circular(5.0),
-                                )),
-                            child: Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: TextFormField(
-                                controller: confirmpController,
-                                keyboardType: TextInputType.name,
-                                style: TextStyle(color: AppColors.FROMTO_TEXT),
-                                decoration: new InputDecoration.collapsed(
-                                  hintText: 'Confirm your new password',
-                                  hintStyle:
-                                  TextStyle(color: AppColors.FROMTO_TEXT),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            FlatButton(
-                              // onPressed: () => exit(0),
-                              color: AppColors.RESULT_TEXT,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
-                              onPressed: () async {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('Close',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Gotham',
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal)),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            FlatButton(
-                              color: AppColors.RESULT_TEXT,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
-                              onPressed: () async {
-                                if (pController.text.toString() == null ||
-                                    pController.text.toString().isEmpty ||
-                                    pController.text.toString() == '' ||
-                                    confirmpController.text.toString() == null ||
-                                    confirmpController.text.toString().isEmpty ||
-                                    confirmpController.text.toString() == ''
-                                ) {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                      content: Text(
-                                          'All field should be fill up. Please try again.')));
-                                } else {
+                        FlatButton(
+                          color: AppColors.RESULT_TEXT,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
+                          onPressed: () async {
+                            if (pController.text.toString() == null ||
+                                pController.text.toString().isEmpty ||
+                                pController.text.toString() == '' ||
+                                confirmpController.text.toString() == null ||
+                                confirmpController.text.toString().isEmpty ||
+                                confirmpController.text.toString() == '') {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      'All field should be fill up. Please try again.')));
+                            } else {
+                              var data = await Apiservice().PostChangePassword(
+                                  pController.text.toString(),
+                                  confirmpController.text.toString());
+                              Navigator.of(context).pop();
 
-
-                                  var data = await Apiservice().PostChangePassword(pController.text.toString(),confirmpController.text.toString());
-                                  Navigator.of(context).pop();
-
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
                                           Text(data["response"].toString())));
-                                  pController.clear();
-                                  confirmpController.clear();
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Mydashboard(
+                              pController.clear();
+                              confirmpController.clear();
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Mydashboard(
                                             number: 4,
                                           )));
-                                }
-                              },
-                              child: Text('Update',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Gotham',
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.normal)),
-                            ),
-                          ],
+                            }
+                          },
+                          child: Text('Update',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'Gotham',
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.normal)),
                         ),
                       ],
                     ),
-                  ),
-                );
-              }),
+                  ],
+                ),
+              ),
+            );
+          }),
         );
       },
     );
 
     return shouldPop ?? false;
   }
-
 
   getprofile() async {
     var data;
@@ -506,7 +484,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       dataresponse["is_login"],
     );
     profilemodel.add(model);
-print(dataresponse["profile_pic"].toString());
+    print(dataresponse["profile_pic"].toString());
     return profilemodel;
   }
 
@@ -558,11 +536,11 @@ print(dataresponse["profile_pic"].toString());
                                           padding: const EdgeInsets.all(3.0),
                                           child: CircleAvatar(
                                             radius: 65,
-                                            backgroundImage: NetworkImage(
-                                                snapshot.data[i].profile_pic==''?
-                                                'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
-
-                                              : '${AppStrings.profilePictureApi}/${snapshot.data[i].profile_pic}'),
+                                            backgroundImage: NetworkImage(snapshot
+                                                        .data[i].profile_pic ==
+                                                    ''
+                                                ? '${AppStrings.noProfilePicture}'
+                                                : '${AppStrings.profilePictureApi}/${snapshot.data[i].profile_pic}'),
                                           ),
                                         ),
                                       ),
@@ -598,9 +576,9 @@ print(dataresponse["profile_pic"].toString());
                                                                     .bold)),
                                                   ),
                                                   TextButton(
-                                                    onPressed: ()  {
+                                                    onPressed: () {
                                                       Navigator.pop(context);
-                                                       _getFromCamera();
+                                                      _getFromCamera();
                                                       // DisplaychooseImage();
                                                     },
                                                     child: Container(
@@ -639,9 +617,9 @@ print(dataresponse["profile_pic"].toString());
                                                     ),
                                                   ),
                                                   TextButton(
-                                                    onPressed: ()  {
+                                                    onPressed: () {
                                                       Navigator.pop(context);
-                                                       _getFromGallery();
+                                                      _getFromGallery();
                                                       // DisplaychooseImage();
                                                     },
                                                     child: Container(
@@ -716,7 +694,9 @@ print(dataresponse["profile_pic"].toString());
                               )),
                           Container(
                             height: 100,
-                            color: Get.isDarkMode ? Colors.black12 : AppColors.PROFILE_TAB_CONTAINER1_COLOR,
+                            color: Get.isDarkMode
+                                ? Colors.black12
+                                : AppColors.PROFILE_TAB_CONTAINER1_COLOR,
                             child: Center(
                               child: Padding(
                                 padding:
@@ -792,8 +772,10 @@ print(dataresponse["profile_pic"].toString());
                                           snapshot.data[i].name,
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color:Get.isDarkMode ? Colors.white : AppColors
-                                                  .PROFILE_TAB_NORMAL_TEXT,
+                                              color: Get.isDarkMode
+                                                  ? Colors.white
+                                                  : AppColors
+                                                      .PROFILE_TAB_NORMAL_TEXT,
                                               fontFamily: 'Gotham',
                                               fontWeight: FontWeight.w500),
                                         )),
@@ -831,8 +813,10 @@ print(dataresponse["profile_pic"].toString());
                                           snapshot.data[i].email,
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: Get.isDarkMode ? Colors.white :AppColors
-                                                  .PROFILE_TAB_NORMAL_TEXT,
+                                              color: Get.isDarkMode
+                                                  ? Colors.white
+                                                  : AppColors
+                                                      .PROFILE_TAB_NORMAL_TEXT,
                                               fontFamily: 'Gotham',
                                               fontWeight: FontWeight.w500),
                                         )),
@@ -866,7 +850,7 @@ print(dataresponse["profile_pic"].toString());
                                                   fontWeight: FontWeight.w500),
                                             ),
                                             GestureDetector(
-                                              onTap: (){
+                                              onTap: () {
                                                 ChangePassword();
                                               },
                                               child: Text(
@@ -876,7 +860,8 @@ print(dataresponse["profile_pic"].toString());
                                                     color: AppColors
                                                         .LOGIN_PAGE_LOGINBOX,
                                                     fontFamily: 'Gotham',
-                                                    fontWeight: FontWeight.w500),
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
                                             ),
                                           ],
@@ -890,8 +875,10 @@ print(dataresponse["profile_pic"].toString());
                                           "................",
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: Get.isDarkMode ? Colors.white : AppColors
-                                                  .PROFILE_TAB_NORMAL_TEXT,
+                                              color: Get.isDarkMode
+                                                  ? Colors.white
+                                                  : AppColors
+                                                      .PROFILE_TAB_NORMAL_TEXT,
                                               fontFamily: 'Gotham',
                                               fontWeight: FontWeight.w500),
                                         )),
@@ -903,43 +890,10 @@ print(dataresponse["profile_pic"].toString());
                             color: AppColors.PROFILE_TAB_DIVIDER,
                           ),
                           Container(
-                              width: double.infinity,
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 30, top: 40, right: 30, bottom: 30),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                        width: double.infinity,
-                                        child: Text(
-                                          'Birthday',
-                                          style: TextStyle(
-                                              fontSize: 13,
-                                              color: AppColors
-                                                  .PROFILE_TAB_LABEL_TEXT,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.w500),
-                                        )),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Container(
-                                        width: double.infinity,
-                                        child: Text(
-                                          'January 12, 1990',
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Get.isDarkMode ? Colors.white : AppColors
-                                                  .PROFILE_TAB_NORMAL_TEXT,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.w500),
-                                        )),
-                                  ],
-                                ),
-                              )),
-                          Container(
                             width: double.infinity,
-                            color: Get.isDarkMode ? Colors.black12 : AppColors.PROFILE_TAB_CONTAINER1_COLOR,
+                            color: Get.isDarkMode
+                                ? Colors.black12
+                                : AppColors.PROFILE_TAB_CONTAINER1_COLOR,
                             child: Padding(
                               padding: const EdgeInsets.only(
                                   left: 30, right: 30, top: 30, bottom: 30),
@@ -974,8 +928,9 @@ print(dataresponse["profile_pic"].toString());
                                     'Chat Settings',
                                     style: TextStyle(
                                         fontSize: 14,
-                                        color:Get.isDarkMode ? Colors.white :
-                                            AppColors.PROFILE_TAB_NORMAL_TEXT,
+                                        color: Get.isDarkMode
+                                            ? Colors.white
+                                            : AppColors.PROFILE_TAB_NORMAL_TEXT,
                                         fontFamily: 'Gotham',
                                         fontWeight: FontWeight.w500),
                                   ),
@@ -997,6 +952,3 @@ print(dataresponse["profile_pic"].toString());
         )));
   }
 }
- 
-
- 

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart' as clint;
 import 'package:http/http.dart' as http;
@@ -12,8 +13,16 @@ import 'package:http/http.dart' as http;
 class Apiservice {
   Dio dio = new Dio();
 
+  Future getMyId() async {
+    final prefs = await SharedPreferences.getInstance();
+    // final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+
+    return id.toString();
+  }
   Future getfaqs() async {
-    late String url = "https://pennychats.com/pennychatapi/cms/faq";
+    late String url = "${AppStrings.baseUrl}/cms/faq";
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
 
@@ -24,7 +33,7 @@ class Apiservice {
   }
 
   Future getTrading() async {
-    late String url = "https://pennychats.com/pennychatapi/cms/trading";
+    late String url = "${AppStrings.baseUrl}/cms/trading";
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
 
@@ -36,7 +45,7 @@ class Apiservice {
 
   Future getStocktoWatch(String id) async {
     late String url =
-        "https://pennychats.com/pennychatapi/pennystocks/lists/$id";
+        "${AppStrings.baseUrl}/pennystocks/lists/$id";
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
 
@@ -48,7 +57,7 @@ class Apiservice {
 
   Future StockAlert() async {
     late String url =
-        "https://pennychats.com/pennychatapi/dashboard/stocktrade";
+        "${AppStrings.baseUrl}/dashboard/stocktrade";
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
 
@@ -59,7 +68,7 @@ class Apiservice {
   }
 
   Future getTestimonial() async {
-    late String url = "https://pennychats.com/pennychatapi/cms/testimonial";
+    late String url = "${AppStrings.baseUrl}/cms/testimonial";
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
 
@@ -75,7 +84,7 @@ class Apiservice {
     final id = prefs.getString('id') ?? '';
     print("id => $id ");
     late String url =
-        "https://pennychats.com/pennychatapi/users/userdetails/$id";
+        "${AppStrings.baseUrl}/users/userdetails/$id";
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
@@ -88,7 +97,7 @@ class Apiservice {
     final id = prefs.getString('id') ?? '';
     print("id => $id ");
     late String url =
-        "https://pennychats.com/pennychatapi/users/user_fav_posts/$id/$postid";
+        "${AppStrings.baseUrl}/users/user_fav_posts/$id/$postid";
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
@@ -102,7 +111,7 @@ class Apiservice {
     final id = prefs.getString('id') ?? '';
     print("id => $id ");
     late String url =
-        "https://pennychats.com/pennychatapi/users/user_unfav_posts/$id/$postid";
+        "${AppStrings.baseUrl}/users/user_unfav_posts/$id/$postid";
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
@@ -120,7 +129,7 @@ class Apiservice {
     _data['content'] = '$text';
     try {
       response = await dio.post(
-          "https://pennychats.com/pennychatapi/testimonial/add_testimonial/$id",
+          "${AppStrings.baseUrl}/testimonial/add_testimonial/$id",
           data: _data,
           options: Options(headers: {
             "Accept": "application/json",
@@ -144,7 +153,7 @@ class Apiservice {
     clint.Response response;
     try {
     response = await dio.post(
-        "https://pennychats.com/pennychatapi/users/edit_profile/$id",
+        "${AppStrings.baseUrl}/users/edit_profile/$id",
     data: _data,
     options: Options(headers: {
     "Accept": "application/json",
@@ -168,7 +177,7 @@ class Apiservice {
 
     try {
       response = await dio.post(
-          "https://pennychats.com/pennychatapi/users/add_stock/$id",
+          "${AppStrings.baseUrl}/users/add_stock/$id",
           data: _data,
           options: Options(headers: {
             "Accept": "application/json",
@@ -192,7 +201,7 @@ class Apiservice {
 
     try {
       response = await dio.post(
-          "https://pennychats.com/pennychatapi/users/add_weekly_watch/$id",
+          "${AppStrings.baseUrl}/users/add_weekly_watch/$id",
           data: _data,
           options: Options(headers: {
             "Accept": "application/json",
@@ -217,7 +226,7 @@ class Apiservice {
 
     try {
       response = await dio.post(
-          "https://pennychats.com/pennychatapi/contact/contact_us",
+          "${AppStrings.baseUrl}/contact/contact_us",
           data: _data,
           options: Options(headers: {
             "Accept": "application/json",
@@ -242,7 +251,7 @@ class Apiservice {
 
     try {
       response = await dio.post(
-          "https://pennychats.com/pennychatapi/post/add_comments/$id",
+          "${AppStrings.baseUrl}/post/add_comments/$id",
           data: _data,
           options: Options(headers: {
             "Accept": "application/json",
@@ -263,7 +272,7 @@ class Apiservice {
     final id = prefs.getString('id') ?? '';
   print("=============p==========");
     late String url =
-        "https://pennychats.com/pennychatapi/post/details/$postid/$id";
+        "${AppStrings.baseUrl}/post/details/$postid/$id";
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
@@ -285,7 +294,7 @@ class Apiservice {
 
     try {
       response = await dio.post(
-          "https://pennychats.com/pennychatapi/login/change_password",
+          "${AppStrings.baseUrl}/login/change_password",
           data: _data,
           options: Options(headers: {
             "Accept": "application/json",
@@ -310,7 +319,7 @@ class Apiservice {
 
     try {
       response = await dio.post(
-          "https://pennychats.com/pennychatapi/post/add_post/$id",
+          "${AppStrings.baseUrl}/post/add_post/$id",
           data: _data,
           options: Options(headers: {
             "Accept": "application/json",
@@ -334,7 +343,7 @@ class Apiservice {
     final id = prefs.getString('id') ?? '';
 print("id -> $id");
     var request =
-    http.MultipartRequest('POST', Uri.parse('https://pennychats.com/pennychatapi/users/img_upload/$id'));
+    http.MultipartRequest('POST', Uri.parse('${AppStrings.baseUrl}/users/img_upload/$id'));
     request.files.add(http.MultipartFile('profile_pic',
         File(filepath).readAsBytes().asStream(), File(filepath).lengthSync(),
         filename: filepath.split("/").last));
@@ -352,7 +361,7 @@ print("id -> $id");
     final token = prefs.getString('token') ?? '';
 
     late String url =
-        "https://pennychats.com/pennychatapi/users/userdetails/$userid";
+        "${AppStrings.baseUrl}/users/userdetails/$userid";
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
@@ -364,7 +373,7 @@ print("id -> $id");
     final id = prefs.getString('id') ?? '';
     // print("id => $id ");
     late String url =
-        "https://pennychats.com/pennychatapi/pennystocks/details/$posttitle";
+        "${AppStrings.baseUrl}/pennystocks/details/$posttitle";
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
@@ -380,7 +389,7 @@ print("id -> $id");
 
     try {
       response = await dio.post(
-          "https://pennychats.com/pennychatapi/pennystocks/add_comments",
+          "${AppStrings.baseUrl}/pennystocks/add_comments",
           data: _data,
           options: Options(headers: {
             "Accept": "application/json",

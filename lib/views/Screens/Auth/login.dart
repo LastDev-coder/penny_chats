@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:penny_chats/controllers/Api/AuthServices/AuthServices.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/views/Screens/Auth/forgotpassword.dart';
@@ -92,8 +94,9 @@ class _LoginState extends State<Login> {
                                   },
                                   controller: _userName,
                                   style: TextStyle(
-                                      color: AppColors
-                                          .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                      color: Get.isDarkMode
+                                          ? Colors.white
+                                          : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                       fontFamily: 'Gotham',
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400),
@@ -164,8 +167,9 @@ class _LoginState extends State<Login> {
                                         },
                                         controller: _password,
                                         style: TextStyle(
-                                            color: AppColors
-                                                .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                            color: Get.isDarkMode
+                                                ? Colors.white
+                                                : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                             fontFamily: 'Gotham',
                                             fontSize: 16,
                                             fontWeight: FontWeight.w400),

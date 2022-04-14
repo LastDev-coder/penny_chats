@@ -208,7 +208,7 @@ var data;
                                   GestureDetector(
                                     behavior: HitTestBehavior.opaque,
                                     onTap: (){
-                                      likePost(_post.);
+                                      // likePost(_post.);
                                     },
                                     child: Container(
                                       child: Row(
