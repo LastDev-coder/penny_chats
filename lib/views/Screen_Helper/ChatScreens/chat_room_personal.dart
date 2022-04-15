@@ -244,8 +244,8 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
       Visiibility = true;
     } else if (index > 0) {
       try {
-        String md1 =_listMessages[index - 1]!.time!.split(" ")[0] +" "+ _listMessages[index - 1].time!.split(" ")[1];
-        String  md2 =_listMessages[index]!.time!.split(" ")[0] +" "+ _listMessages[index].time!.split(" ")[1];
+        String md1 =_listMessages[index - 1].time!.split(" ")[0] +" "+ _listMessages[index - 1].time!.split(" ")[1];
+        String  md2 =_listMessages[index].time!.split(" ")[0] +" "+ _listMessages[index].time!.split(" ")[1];
         if(md1!=md2){
           Visiibility = true;
         }

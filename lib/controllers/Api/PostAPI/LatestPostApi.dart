@@ -11,12 +11,10 @@ class LatestPostApi {
     var token = _prefs.getString('token');
     final prefs = await SharedPreferences.getInstance();
     final id = prefs.getString('id') ?? '';
-    final id = _prefs.getString('id') ?? '';
 
     LatestPostModel? latestPostData;
     var response = await http
         .get(Uri.parse("$api/$id"), headers: {"authentication-token": "$token"});
-        .get(Uri.parse('${api}/${id}'), headers: {"authentication-token": "$token"});
     var responseBody = json.decode(response.body);
     print("--------------latest post-------------");
     print(responseBody);

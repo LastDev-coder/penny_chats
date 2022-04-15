@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:penny_chats/controllers/Api/AuthServices/Authenticate.dart';
 
 void main() {
-  GestureBinding.instance!.resamplingEnabled = true; //
+  GestureBinding.instance?.resamplingEnabled = true; //
   runApp(MyApp());
 }
 
