@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/Api/PostAPI/LatestPostApi.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
@@ -189,59 +190,81 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                 color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/icon/heart.svg',
-                                          height: 20,
-                                          color: AppColors.POST_TAB_LIKE_COLOR,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          _post.votes.toString(),
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color:
-                                                  AppColors.POST_TAB_LIKE_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                            GestureDetector(
+
+                              behavior: HitTestBehavior.opaque,
+                              onTap: (){
+                                String currentStatus= "1";
+                                int votes = int.parse(_post.votes!);
+                                if(_post.is_liked_ornot=="1"){
+                                  currentStatus = "0";
+                                  if(votes>0){
+                                    votes--;
+                                  }
+                                }else{
+                                  if(votes>0){
+                                    votes++;
+                                  }
+                                }
+
+                                _favouritePostList!.response![index].votes = votes.toString();
+                                makeDisLike(_favouritePostList!.response![index].id!,index);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icon/heart-fill.svg',
+                                            height: 20,
+                                            color: AppColors.red
+                                            ,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            _post.votes.toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    AppColors.POST_TAB_LIKE_COLOR,
+                                                fontFamily: 'Gotham',
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/icon/chat.svg',
-                                          height: 20,
-                                          color: AppColors.POST_TAB_LIKE_COLOR,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          _post.comments.toString(),
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color:
-                                                  AppColors.POST_TAB_LIKE_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icon/chat.svg',
+                                            height: 20,
+                                            color: AppColors.POST_TAB_LIKE_COLOR,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            _post.comments.toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    AppColors.POST_TAB_LIKE_COLOR,
+                                                fontFamily: 'Gotham',
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             )
                           ],
@@ -253,5 +276,23 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
               },
             ),
     );
+  }
+
+  makeDisLike(String postid,int index) async {
+    print(postid);
+    var data = await Apiservice().getdislike(postid);
+    print(data);
+    if(data["status"]==true){
+      String  msg= 'You disliked this post';
+      _favouritePostList?.response!.removeAt(index);
+      setState(() {
+
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              msg)));
+    }
+
+
   }
 }

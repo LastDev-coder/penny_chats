@@ -23,7 +23,10 @@ class LatestPostModel {
       LatestPostModel(
         status: json["status"],
         response: List<Response>.from(
-            json["response"].map((x) => Response.fromJson(x))),
+            json["response"].map((x){
+              print("-------------------$x");
+              return Response.fromJson(x);
+            })),
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,6 +49,8 @@ class Response {
     this.isActive,
     this.name,
     this.profilePic,
+    this.is_liked_ornot
+
   });
 
   String? id;
@@ -60,6 +65,7 @@ class Response {
   String? isActive;
   String? name;
   String? profilePic;
+  String? is_liked_ornot;
 
   factory Response.fromJson(Map<String, dynamic> json) => Response(
         id: json["id"],
@@ -74,6 +80,7 @@ class Response {
         isActive: json["is_active"],
         name: json["name"],
         profilePic: json["profile_pic"],
+    is_liked_ornot: json["is_liked_ornot"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -89,5 +96,6 @@ class Response {
         "is_active": isActive,
         "name": name,
         "profile_pic": profilePic,
+        "is_liked_ornot": is_liked_ornot,
       };
 }

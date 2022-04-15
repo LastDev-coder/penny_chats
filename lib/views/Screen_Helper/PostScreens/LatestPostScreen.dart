@@ -199,26 +199,46 @@ var data;
                                 color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: (){
-                                      likePost(_post.);
-                                    },
-                                    child: Container(
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: (){
+                                String currentStatus= "1";
+                                int votes = int.parse(_post.votes!);
+                                if(_post.is_liked_ornot=="1"){
+                                  currentStatus = "0";
+                                  if(votes>0){
+                                    votes--;
+                                  }
+                                }else{
+                                  if(votes>0){
+                                    votes++;
+                                  }
+                                }
+                                _latestPostModel!.response![index].is_liked_ornot = currentStatus;
+                                _latestPostModel!.response![index].votes = votes.toString();
+                                likePost(_latestPostModel!.response![index].id!,currentStatus);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
                                       child: Row(
                                         children: [
-                                SvgPicture.asset(
+                                          _post.is_liked_ornot=="1"?SvgPicture.asset(
+                                            'assets/icon/heart-fill.svg',
+                                            height: 20,
+                                            color: AppColors.red
+                                            ,
+                                          ):
+                                  SvgPicture.asset(
                                     'assets/icon/heart.svg',
                                     height: 20,
                                     color: AppColors.POST_TAB_LIKE_COLOR,
 
-                                ),
+                                  ),
 
                                           SizedBox(
                                             width: 10,
@@ -235,31 +255,31 @@ var data;
                                         ],
                                       ),
                                     ),
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/icon/chat.svg',
-                                          height: 20,
-                                          color: AppColors.POST_TAB_LIKE_COLOR,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          _post.comments.toString(),
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color:
-                                                  AppColors.POST_TAB_LIKE_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icon/chat.svg',
+                                            height: 20,
+                                            color: AppColors.POST_TAB_LIKE_COLOR,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            _post.comments.toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                    AppColors.POST_TAB_LIKE_COLOR,
+                                                fontFamily: 'Gotham',
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             )
                           ],
@@ -273,7 +293,53 @@ var data;
     );
   }
 
-  likePost(){
+  likePost(String postId,String currentStatus){
+    if(currentStatus=="1"){
+      makelike(postId);
+    }else{
+      makeDisLike(postId);
+    }
+
+  }
+
+
+  makelike(String postid) async {
+    print(postid);
+
+    var data = await Apiservice().getlike(postid);
+    print(data);
+    if(data["status"]==true){
+      String  msg= 'You liked this post';
+
+      setState(() {
+
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              msg)));
+    }
+
+
+    print("=============================");
+    print(data);
+    print("post id -> $postid , like -> $isLike");
+
+  }
+
+  makeDisLike(String postid) async {
+    print(postid);
+    var data = await Apiservice().getdislike(postid);
+    print(data);
+    if(data["status"]==true){
+      String  msg= 'You disliked this post';
+
+      setState(() {
+
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              msg)));
+    }
 
 
   }

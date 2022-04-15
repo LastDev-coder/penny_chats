@@ -12,6 +12,7 @@ import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/NotificationsModel.dart';
 import 'package:penny_chats/models/ProfileModel.dart';
 import 'package:penny_chats/views/Screen_Helper/ChatScreens/chat.dart';
+import 'package:penny_chats/views/Screen_Helper/ChatScreens/chat_room_personal.dart';
 import 'package:penny_chats/views/Screen_Helper/Drawer/Navigation_Drawer.dart';
 import 'package:penny_chats/views/Screen_Helper/Notification/notification.dart';
 import 'package:penny_chats/views/Screen_Helper/Notification/notification_setting.dart';
@@ -36,7 +37,7 @@ class _MydashboardState extends State<Mydashboard> {
   int _currentIndex = 0;
 
   static final tabs = [
-    Chat(),
+    ChatRoomPersonal(),
     NoStocks(),
     WeeklyWatchScreen(),
     Post(),

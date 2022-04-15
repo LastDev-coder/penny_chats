@@ -109,6 +109,66 @@ class Apiservice {
     return response.data;
   }
 
+
+  Future getOnlineUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    late String url =
+        "https://pennychats.com/pennychatapi/chat/Chat_online_user";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+
+
+  Future  sendMessage(String text) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    late String url =
+        "https://pennychats.com/pennychatapi/chat/send_msg/$id";
+    Dio dio = new Dio();
+
+    var json = {"txt":text};
+    dio.options.headers["authentication-token"] = token;
+    dio.options.headers["Content-Type"] = "multipart/form-data";
+
+    clint.Response response = await dio.post(url,data: json);
+    return response.data;
+  }
+
+
+  getMessages(String messageId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    late String url =
+        "https://pennychats.com/pennychatapi/chat/chat_msg_all/$id";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+
+
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+
+
+  getCurrentMessages(String messageId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    late String url =
+        "https://pennychats.com/pennychatapi/chat/next_chat_msg_all/$messageId";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+
+
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+
   Future postTestimonial(String text) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
