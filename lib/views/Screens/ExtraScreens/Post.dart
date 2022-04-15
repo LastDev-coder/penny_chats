@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
@@ -15,9 +15,9 @@ class MyPost extends StatefulWidget {
 }
 
 class _MyPostState extends State<MyPost> {
-
   TextEditingController titleController = TextEditingController();
   TextEditingController despController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -169,6 +169,10 @@ class _MyPostState extends State<MyPost> {
           ],
         ),
       ),
+
+
     );
   }
+
+
 }

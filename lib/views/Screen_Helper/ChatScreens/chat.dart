@@ -288,138 +288,138 @@ class _ChatState extends State<Chat> with SingleTickerProviderStateMixin {
           ],
         ),
       ),
-      floatingActionButton: Align(
-        alignment: Alignment.bottomRight,
-        child: getFloatingActionButton(),
-      ),
+      // floatingActionButton: Align(
+      //   alignment: Alignment.bottomRight,
+      //   child: getFloatingActionButton(),
+      // ),
     );
   }
 
-  Widget getFloatingActionButton() {
-    return Stack(
-      children: [
-        AnimatedPositioned(
-            duration: duration,
-            bottom: isBottomCollapsed ? 140 : 20,
-            right: 25,
-            child: Visibility(
-              visible: isBottomCollapsed,
-              child: GestureDetector(
-                onTap: () {
-                  Calculator();
-                },
-                child: Container(
-                  height: 30,
-                  width: 70,
-                  decoration: BoxDecoration(
-                    color: Color(0XFFFBC02D),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          "GAIN",
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            )),
-
-        AnimatedPositioned(
-            duration: duration,
-            bottom: isBottomCollapsed ? 90 : 20,
-            right: 25,
-            child: Visibility(
-              visible: isBottomCollapsed,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyPost()));
-                },
-                child: Container(
-                  height: 30,
-                  width: 70,
-                  decoration: BoxDecoration(
-                    color: Get.isDarkMode ? Colors.white38 : Colors.black54,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                  ),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.add,
-                          size: 20,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          "POST",
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            )),
-
-        Positioned(
-          bottom: 20,
-          right: 30,
-          child: FloatingActionButton(
-            backgroundColor: Color(0XFF4CAF50),
-            onPressed: () {
-              if (_controller != null) {
-                setState(() {
-                  isBottomCollapsed = !isBottomCollapsed;
-                  isBottomCollapsed
-                      ? _controller!.forward()
-                      : _controller!.reverse();
-                });
-              }
-            },
-            child: RotationTransition(
-              turns: Tween(begin: 0.0, end: .1).animate(_controller!),
-              child: Icon(Icons.add),
-            ),
-          ),
-        ),
-
-        // FloatingActionButton.extended(
-        //     onPressed: () {
-        //
-        //       Navigator.push(
-        //           context, MaterialPageRoute(builder: (context) => ChatRoom()));
-        //     },
-        //     label: Text(
-        //       'Start Discussion',
-        //       style: GoogleFonts.openSans(
-        //         color: AppColors.white,
-        //         fontSize: 12,
-        //         fontWeight: FontWeight.bold,
-        //       ),
-        //     ),
-        //     // icon: const Icon(Icons.thumb_up),
-        //     backgroundColor: AppColors.LOGIN_PAGE_LOGINBOX)
-      ],
-    );
-  }
+  // Widget getFloatingActionButton() {
+  //   return Stack(
+  //     children: [
+  //       AnimatedPositioned(
+  //           duration: duration,
+  //           bottom: isBottomCollapsed ? 140 : 20,
+  //           right: 25,
+  //           child: Visibility(
+  //             visible: isBottomCollapsed,
+  //             child: GestureDetector(
+  //               onTap: () {
+  //                 Calculator();
+  //               },
+  //               child: Container(
+  //                 height: 30,
+  //                 width: 70,
+  //                 decoration: BoxDecoration(
+  //                   color: Color(0XFFFBC02D),
+  //                   shape: BoxShape.rectangle,
+  //                   borderRadius: BorderRadius.all(Radius.circular(30)),
+  //                 ),
+  //                 child: Center(
+  //                   child: Row(
+  //                     mainAxisAlignment: MainAxisAlignment.center,
+  //                     children: [
+  //                       Icon(
+  //                         Icons.add,
+  //                         size: 20,
+  //                         color: Colors.white,
+  //                       ),
+  //                       Text(
+  //                         "GAIN",
+  //                         style: TextStyle(
+  //                             fontSize: 12,
+  //                             color: Colors.white,
+  //                             fontWeight: FontWeight.w500),
+  //                       )
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           )),
+  //
+  //       AnimatedPositioned(
+  //           duration: duration,
+  //           bottom: isBottomCollapsed ? 90 : 20,
+  //           right: 25,
+  //           child: Visibility(
+  //             visible: isBottomCollapsed,
+  //             child: GestureDetector(
+  //               onTap: () {
+  //                 Navigator.push(context,
+  //                     MaterialPageRoute(builder: (context) => MyPost()));
+  //               },
+  //               child: Container(
+  //                 height: 30,
+  //                 width: 70,
+  //                 decoration: BoxDecoration(
+  //                   color: Get.isDarkMode ? Colors.white38 : Colors.black54,
+  //                   shape: BoxShape.rectangle,
+  //                   borderRadius: BorderRadius.all(Radius.circular(30)),
+  //                 ),
+  //                 child: Center(
+  //                   child: Row(
+  //                     mainAxisAlignment: MainAxisAlignment.center,
+  //                     children: [
+  //                       Icon(
+  //                         Icons.add,
+  //                         size: 20,
+  //                         color: Colors.white,
+  //                       ),
+  //                       Text(
+  //                         "POST",
+  //                         style: TextStyle(
+  //                             fontSize: 12,
+  //                             color: Colors.white,
+  //                             fontWeight: FontWeight.w500),
+  //                       )
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //             ),
+  //           )),
+  //
+  //       Positioned(
+  //         bottom: 20,
+  //         right: 30,
+  //         child: FloatingActionButton(
+  //           backgroundColor: Color(0XFF4CAF50),
+  //           onPressed: () {
+  //             if (_controller != null) {
+  //               setState(() {
+  //                 isBottomCollapsed = !isBottomCollapsed;
+  //                 isBottomCollapsed
+  //                     ? _controller!.forward()
+  //                     : _controller!.reverse();
+  //               });
+  //             }
+  //           },
+  //           child: RotationTransition(
+  //             turns: Tween(begin: 0.0, end: .1).animate(_controller!),
+  //             child: Icon(Icons.add),
+  //           ),
+  //         ),
+  //       ),
+  //
+  //       // FloatingActionButton.extended(
+  //       //     onPressed: () {
+  //       //
+  //       //       Navigator.push(
+  //       //           context, MaterialPageRoute(builder: (context) => ChatRoom()));
+  //       //     },
+  //       //     label: Text(
+  //       //       'Start Discussion',
+  //       //       style: GoogleFonts.openSans(
+  //       //         color: AppColors.white,
+  //       //         fontSize: 12,
+  //       //         fontWeight: FontWeight.bold,
+  //       //       ),
+  //       //     ),
+  //       //     // icon: const Icon(Icons.thumb_up),
+  //       //     backgroundColor: AppColors.LOGIN_PAGE_LOGINBOX)
+  //     ],
+  //   );
+  // }
 }

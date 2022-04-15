@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 
 class Terms extends StatefulWidget {
@@ -42,7 +44,9 @@ class _TermsState extends State<Terms> {
           children: [
             Container(
               width: double.infinity,
-              color: AppColors.NOTIFICATION_BLACKSHADE,
+              color: Get.isDarkMode
+                  ? Colors.black12
+                  : AppColors.NOTIFICATION_BLACKSHADE,
               child: Padding(
                 padding: const EdgeInsets.only(
                     left: 30, right: 30, top: 30, bottom: 30),
@@ -66,14 +70,18 @@ class _TermsState extends State<Terms> {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         fontSize: 14,
-                        color: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                        color: Get.isDarkMode
+                            ? Colors.white
+                            : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                         fontFamily: 'Gotham',
                         fontWeight: FontWeight.w400)),
               ),
             ),
             Container(
               width: double.infinity,
-              color: AppColors.NOTIFICATION_BLACKSHADE,
+              color: Get.isDarkMode
+                  ? Colors.black12
+                  : AppColors.NOTIFICATION_BLACKSHADE,
               child: Padding(
                 padding: const EdgeInsets.only(
                     left: 30, right: 30, top: 30, bottom: 30),
@@ -97,7 +105,9 @@ class _TermsState extends State<Terms> {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                         fontSize: 14,
-                        color: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                        color: Get.isDarkMode
+                            ? Colors.white
+                            : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                         fontFamily: 'Gotham',
                         fontWeight: FontWeight.w400)),
               ),

@@ -1,34 +1,40 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../ApiService/Apiservice.dart';
 import '../../../models/NewsDetailsModel.dart';
 
 class NewsDetails extends StatefulWidget {
-  final id, title, content, time;
-  const NewsDetails(
-      {Key? key,
-      required this.id,
-      required this.title,
-      required this.content,
-      required this.time})
-      : super(key: key);
+  final id, title, content, time, img;
+
+  const NewsDetails({
+    Key? key,
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.time,
+    required this.img,
+  }) : super(key: key);
 
   @override
   _NewsDetailsState createState() => _NewsDetailsState();
 }
 
 class _NewsDetailsState extends State<NewsDetails> {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController commentController = TextEditingController();
 
-
-  MyComment(String name, String comment, String news_id, String url_title) async {
-    String title = url_title.replaceAll(' ','-');
+  MyComment(
+      String name, String comment, String news_id, String url_title) async {
+    String title = url_title.replaceAll(' ', '-');
     var _data = new Map<String, dynamic>();
     _data['news_id'] = news_id;
     _data['url_title'] = title;
@@ -36,8 +42,8 @@ class _NewsDetailsState extends State<NewsDetails> {
     _data['comment'] = comment;
     // print("$title");
     print(_data);
-nameController.clear();
-commentController.clear();
+    nameController.clear();
+    commentController.clear();
     var data = await Apiservice().PostCommentPennyPlay(_data);
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(data["response"].toString())));
@@ -47,7 +53,8 @@ commentController.clear();
   PostDetail() async {
     List<NewsDetailsModel> postmodel = [];
 
-    var data = await Apiservice().getPostDetailsPennyPlay(widget.title.replaceAll(' ','-'));
+    var data = await Apiservice()
+        .getPostDetailsPennyPlay(widget.title.replaceAll(' ', '-'));
     var commentdata = data["response"]["comment"];
     print(commentdata);
     int i = 0;
@@ -62,8 +69,7 @@ commentController.clear();
           data["response"]["comment"][i]["cmt_email"],
           data["response"]["comment"][i]["comment"],
           data["response"]["comment"][i]["created"],
-          data["response"]["comment"][i]["status"]
-      );
+          data["response"]["comment"][i]["status"]);
       postmodel.add(model);
       i++;
     }
@@ -73,8 +79,6 @@ commentController.clear();
 // });
     return postmodel;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +111,9 @@ commentController.clear();
               child: Text(
                 "${widget.title}",
                 style: TextStyle(
-                    color: Get.isDarkMode ? Colors.white70 :AppColors.PROFILE_TAB_NORMAL_TEXT,
+                    color: Get.isDarkMode
+                        ? Colors.white70
+                        : AppColors.PROFILE_TAB_NORMAL_TEXT,
                     fontFamily: 'Gotham',
                     fontSize: 20,
                     fontWeight: FontWeight.w600),
@@ -157,17 +163,32 @@ commentController.clear();
                 ],
               ),
             ),
+            SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 20, left: 15, right: 15, bottom: 10),
-              child: Text(
-                "${widget.content}",
-                style: TextStyle(
-                  fontSize: 14,
-                  height: 1.4,
-                  color:Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
-                  fontFamily: 'Gotham',
-                ),
+                  top: 20, left: 10, right: 10, bottom: 0),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: Image.network(
+                      "https://www.pennychats.com/beta/uploads/stocknews/${widget.img}")),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 0, left: 15, right: 15, bottom: 10),
+              child: Html(
+                data: '${widget.content}',
+                onLinkTap: (String? url, RenderContext context,
+                    Map<String, String> attributes, dom.Element? element) {
+                  //open URL in webview, or launch URL in browser, or any other logic here
+                  print('clicked');
+                  launch(url!);
+                },
+                shrinkWrap: true,
               ),
             ),
             Padding(
@@ -178,14 +199,13 @@ commentController.clear();
               ),
             ),
             Container(
-              margin: EdgeInsets.only(left: 10,right: 10,bottom: 10),
+              margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: Get.isDarkMode
                     ? Colors.black
                     : AppColors.POST_DETAILS_COMMENTBOX,
               ),
-
               width: MediaQuery.of(context).size.width,
               child: Padding(
                 padding: const EdgeInsets.only(left: 8, right: 8),
@@ -216,10 +236,9 @@ commentController.clear();
                 ),
               ),
             ),
-
             Container(
               // height: 20,
-              margin: EdgeInsets.only(left: 10,right: 10),
+              margin: EdgeInsets.only(left: 10, right: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: Get.isDarkMode
@@ -235,7 +254,6 @@ commentController.clear();
                   controller: commentController,
                   maxLines: 2,
                   style: TextStyle(
-
                       color: Get.isDarkMode
                           ? Colors.white
                           : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
@@ -277,13 +295,16 @@ commentController.clear();
                               nameController.text.toString() == '' ||
                               commentController.text.toString() == null ||
                               commentController.text.toString().isEmpty ||
-                              commentController.text.toString() == ''
-                              ) {
+                              commentController.text.toString() == '') {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text(
                                     'All fields should be fill up. Please try again.')));
-                          }else{
-                            MyComment(nameController.text.toString(), commentController.text.toString(), widget.id, widget.title);
+                          } else {
+                            MyComment(
+                                nameController.text.toString(),
+                                commentController.text.toString(),
+                                widget.id,
+                                widget.title);
                           }
                         },
                         child: Text(
@@ -297,7 +318,6 @@ commentController.clear();
                 ),
               ],
             ),
-
             Padding(
               padding: const EdgeInsets.only(top: 10),
               child: Divider(
@@ -305,139 +325,135 @@ commentController.clear();
                 color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
               ),
             ),
-
             FutureBuilder(
               future: PostDetail(),
               // initialData: InitialData,
               builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                 if (snapshot.data == null) {
+                  print('loading...........');
                   return Container(
-                    child: Center(
-                        child: CupertinoActivityIndicator(
-                            animating: true, radius: 15)),
+                    // child: Center(
+                    //     child: CupertinoActivityIndicator(
+                    //         animating: true, radius: 15)),
                   );
                 } else {
                   return snapshot.data.length.toString() != "0" ||
-                      snapshot.data.length.toString() != "null"
+                          snapshot.data.length.toString() != "null"
                       ? ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int i) {
-                      // postComment = snapshot.data.length.toString();
-                      // print("***********"+postComment);
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (BuildContext context, int i) {
+                            // postComment = snapshot.data.length.toString();
+                            // print("***********"+postComment);
 
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: 15, right: 15),
-                            child: Row(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                            return Column(
                               children: [
-
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                              .size
-                                              .width,
-                                          child: Text(
-                                            '${snapshot.data[i].cmt_name}',
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: AppColors
-                                                    .LOGIN_PAGE_LOGINBOX,
-                                                fontFamily: 'Gotham',
-                                                fontWeight:
-                                                FontWeight.bold),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          '${snapshot.data[i].comment}',
-                                          textAlign: TextAlign.start,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: AppColors
-                                                  .POST_TAB_COMMENTS_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontWeight:
-                                              FontWeight.w500),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 15,
-                                              top: 10,
-                                              bottom: 10),
-                                          child: Row(
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Column(
                                             mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .end,
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(
-                                                    left: 5),
+                                              Container(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
                                                 child: Text(
-                                                  'Posted on :',
+                                                  snapshot.data[i].cmt_name
+                                                      .toString(),
                                                   style: TextStyle(
-                                                      color: AppColors
-                                                          .POST_DETAILS_ICONTEXT,
-                                                      fontFamily:
-                                                      'Gotham',
                                                       fontSize: 12,
+                                                      color: AppColors
+                                                          .LOGIN_PAGE_LOGINBOX,
+                                                      fontFamily: 'Gotham',
                                                       fontWeight:
-                                                      FontWeight
-                                                          .w400),
+                                                          FontWeight.bold),
                                                 ),
                                               ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                snapshot.data[i].comment
+                                                    .toString(),
+                                                textAlign: TextAlign.start,
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: AppColors
+                                                        .POST_TAB_COMMENTS_COLOR,
+                                                    fontFamily: 'Gotham',
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
                                               Padding(
-                                                padding:
-                                                const EdgeInsets
-                                                    .only(
-                                                    left: 5),
-                                                child: Text(
-                                                  '${snapshot.data[i].created}',
-                                                  style: TextStyle(
-                                                      color: AppColors
-                                                          .POST_DETAILS_ICONTEXT,
-                                                      fontFamily:
-                                                      'Gotham',
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .w400),
+                                                padding: const EdgeInsets.only(
+                                                    right: 15,
+                                                    top: 10,
+                                                    bottom: 10),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.end,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 5),
+                                                      child: Text(
+                                                        'Posted on :',
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .POST_DETAILS_ICONTEXT,
+                                                            fontFamily:
+                                                                'Gotham',
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 5),
+                                                      child: Text(
+                                                        '${snapshot.data[i].created}',
+                                                        style: TextStyle(
+                                                            color: AppColors
+                                                                .POST_DETAILS_ICONTEXT,
+                                                            fontFamily:
+                                                                'Gotham',
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-
                                             ],
                                           ),
                                         ),
-
-                                      ],
-                                    ),
+                                      )
+                                    ],
                                   ),
-                                )
+                                ),
                               ],
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  )
+                            );
+                          },
+                        )
                       : Container();
                 }
               },

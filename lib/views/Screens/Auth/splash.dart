@@ -67,7 +67,7 @@ class _SplashState extends State<Splash> {
                         width: 10,
                       ),
                       Text(
-                        '2021 PennyChats',
+                        '2022 PennyChats',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: AppColors.white,

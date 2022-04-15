@@ -238,7 +238,7 @@ var data;
                                     height: 20,
                                     color: AppColors.POST_TAB_LIKE_COLOR,
 
-                                  ),
+                                ),
 
                                           SizedBox(
                                             width: 10,
