@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:html/parser.dart';
@@ -8,6 +9,7 @@ import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/FAQModel.dart';
 
+import '../../../models/TradingModel.dart';
 import '../appdrawer.dart';
 
 class Trading extends StatefulWidget {
@@ -42,9 +44,21 @@ class _TradingState extends State<Trading> {
     return parsedString;
   }
 
+  String? _parseHtmlImage(String htmlString){
+    final document = parse(htmlString);
+    final element;
+    String? parsedString = "";
+    try {
+      parsedString = document.getElementsByTagName('img') as String?;
+    } catch (e) {
+      parsedString = "";
+    }
+    return htmlString;
+  }
+
   Future gettrade() async {
-    List<FAQModel> faqmodel = [];
-    String text, date;
+    List<TradingModel> faqmodel = [];
+    String text,url, date;
     var data;
 
     data = await Apiservice().getTrading();
@@ -54,9 +68,11 @@ class _TradingState extends State<Trading> {
     int i = 0;
     for (var x in dataresponse) {
       text = _parseHtmlString(dataresponse[i]["content"]);
+      url = _parseHtmlImage(dataresponse[i]["content"])!;
+      print('url ==================='+ url.toString());
       date = getFormattedDate(dataresponse[i]["created"]);
-      FAQModel model = FAQModel(
-          dataresponse[i]["title"], text, date, dataresponse[i]["modified"]);
+      TradingModel model = TradingModel(
+          dataresponse[i]["title"], text,url, date, dataresponse[i]["modified"]);
       faqmodel.add(model);
       i++;
     }
@@ -189,20 +205,30 @@ class _TradingState extends State<Trading> {
                                       ],
                                     ),
                                     children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 25, right: 10),
-                                        child: Text(
-                                          '${snapshot.data[i].ans}',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            height: 1.4,
-                                            color: Get.isDarkMode ? Colors.white38 : AppColors
-                                                .POST_TAB_COMMENTS_COLOR,
-                                            fontFamily: 'Gotham',
-                                          ),
-                                        ),
+
+                                      Html(
+                                        data: '${snapshot.data[i].image}',
+
                                       ),
+                                      // Padding(
+                                      //   padding: const EdgeInsets.only(
+                                      //       left: 25, right: 10),
+                                      //   child: Text(
+                                      //     '${snapshot.data[i].ans}',
+                                      //     style: TextStyle(
+                                      //       fontSize: 14,
+                                      //       height: 1.4,
+                                      //       color: Get.isDarkMode ? Colors.white38 : AppColors
+                                      //           .POST_TAB_COMMENTS_COLOR,
+                                      //       fontFamily: 'Gotham',
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      // Padding(
+                                      //   padding: const EdgeInsets.only(
+                                      //       left: 10, right: 10),
+                                      //   child: Image.network('${snapshot.data[i].image}'),
+                                      // ),
                                     ],
                                   ),
                                   Padding(
@@ -295,6 +321,8 @@ class _TradingState extends State<Trading> {
           ),
         ],
       ),
+
+
     );
   }
 }

@@ -34,6 +34,8 @@ class AppStrings {
       'https://www.pennychats.com/beta/uploads/profile_pictures';
   static const noProfilePicture =
       'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459';
+  static const stockNewsPicture =
+      'https://www.pennychats.com/beta/uploads/stocknews';
 
   static DateFormat dateFormat = DateFormat('yyyy-MM-dd – kk:mm');
 

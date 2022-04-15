@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 
+import '../../../ApiService/Apiservice.dart';
+
 class ForgotPassword extends StatefulWidget {
   ForgotPassword({Key? key}) : super(key: key);
 
@@ -11,6 +13,8 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  TextEditingController textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +46,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         height: 40,
                       ),
                       Text(
-                        'Enter the email you use for PennyChat, and we’ll help you creat a new password',
+                        'Enter the username you use for PennyChat, and we’ll help you creat a new password',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: AppColors.FORGOT_PAGE_BLACK_TEXT,
@@ -54,6 +58,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         height: 130,
                       ),
                       TextFormField(
+                        controller: textController,
                         style: TextStyle(
                             color: Get.isDarkMode
                                 ? Colors.white
@@ -62,7 +67,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             fontSize: 16,
                             fontWeight: FontWeight.bold),
                         decoration: const InputDecoration(
-                          labelText: 'YOUR EMAIL',
+                          labelText: 'YOUR USERNAME',
                           labelStyle: TextStyle(
                               fontSize: 13,
                               color: AppColors.FORGOT_PAGE_INPUT_LABLE_TEXT,
@@ -84,12 +89,30 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(50)),
                             color: AppColors.LOGIN_PAGE_LOGINBOX,
-                            onPressed: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => login()));
+                            onPressed: () async {
+                              if (textController.text.toString() == null ||
+                                  textController.text.toString().isEmpty ||
+                                  textController.text.toString() == '') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            'Username should not be blanked.')));
+                              } else {
+                                print("not null --------> " +
+                                    textController.text.toString());
+                                var data = await Apiservice().postfpassword(
+                                    textController.text.toString());
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content:
+                                            Text(data["response"].toString())));
+                                textController.clear();
+                                Navigator.of(context).pop();
+
+                              }
                             },
+
+
                             child: Text(
                               'RESET PASSWORD',
                               style: TextStyle(

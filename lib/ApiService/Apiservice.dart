@@ -13,14 +13,31 @@ import 'package:http/http.dart' as http;
 class Apiservice {
   Dio dio = new Dio();
 
-  Future getMyId() async {
-    final prefs = await SharedPreferences.getInstance();
-    // final token = prefs.getString('token') ?? '';
-    final id = prefs.getString('id') ?? '';
-    print("id => $id ");
+  Future postfpassword(String name) async {
 
-    return id.toString();
+    Dio dio = new Dio();
+    clint.Response response;
+    var _data = new Map<String, dynamic>();
+    _data['username'] = '$name';
+
+
+    try {
+      response = await dio.post(
+          "${AppStrings.baseUrl}/login/forgot",
+          data: _data,
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+          }));
+
+      print('response : ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('Error : $e');
+    }
+
   }
+
   Future getfaqs() async {
     late String url = "${AppStrings.baseUrl}/cms/faq";
     final prefs = await SharedPreferences.getInstance();

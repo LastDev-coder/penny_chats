@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
+import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/StockToWatchModel.dart';
 import 'package:penny_chats/views/Screens/ExtraScreens/NewsDetails.dart';
@@ -60,14 +61,14 @@ class _StocksToWatchState extends State<StocksToWatch> {
 
     int i = 0;
     for (var x in dataresponse) {
-      text = _parseHtmlString(dataresponse[i]["content"]);
+      // text = _parseHtmlString(dataresponse[i]["content"]);
 
       date = getFormattedDate(dataresponse[i]["created"]);
       StockToWatchModel model = StockToWatchModel(
         dataresponse[i]["newscategory"],
         dataresponse[i]["title"],
         dataresponse[i]["url_title"],
-        text,
+        dataresponse[i]["content"],
         dataresponse[i]["img_news"],
         dataresponse[i]["img_caption"],
         date,
@@ -127,6 +128,7 @@ class _StocksToWatchState extends State<StocksToWatch> {
                                     title: snapshot.data[i].title,
                                     content: snapshot.data[i].content,
                                     time: snapshot.data[i].created,
+                                    img: snapshot.data[i].img_news
                                   )));
                     },
                     style: ElevatedButton.styleFrom(
@@ -146,7 +148,7 @@ class _StocksToWatchState extends State<StocksToWatch> {
                         ClipRRect(
                             borderRadius: BorderRadius.circular(5.0),
                             child: Image.network(
-                                "https://www.pennychats.com/beta/uploads/stocknews/${snapshot.data[i].img_news}")),
+                                "${AppStrings.stockNewsPicture}/${snapshot.data[i].img_news}")),
                         SizedBox(
                           height: 10,
                         ),

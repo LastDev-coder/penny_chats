@@ -199,6 +199,8 @@ class _PostState extends State<Post>  with SingleTickerProviderStateMixin{
                                           )));
                                 }
                               },
+
+
                               child: Text('Post',
                                   style: TextStyle(
                                       color: Colors.white,
