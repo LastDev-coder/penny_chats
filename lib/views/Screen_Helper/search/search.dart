@@ -63,7 +63,7 @@ class _SarchState extends State<Sarch> {
           ),
         ),
       ),
-      backgroundColor:AppColors.SCAFFOLD_BACKGROUND,
+      backgroundColor:Get.isDarkMode ? Colors.black38 :AppColors.SCAFFOLD_BACKGROUND,
       body: Padding(
         padding: const EdgeInsets.only(top: 10,left: 12,right: 12),
         child: Column(
@@ -76,17 +76,17 @@ class _SarchState extends State<Sarch> {
                 labelText: "Search name",
                 //  filled: true, // Needed for adding a fill color
                 isDense: true,
-                fillColor: Colors.white,
+                fillColor: Get.isDarkMode ? Colors.black38 : Colors.white,
                 focusColor: Colors.white,
                 hoverColor: Colors.white,
                 filled: true,
 
                 //  filled: true, // Needed for adding a fill color
                 border: OutlineInputBorder(
-                    borderSide: new BorderSide(color: Colors.black),
+                    borderSide: new BorderSide(color: Get.isDarkMode ? Colors.white70 : Colors.black),
                     borderRadius: new BorderRadius.circular(40)),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: new BorderSide(color: Colors.black),
+                  borderSide: new BorderSide(color: Get.isDarkMode ? Colors.white70 :Colors.black),
                   borderRadius: new BorderRadius.circular(40),
                 ),
 

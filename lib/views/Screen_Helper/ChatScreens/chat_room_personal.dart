@@ -92,7 +92,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 1),
                     child: Container(
-                        color:Get.isDarkMode ? Colors.black38 : AppColors.white,
+                        color:Get.isDarkMode ? Colors.black12 : AppColors.white,
                         child: TextFormField(
                           controller: _messagesendController,
                           keyboardType: TextInputType.multiline,
