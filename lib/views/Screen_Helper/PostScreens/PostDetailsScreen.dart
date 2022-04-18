@@ -425,7 +425,7 @@ class _PostDetailsState extends State<PostDetails> {
                 widget.title.toString(),
                 style: TextStyle(
                     fontSize: 15,
-                    color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
+                    color: Get.isDarkMode ? Colors.white70 : AppColors.POST_TAB_COMMENTS_COLOR,
                     fontFamily: 'Gotham',
                     fontWeight: FontWeight.w600),
                 textAlign: TextAlign.start,
@@ -438,7 +438,7 @@ class _PostDetailsState extends State<PostDetails> {
                 widget.desc.toString(),
                 style: TextStyle(
                     fontSize: 14,
-                    color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR_1,
+                    color: Get.isDarkMode ? Colors.white70 : AppColors.POST_TAB_COMMENTS_COLOR_1,
                     fontFamily: 'Gotham',
                     fontWeight: FontWeight.w500),
                 textAlign: TextAlign.start,
@@ -693,7 +693,7 @@ class _PostDetailsState extends State<PostDetails> {
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           fontSize: 12,
-                                          color: AppColors.POST_TAB_COMMENTS_COLOR,
+                                          color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_COMMENTS_COLOR,
                                           fontFamily: 'Gotham',
                                           fontWeight: FontWeight.w500),
                                     ),

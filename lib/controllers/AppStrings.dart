@@ -25,7 +25,7 @@ class AppStrings {
       '$baseUrl/dashboard/favouritepost';
 
   static const getNotificationApi =
-      '$baseUrl/dashboard/notification';
+      '$baseUrl/users/notification_list';
 
   static const getWeeklyWatchApi =
       '$baseUrl/dashboard/weeklywatch';

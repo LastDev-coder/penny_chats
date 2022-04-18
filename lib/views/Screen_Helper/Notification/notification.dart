@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
@@ -93,45 +94,74 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             padding: const EdgeInsets.only(left: 30, right: 30),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text('ⓘ',
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            color:Get.isDarkMode ? Colors.white : AppColors
-                                                .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                                            fontFamily: 'Gotham',
-                                            fontWeight: FontWeight.normal)),
-                                    SizedBox(
-                                      width: 5,
+                                    Expanded(
+                                      child: Text.rich(
+                                        TextSpan(
+                                          children: [
+
+                                            TextSpan(
+                                              text: 'ⓘ ',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color:Get.isDarkMode ? Colors.white : AppColors
+                                                      .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                  fontFamily: 'Gotham',
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                              _notification.notification.toString(),
+                                              style: TextStyle(
+                                                  fontSize: 13,
+                                                  color:Get.isDarkMode ? Colors.white70 :
+                                                  AppColors.NOTIFICATION_HEADING,
+                                                  fontFamily: 'Gotham',
+                                                  fontWeight: FontWeight.normal ),
+
+
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                    Text(_notification.topic.toString(),
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color:Get.isDarkMode ? Colors.white70 :
-                                                AppColors.NOTIFICATION_HEADING,
-                                            fontFamily: 'Gotham',
-                                            fontWeight: FontWeight.bold)),
+
+
+
                                   ],
                                 ),
-                                ReadMoreText(
-                                    AppStrings.parseHtmlString(
-                                        _notification.content.toString()),
-                                    trimLines: 2,
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color:Get.isDarkMode ? Colors.white38 :
-                                            AppColors.NOTIFICATION_NEWSDETAILS,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.w500),
-                                    colorClickableText: Colors.pink,
-                                    trimMode: TrimMode.Line,
-                                    trimCollapsedText: 'Show more',
-                                    trimExpandedText: 'Show less',
-                                    moreStyle: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold)),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Text(_notification.c_date.toString(),
+                                      textAlign: TextAlign.start,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color:Get.isDarkMode ? Colors.white38 :
+                                                       AppColors.NOTIFICATION_NEWSDETAILS,
+                                          fontFamily: 'Gotham',
+                                          fontWeight: FontWeight.normal)),
+                                ),
+                                // ReadMoreText(
+                                //     AppStrings.parseHtmlString(
+                                //         '${_notification.notification.toString()}'),
+                                //     trimLines: 2,
+                                //     style: TextStyle(
+                                //         fontSize: 12,
+                                //         color:Get.isDarkMode ? Colors.white38 :
+                                //             AppColors.NOTIFICATION_NEWSDETAILS,
+                                //         fontFamily: 'Gotham',
+                                //         fontWeight: FontWeight.w500),
+                                //     colorClickableText: Colors.pink,
+                                //     trimMode: TrimMode.Line,
+                                //     trimCollapsedText: 'Show more',
+                                //     trimExpandedText: 'Show less',
+                                //     moreStyle: TextStyle(
+                                //         fontSize: 14,
+                                //         fontWeight: FontWeight.bold)),
                               ],
                             ),
                           ),

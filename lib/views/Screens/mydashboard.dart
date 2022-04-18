@@ -169,18 +169,18 @@ class _MydashboardState extends State<Mydashboard> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(
-                      content: Text(
-                        'no new notification found',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      // backgroundColor: Colors.green,
-                    ));
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => NotificationScreen()));
+                    // ScaffoldMessenger.of(context)
+                    //     .showSnackBar(SnackBar(
+                    //   content: Text(
+                    //     'no new notification found',
+                    //     style: TextStyle(color: Colors.white),
+                    //   ),
+                    //   // backgroundColor: Colors.green,
+                    // ));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NotificationScreen()));
                   },
                   child: Badge(
                     position: BadgePosition.topEnd(top: -50, end: -5),

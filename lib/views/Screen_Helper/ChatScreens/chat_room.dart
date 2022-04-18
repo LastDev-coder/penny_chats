@@ -1,6 +1,8 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 
@@ -252,7 +254,7 @@ class _ChatRoomState extends State<ChatRoom> {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                    color: Colors.black38,
+                    color:  Colors.black38,
                     width: MediaQuery.of(context).size.width,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 1),
@@ -275,7 +277,7 @@ class _ChatRoomState extends State<ChatRoom> {
                                     icon: Icon(
                                       Icons.send,
                                       size: 30,
-                                      color: AppColors.LOGIN_PAGE_LOGINBOX,
+                                      color:AppColors.LOGIN_PAGE_LOGINBOX,
                                     )),
                                 prefixIcon: Row(
                                   mainAxisSize: MainAxisSize.min,

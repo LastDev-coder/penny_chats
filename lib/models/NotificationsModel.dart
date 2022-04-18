@@ -34,36 +34,32 @@ class NotificationsModel {
 
 class Response {
   Response({
-    this.id,
-    this.topic,
-    this.content,
-    this.created,
-    this.modified,
-    this.isActive,
+    this.nid,
+    this.n_for,
+    this.notification,
+    this.c_date,
+
   });
 
-  String? id;
-  String? topic;
-  String? content;
-  DateTime? created;
-  DateTime? modified;
-  String? isActive;
+  String? nid;
+  String? n_for;
+  String? notification;
+
+  String? c_date;
 
   factory Response.fromJson(Map<String, dynamic> json) => Response(
-        id: json["id"],
-        topic: json["topic"],
-        content: json["content"],
-        created: DateTime.parse(json["created"]),
-        modified: DateTime.parse(json["modified"]),
-        isActive: json["is_active"],
+    nid: json["nid"],
+    n_for: json["n_for"],
+    notification: json["notification"],
+    c_date: json["c_date"],
+
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "topic": topic,
-        "content": content,
-        "created": created!.toIso8601String(),
-        "modified": modified!.toIso8601String(),
-        "is_active": isActive,
+        "nid": nid,
+        "n_for": n_for,
+        "notification": notification,
+        "c_date": c_date,
+
       };
 }

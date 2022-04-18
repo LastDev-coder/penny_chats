@@ -92,7 +92,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 1),
                     child: Container(
-                        color: AppColors.white,
+                        color:Get.isDarkMode ? Colors.black38 : AppColors.white,
                         child: TextFormField(
                           controller: _messagesendController,
                           keyboardType: TextInputType.multiline,
@@ -100,7 +100,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                           maxLines: 4,
                           minLines: 1,
                           style: GoogleFonts.openSans(
-                            color: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                            color:Get.isDarkMode ? Colors.white : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -374,7 +374,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                         margin: EdgeInsets.only(top: 5, right: 70),
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            color: Color(0xfff1f2f6),
+                            color: Get.isDarkMode ? Colors.black38 : Color(0xfff1f2f6),
                             borderRadius: BorderRadius.only(
                               topRight: Radius.circular(10),
                               bottomLeft: Radius.circular(10),
@@ -487,7 +487,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                                 fontSize: 14,
                                 height: 1.4,
                                 color: Get.isDarkMode
-                                    ? Colors.white38
+                                    ? Colors.white
                                     : Colors.black,
                                 fontFamily: 'Gotham',
                                 fontWeight: FontWeight.normal)),

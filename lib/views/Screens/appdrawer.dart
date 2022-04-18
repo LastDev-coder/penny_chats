@@ -70,7 +70,7 @@ class _appdrawerState extends State<appdrawer> {
                         ),
                         Text('Percent gain calculator',
                             style: TextStyle(
-                                color: Colors.black,
+                                color: Get.isDarkMode ? Colors.white70 : Colors.black,
                                 fontFamily: 'Gotham',
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600)
@@ -91,7 +91,7 @@ class _appdrawerState extends State<appdrawer> {
                           padding: const EdgeInsets.only(left: 0, right: 0),
                           child: Container(
                             decoration: new BoxDecoration(
-                                color: AppColors.INPUT_BOX,
+                                color: Get.isDarkMode ? Colors.black12 :AppColors.INPUT_BOX,
                                 borderRadius: new BorderRadius.only(
                                   topLeft: const Radius.circular(5.0),
                                   topRight: const Radius.circular(5.0),
@@ -103,7 +103,7 @@ class _appdrawerState extends State<appdrawer> {
                               child: TextFormField(
                                 controller: spController,
                                 keyboardType: TextInputType.number,
-                                style: TextStyle(color: AppColors.INPUT_TEXT),
+                                style: TextStyle(color: AppColors.FROMTO_TEXT),
                                 decoration: new InputDecoration.collapsed(
                                   hintText: 'Starting Price',
                                   hintStyle:
@@ -129,7 +129,7 @@ class _appdrawerState extends State<appdrawer> {
                           padding: const EdgeInsets.only(left: 0, right: 0),
                           child: Container(
                             decoration: new BoxDecoration(
-                                color: AppColors.INPUT_BOX,
+                                color:Get.isDarkMode ? Colors.black12:  AppColors.INPUT_BOX,
                                 borderRadius: new BorderRadius.only(
                                   topLeft: const Radius.circular(5.0),
                                   topRight: const Radius.circular(5.0),
@@ -141,7 +141,7 @@ class _appdrawerState extends State<appdrawer> {
                               child: TextFormField(
                                 controller: epController,
                                 keyboardType: TextInputType.number,
-                                style: TextStyle(color: AppColors.INPUT_TEXT),
+                                style: TextStyle(color: AppColors.FROMTO_TEXT),
                                 decoration: new InputDecoration.collapsed(
                                   hintText: 'Ending Price',
                                   hintStyle:
@@ -216,7 +216,7 @@ class _appdrawerState extends State<appdrawer> {
                               width: 10,
                             ),
                             FlatButton(
-                              color: AppColors.CLEAR_BOX,
+                              color: Get.isDarkMode ? Colors.black12: AppColors.CLEAR_BOX,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50)),
                               onPressed: () {

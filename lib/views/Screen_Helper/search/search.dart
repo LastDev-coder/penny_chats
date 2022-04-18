@@ -15,6 +15,8 @@ import 'package:penny_chats/models/LatestPostModel.dart';
 import 'package:penny_chats/models/user_search_model.dart';
 import 'package:penny_chats/views/Screen_Helper/PostScreens/PostDetailsScreen.dart';
 
+import '../Profile/PostUserScreen.dart';
+
 class Sarch extends StatefulWidget {
   @override
   _SarchState createState() => _SarchState();
@@ -99,7 +101,7 @@ class _SarchState extends State<Sarch> {
 
               ),
             ),
-            _popularPostList==null?Container():
+            _popularPostList==null?Container( ):
           Expanded(
               flex: 1,
               child:   SingleChildScrollView(
@@ -134,172 +136,182 @@ class _SarchState extends State<Sarch> {
                       //         )));
                     },
                     // splashColor: AppColors.DASHBOARD_SELECTED_ICON_COLOR,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: IntrinsicHeight(
-                                child: Row(
-                                  children: [
-                                    Card(
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(50)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: CircleAvatar(
-                                          radius: 25,
-                                          backgroundImage: _post.profilePic ==
-                                              ''
-                                              ? NetworkImage(
-                                              'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg')
-                                              : NetworkImage(
-                                              '${AppStrings.profilePictureApi}/${_post.profilePic}'),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PostUserScreen(
+                                  postUserId: _post.id.toString(),
+                                )));
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: IntrinsicHeight(
+                                  child: Row(
+                                    children: [
+                                      Card(
+                                        elevation: 2,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                            BorderRadius.circular(50)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(2.0),
+                                          child: CircleAvatar(
+                                            radius: 25,
+                                            backgroundImage: _post.profilePic ==
+                                                ''
+                                                ? NetworkImage(
+                                                '${AppStrings.noProfilePicture}')
+                                                : NetworkImage(
+                                                '${AppStrings.profilePictureApi}/${_post.profilePic}'),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 15,
-                                    ),
-                                    Container(
-
-                                      child: Text(
-                                        _post.name.toString(),
-                                        style: TextStyle(
-                                            fontSize: 13,
-                                            color:Get.isDarkMode
-                                                ? Colors.white38
-                                                :
-                                            AppColors.LOGIN_PAGE_LOGINBOX,
-                                            fontFamily: 'Gotham',
-                                            fontWeight: FontWeight.bold),
+                                      SizedBox(
+                                        width: 15,
                                       ),
-                                    ),
+                                      Container(
+
+                                        child: Text(
+                                          _post.name.toString(),
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color:Get.isDarkMode
+                                                  ? Colors.white38
+                                                  :
+                                              AppColors.LOGIN_PAGE_LOGINBOX,
+                                              fontFamily: 'Gotham',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
 
 
 
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
+
+
+                              // Padding(
+                              //   padding:
+                              //   const EdgeInsets.only(left: 15, right: 15),
+                              //   child: Text(
+                              //     _post.content.toString().length < 150
+                              //         ? AppStrings.parseHtmlString(
+                              //         _post.content.toString())
+                              //         : "${AppStrings.parseHtmlString(_post.content.toString().substring(0, 150))}.....",
+                              //     style: TextStyle(
+                              //       fontSize: 14,
+                              //       height: 1.4,
+                              //       color: Get.isDarkMode ? Colors.white38 :AppColors.POST_TAB_COMMENTS_COLOR,
+                              //       fontFamily: 'Gotham',
+                              //     ),
+                              //   ),
+                              // ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 15,
+                            ),
+                            SvgPicture.asset(
+                              'assets/icon/clock.svg',
+                              height: 20,
+                              color: AppColors.POST_TAB_LIKE_COLOR,
+                            ),
+                            SizedBox(
+                              width: 10,
                             ),
 
+                            Text(" Member since ${getDate(_post.created!)}",
 
-                            // Padding(
-                            //   padding:
-                            //   const EdgeInsets.only(left: 15, right: 15),
-                            //   child: Text(
-                            //     _post.content.toString().length < 150
-                            //         ? AppStrings.parseHtmlString(
-                            //         _post.content.toString())
-                            //         : "${AppStrings.parseHtmlString(_post.content.toString().substring(0, 150))}.....",
-                            //     style: TextStyle(
-                            //       fontSize: 14,
-                            //       height: 1.4,
-                            //       color: Get.isDarkMode ? Colors.white38 :AppColors.POST_TAB_COMMENTS_COLOR,
-                            //       fontFamily: 'Gotham',
-                            //     ),
-                            //   ),
-                            // ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 15,
-                          ),
-                          SvgPicture.asset(
-                            'assets/icon/clock.svg',
-                            height: 20,
-                            color: AppColors.POST_TAB_LIKE_COLOR,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-
-                          Text(" Member since ${getDate(_post.created!)}",
-
-                            style: TextStyle(
-                                fontSize: 12,
-                                color:Get.isDarkMode
-                                    ? Colors.white38
-                                    :
-                                AppColors.POST_TAB_LIKE_COLOR,
-                                fontFamily: 'Gotham',
-                                fontWeight: FontWeight.bold),),
-                        ],
-                      ),
-
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Divider(
-                                thickness: 1,
-                                color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/icon/posts.svg',
-                                          height: 20,
-                                          color: AppColors.POST_TAB_LIKE_COLOR,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text("${_post.pcount!} Post",
-                                          //_post.votes.toString(),
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color:Get.isDarkMode
-                                                  ? Colors.white38
-                                                  :
-                                              AppColors.POST_TAB_LIKE_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/icon/chat.svg',
-                                          height: 20,
-                                          color: AppColors.POST_TAB_LIKE_COLOR,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text("${_post.tcount.toString()} Testimonial",
-
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color:Get.isDarkMode
-                                                  ? Colors.white38
-                                                  :
-                                              AppColors.POST_TAB_LIKE_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color:Get.isDarkMode
+                                      ? Colors.white38
+                                      :
+                                  AppColors.POST_TAB_LIKE_COLOR,
+                                  fontFamily: 'Gotham',
+                                  fontWeight: FontWeight.bold),),
                           ],
+                        ),
+
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Divider(
+                                  thickness: 1,
+                                  color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icon/posts.svg',
+                                            height: 20,
+                                            color: AppColors.POST_TAB_LIKE_COLOR,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text("${_post.pcount!} Post",
+                                            //_post.votes.toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color:Get.isDarkMode
+                                                    ? Colors.white38
+                                                    :
+                                                AppColors.POST_TAB_LIKE_COLOR,
+                                                fontFamily: 'Gotham',
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            'assets/icon/chat.svg',
+                                            height: 20,
+                                            color: AppColors.POST_TAB_LIKE_COLOR,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text("${_post.tcount.toString()} Testimonial",
+
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color:Get.isDarkMode
+                                                    ? Colors.white38
+                                                    :
+                                                AppColors.POST_TAB_LIKE_COLOR,
+                                                fontFamily: 'Gotham',
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
