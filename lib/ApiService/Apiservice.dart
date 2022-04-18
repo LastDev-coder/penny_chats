@@ -149,20 +149,39 @@ class Apiservice {
   }
 
 
-  Future  sendMessage(String text) async {
+  Future  sendMessage(var text) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final id = prefs.getString('id') ?? '';
-    late String url =
-        "https://pennychats.com/pennychatapi/chat/send_msg/$id";
+
+  //  late String url = "https://pennychats.com/pennychatapi/chat/send_msg/$id";
+    late String url = "https://pennychats.com/pennychatapi/chat/send_msg/  ";
     Dio dio = new Dio();
 
-    var json = {"txt":text};
+    var json = {"txt":text,"userid":id};
     dio.options.headers["authentication-token"] = token;
-    dio.options.headers["Content-Type"] = "multipart/form-data";
-
     clint.Response response = await dio.post(url,data: json);
     return response.data;
+  }
+
+
+  Future  getSearchData(String text) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token') ?? '';
+      final id = prefs.getString('id') ?? '';
+      late String url =
+              "https://pennychats.com/pennychatapi/users/search/$id";
+      Dio dio = new Dio();
+      var json = {"srch":text};
+      dio.options.headers["authentication-token"] = token;
+
+      clint.Response response = await dio.post(url,data: json);
+      return response.data;
+    } catch (e) {
+      print(e);
+
+    }
   }
 
 

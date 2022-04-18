@@ -51,7 +51,7 @@ dependencies:
   change_app_package_name: ^1.0.0
   platform: ^3.1.0
   webview_flutter:
-  url_launcher: ^6.0.20
+  url_launcher:
   flutter_html:
 
 
@@ -124,7 +124,11 @@ fonts:
            weight: 400
          - asset: fonts/Gotham-Book.ttf
            weight: 500
-         
+     - family: Gotham
+       fonts:
+         - asset: fonts/NotoColorEmoji.ttf
+
+
          
 
   # For details regarding fonts from package dependencies,

@@ -24,7 +24,7 @@ class LatestPostModel {
         status: json["status"],
         response: List<Response>.from(
             json["response"].map((x){
-              print("-------------------$x");
+
               return Response.fromJson(x);
             })),
       );

@@ -20,6 +20,7 @@ import 'package:penny_chats/views/Screen_Helper/PostScreens/post.dart';
 import 'package:penny_chats/views/Screen_Helper/Profile/profile.dart';
 import 'package:penny_chats/views/Screen_Helper/Stock/WeeklyWatch.dart';
 import 'package:penny_chats/views/Screen_Helper/Stock/stock_alert_add.dart';
+import 'package:penny_chats/views/Screen_Helper/search/search.dart';
 import 'package:penny_chats/views/Screens/Auth/splash.dart';
 import 'package:penny_chats/views/Screens/ExtraScreens/disclaimerScreen.dart';
 import 'package:penny_chats/views/Screens/appdrawer.dart';
@@ -150,11 +151,17 @@ class _MydashboardState extends State<Mydashboard> {
               ),
               title: _appBarName[_currentIndex],
               actions: [
-                Badge(
-                  position: BadgePosition.topEnd(top: -20),
-                  child: SvgPicture.asset(
-                    "assets/icon/search.svg",
-                    height: 20,
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Sarch()));
+                  },
+                  child: Badge(
+                    position: BadgePosition.topEnd(top: -20),
+                    child: SvgPicture.asset(
+                      "assets/icon/search.svg",
+                      height: 20,
+                    ),
+
                   ),
                 ),
                 SizedBox(

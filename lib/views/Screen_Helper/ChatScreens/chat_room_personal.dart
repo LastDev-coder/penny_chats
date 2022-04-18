@@ -39,7 +39,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
     super.initState();
     _scrollController= ScrollController();
     getMessage();
-    callTimer();
+   // callTimer();
   }
 
   @override
@@ -187,7 +187,9 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
   }
 
   sendmessage() async {
-    String msg = _messagesendController.text.toString().trim();
+
+    String msg = _messagesendController.text;
+    print("======================$msg");
     if (msg.isEmpty) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Please enter something")));
@@ -195,6 +197,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
     }
     var data = await Apiservice().sendMessage(msg);
     _messagesendController.text = "";
+    print("======================$data");
     gatLastMessage();
 
   }
@@ -218,10 +221,23 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
     }
     if(iisf){
       print("------------xx-----${ _scrollController.hasClients}");
+      print("------------xx-----${ _scrollController.position.maxScrollExtent}");
 
+
+      if (_scrollController.hasClients) {
+        Future.delayed(const Duration(milliseconds: 500)).then((value) {
+          _scrollController.animateTo(
+            _scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.fastOutSlowIn,
+          );
+        });
+      }
      if( _scrollController.hasClients)
-      _scrollController.jumpTo(
-        _scrollController.position.maxScrollExtent
+       _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent+10,
+        duration: const Duration(milliseconds: 1),
+        curve: Curves.bounceInOut,
       );
     }
     lastMessageId = _listMessages.first.iD.toString();
@@ -280,12 +296,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                     width: 10,
                   ),
                   Text(
-                    md,
-                    style: GoogleFonts.openSans(
-                      color: AppColors.CHAT_ROOM_DATEOFMESSAGE,
-                      fontSize: 14.11,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    md
                   ),
                   SizedBox(
                     width: 10,
@@ -294,7 +305,9 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                     child: Container(
                         width: MediaQuery.of(context).size.width / 2,
                         child: Divider(
-                          color: AppColors.CHAT_ROOM_DATEOFMESSAGE_DIVIDER,
+                          color:Get.isDarkMode
+                              ? Colors.white38
+                              : AppColors.CHAT_ROOM_DATEOFMESSAGE_DIVIDER,
                           thickness: 1,
                         )),
                   ),
@@ -367,15 +380,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                               bottomLeft: Radius.circular(10),
                               bottomRight: Radius.circular(10),
                             )),
-                        child: Text(user.message.toString(),
-                            style: TextStyle(
-                                fontSize: 14,
-                                height: 1.4,
-                                color: Get.isDarkMode
-                                    ? Colors.white38
-                                    : Colors.black,
-                                fontFamily: 'Gotham',
-                                fontWeight: FontWeight.normal)),
+                        child: Text(user.message.toString(),),
                       ),
                     ],
                   ),
@@ -523,6 +528,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
     firstMessageId = _listMessages.last.iD.toString();
     var data = await Apiservice().getCurrentMessages(firstMessageId);
     UserChatModel userChatModel = UserChatModel.fromJson(data);
+    print(data);
 
     for (Messages me in userChatModel.messages!) {
       _listMessages.add(me);
