@@ -15,6 +15,9 @@ import 'package:penny_chats/models/online_user_list_model.dart';
 import 'package:penny_chats/models/user_chat_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'chat_room_personal.dart';
+import 'chat_room_personal.dart';
+
 class ChatRoomPersonal extends StatefulWidget {
   ChatRoomPersonal({Key? key}) : super(key: key);
 
@@ -190,13 +193,24 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
 
     String msg = _messagesendController.text;
     print("======================$msg");
+    FocusScopeNode currentFocus = FocusScope.of(context);
+
     if (msg.isEmpty) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Please enter something")));
+      // _formKey.currentState?.reset();
+      currentFocus.focusedChild?.unfocus();
+
       return;
     }
+    this.setState(() {
+
+    });
+
     var data = await Apiservice().sendMessage(msg);
     _messagesendController.text = "";
+    currentFocus.focusedChild?.unfocus();
+
     print("======================$data");
     gatLastMessage();
 
