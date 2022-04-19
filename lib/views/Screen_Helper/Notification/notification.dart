@@ -64,21 +64,21 @@ class _NotificationScreenState extends State<NotificationScreen> {
           : SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    width: double.infinity,
-                    color: Get.isDarkMode ? Colors.black12 :AppColors.NOTIFICATION_BLACKSHADE,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 30, right: 30, top: 30, bottom: 30),
-                      child: Text('TODAY',
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: AppColors.LOGIN_PAGE_LOGINBOX,
-                              fontFamily: 'Gotham',
-                              fontWeight: FontWeight.bold)),
-                    ),
-                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   color: Get.isDarkMode ? Colors.black12 :AppColors.NOTIFICATION_BLACKSHADE,
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(
+                  //         left: 30, right: 30, top: 30, bottom: 30),
+                  //     child: Text('TODAY',
+                  //         textAlign: TextAlign.start,
+                  //         style: TextStyle(
+                  //             fontSize: 12,
+                  //             color: AppColors.LOGIN_PAGE_LOGINBOX,
+                  //             fontFamily: 'Gotham',
+                  //             fontWeight: FontWeight.bold)),
+                  //   ),
+                  // ),
                   ListView.builder(
                       itemCount: _notificationsList!.response!.length,
                       physics: NeverScrollableScrollPhysics(),

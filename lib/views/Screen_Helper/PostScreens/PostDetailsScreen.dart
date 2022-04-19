@@ -650,9 +650,15 @@ class _PostDetailsState extends State<PostDetails> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             GestureDetector(
-                              onTap:(){
-                                ShowProfile(snapshot.data[i].user_id);
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => PostUserScreen(
+                                          postUserId: snapshot.data[i].user_id,
+                                        )));
                               },
+
                               child: Card(
                                 elevation: 2,
                                 shape: RoundedRectangleBorder(
