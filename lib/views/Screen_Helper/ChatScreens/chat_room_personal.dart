@@ -203,9 +203,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
 
       return;
     }
-    this.setState(() {
 
-    });
 
     var data = await Apiservice().sendMessage(msg);
     _messagesendController.text = "";
