@@ -119,7 +119,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                       child: VerticalDivider(
                                         thickness: 1,
                                         width: 10,
-                                        color: AppColors
+                                        color:Get.isDarkMode ? Colors.white: AppColors
                                             .POST_TAB_FAVOURITE_TIME_COLOR,
                                       ),
                                     ),
@@ -128,7 +128,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                     ),
                                     SvgPicture.asset(
                                       'assets/icon/clock.svg',
-                                      color: AppColors
+                                      color: Get.isDarkMode ? Colors.white:AppColors
                                           .POST_TAB_FAVOURITE_TIME_COLOR,
                                       height: 20,
                                     ),
@@ -142,7 +142,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                           AppStrings.dateFormat
                                               .format(_post.created!),
                                           style: TextStyle(
-                                              color: AppColors
+                                              color:Get.isDarkMode ? Colors.white: AppColors
                                                   .POST_TAB_FAVOURITE_TIME_COLOR,
                                               fontFamily: 'Gotham',
                                               fontSize: 14,
@@ -160,7 +160,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                 _post.title.toString(),
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
+                                    color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_COMMENTS_COLOR,
                                     fontFamily: 'Gotham',
                                     fontWeight: FontWeight.w600),
                                 textAlign: TextAlign.start,
@@ -178,7 +178,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                 style: TextStyle(
                                   fontSize: 14,
                                   height: 1.4,
-                                  color:Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
+                                  color:Get.isDarkMode ? Colors.white : AppColors.POST_TAB_COMMENTS_COLOR,
                                   fontFamily: 'Gotham',
                                 ),
                               ),
@@ -187,7 +187,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                               padding: const EdgeInsets.only(top: 10),
                               child: Divider(
                                 thickness: 1,
-                                color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                                color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                               ),
                             ),
                             GestureDetector(
@@ -232,7 +232,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                             _post.votes.toString(),
                                             style: TextStyle(
                                                 fontSize: 12,
-                                                color:
+                                                color:Get.isDarkMode ? Colors.white:
                                                     AppColors.POST_TAB_LIKE_COLOR,
                                                 fontFamily: 'Gotham',
                                                 fontWeight: FontWeight.bold),
@@ -246,7 +246,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                           SvgPicture.asset(
                                             'assets/icon/chat.svg',
                                             height: 20,
-                                            color: AppColors.POST_TAB_LIKE_COLOR,
+                                            color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_LIKE_COLOR,
                                           ),
                                           SizedBox(
                                             width: 10,
@@ -255,7 +255,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                             _post.comments.toString(),
                                             style: TextStyle(
                                                 fontSize: 12,
-                                                color:
+                                                color:Get.isDarkMode ? Colors.white:
                                                     AppColors.POST_TAB_LIKE_COLOR,
                                                 fontFamily: 'Gotham',
                                                 fontWeight: FontWeight.bold),

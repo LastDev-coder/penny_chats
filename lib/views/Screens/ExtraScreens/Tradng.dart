@@ -235,7 +235,7 @@ class _TradingState extends State<Trading> {
                                     padding: const EdgeInsets.only(
                                         left: 10, right: 10),
                                     child: Divider(
-                                      color: AppColors
+                                      color: Get.isDarkMode ? Colors.white:AppColors
                                           .POST_TAB_FAVOURITE_TIME_COLOR,
                                       thickness: 1,
                                     ),
@@ -267,7 +267,7 @@ class _TradingState extends State<Trading> {
                                             child: Text(
                                               "PennyChats",
                                               style: TextStyle(
-                                                  color: AppColors
+                                                  color: Get.isDarkMode ? Colors.white:AppColors
                                                       .POST_TAB_FAVOURITE_TIME_COLOR,
                                                   fontFamily: 'Gotham',
                                                   fontSize: 12,
@@ -279,7 +279,7 @@ class _TradingState extends State<Trading> {
                                           ),
                                           SvgPicture.asset(
                                             'assets/icon/clock.svg',
-                                            color: AppColors
+                                            color: Get.isDarkMode ? Colors.white:AppColors
                                                 .POST_TAB_FAVOURITE_TIME_COLOR,
                                             height: 18,
                                           ),
@@ -294,7 +294,7 @@ class _TradingState extends State<Trading> {
                                               child: Text(
                                                 '${snapshot.data[i].created}',
                                                 style: TextStyle(
-                                                    color: AppColors
+                                                    color: Get.isDarkMode ? Colors.white:AppColors
                                                         .POST_TAB_FAVOURITE_TIME_COLOR,
                                                     fontFamily: 'Gotham',
                                                     fontSize: 12,

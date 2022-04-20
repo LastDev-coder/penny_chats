@@ -60,7 +60,7 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
                       style: TextStyle(
                         fontSize: 15,
                         height: 1.4,
-                        color: Get.isDarkMode ? Colors.white38 :AppColors.POST_TAB_COMMENTS_COLOR,
+                        color: Get.isDarkMode ? Colors.white :AppColors.POST_TAB_COMMENTS_COLOR,
                         fontFamily: 'Gotham',
                       ),
                     ),

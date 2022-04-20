@@ -98,7 +98,7 @@ print(data);
                                         Text(
                                           " ${snapshot.data[i].content}",
                                           style: TextStyle(
-                                              color:Get.isDarkMode ? Colors.white38 : AppColors
+                                              color:Get.isDarkMode ? Colors.white : AppColors
                                                   .CHAT_SCREEN_BLACK_TEXT,
                                               fontFamily: 'Gotham',
                                               fontSize: 14,

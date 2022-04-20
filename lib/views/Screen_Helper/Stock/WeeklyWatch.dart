@@ -519,7 +519,7 @@ class _WeeklyWatchScreenState extends State<WeeklyWatchScreen> {
                                                       child: Text(_data.stock!,
                                                           style: TextStyle(
                                                               fontSize: 12,
-                                                              color:Get.isDarkMode ? Colors.white38 :
+                                                              color:Get.isDarkMode ? Colors.white :
                                                                   Colors.black,
                                                               fontFamily:
                                                                   'Gotham',

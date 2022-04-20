@@ -151,7 +151,7 @@ class _FAQState extends State<FAQ> {
                                       fontSize: 14,
                                       height: 1.4,
                                       color: Get.isDarkMode
-                                          ? Colors.white38
+                                          ? Colors.white
                                           : AppColors.POST_TAB_COMMENTS_COLOR,
                                       fontFamily: 'Gotham',
                                     ),
@@ -163,7 +163,7 @@ class _FAQState extends State<FAQ> {
                               padding:
                                   const EdgeInsets.only(left: 10, right: 10),
                               child: Divider(
-                                color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                                color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                                 thickness: 1,
                               ),
                             ),
@@ -192,7 +192,7 @@ class _FAQState extends State<FAQ> {
                                       child: Text(
                                         "PennyChats",
                                         style: TextStyle(
-                                            color: AppColors
+                                            color: Get.isDarkMode ? Colors.white:AppColors
                                                 .POST_TAB_FAVOURITE_TIME_COLOR,
                                             fontFamily: 'Gotham',
                                             fontSize: 12,
@@ -204,7 +204,7 @@ class _FAQState extends State<FAQ> {
                                     ),
                                     SvgPicture.asset(
                                       'assets/icon/clock.svg',
-                                      color: AppColors
+                                      color: Get.isDarkMode ? Colors.white:AppColors
                                           .POST_TAB_FAVOURITE_TIME_COLOR,
                                       height: 18,
                                     ),
@@ -217,7 +217,7 @@ class _FAQState extends State<FAQ> {
                                         child: Text(
                                           '${snapshot.data[i].created}',
                                           style: TextStyle(
-                                              color: AppColors
+                                              color: Get.isDarkMode ? Colors.white:AppColors
                                                   .POST_TAB_FAVOURITE_TIME_COLOR,
                                               fontFamily: 'Gotham',
                                               fontSize: 12,

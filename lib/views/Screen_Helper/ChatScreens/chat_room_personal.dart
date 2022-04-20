@@ -118,7 +118,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                                   )),
                               hintText: 'Type in your message...',
                               hintStyle: GoogleFonts.openSans(
-                                //color: AppColors.white,
+                                color: Get.isDarkMode ? Colors.white :Colors.black,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),

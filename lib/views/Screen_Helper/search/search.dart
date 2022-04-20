@@ -185,7 +185,7 @@ class _SarchState extends State<Sarch> {
                                           style: TextStyle(
                                               fontSize: 13,
                                               color:Get.isDarkMode
-                                                  ? Colors.white38
+                                                  ? Colors.white
                                                   :
                                               AppColors.LOGIN_PAGE_LOGINBOX,
                                               fontFamily: 'Gotham',
@@ -225,7 +225,7 @@ class _SarchState extends State<Sarch> {
                             SvgPicture.asset(
                               'assets/icon/clock.svg',
                               height: 20,
-                              color: AppColors.POST_TAB_LIKE_COLOR,
+                              color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_LIKE_COLOR,
                             ),
                             SizedBox(
                               width: 10,
@@ -236,7 +236,7 @@ class _SarchState extends State<Sarch> {
                               style: TextStyle(
                                   fontSize: 12,
                                   color:Get.isDarkMode
-                                      ? Colors.white38
+                                      ? Colors.white
                                       :
                                   AppColors.POST_TAB_LIKE_COLOR,
                                   fontFamily: 'Gotham',
@@ -248,7 +248,7 @@ class _SarchState extends State<Sarch> {
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Divider(
                                   thickness: 1,
-                                  color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                                  color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                                 ),
                               ),
                               Padding(
@@ -263,7 +263,7 @@ class _SarchState extends State<Sarch> {
                                           SvgPicture.asset(
                                             'assets/icon/posts.svg',
                                             height: 20,
-                                            color: AppColors.POST_TAB_LIKE_COLOR,
+                                            color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_LIKE_COLOR,
                                           ),
                                           SizedBox(
                                             width: 10,
@@ -273,7 +273,7 @@ class _SarchState extends State<Sarch> {
                                             style: TextStyle(
                                                 fontSize: 12,
                                                 color:Get.isDarkMode
-                                                    ? Colors.white38
+                                                    ? Colors.white
                                                     :
                                                 AppColors.POST_TAB_LIKE_COLOR,
                                                 fontFamily: 'Gotham',
@@ -288,7 +288,7 @@ class _SarchState extends State<Sarch> {
                                           SvgPicture.asset(
                                             'assets/icon/chat.svg',
                                             height: 20,
-                                            color: AppColors.POST_TAB_LIKE_COLOR,
+                                            color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_LIKE_COLOR,
                                           ),
                                           SizedBox(
                                             width: 10,
@@ -298,7 +298,7 @@ class _SarchState extends State<Sarch> {
                                             style: TextStyle(
                                                 fontSize: 12,
                                                 color:Get.isDarkMode
-                                                    ? Colors.white38
+                                                    ? Colors.white
                                                     :
                                                 AppColors.POST_TAB_LIKE_COLOR,
                                                 fontFamily: 'Gotham',

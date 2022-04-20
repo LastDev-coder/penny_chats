@@ -526,7 +526,7 @@ class _NoStocksState extends State<NoStocks> {
                                                   snapshot.data[i].stock,
                                                   style: TextStyle(
                                                       color: Get.isDarkMode
-                                                          ? Colors.white38
+                                                          ? Colors.white
                                                           : Colors.black,
                                                       fontFamily: 'Gotham',
                                                       fontSize: 14,
@@ -541,7 +541,7 @@ class _NoStocksState extends State<NoStocks> {
                                                   snapshot.data[i].price_start,
                                                   style: TextStyle(
                                                       color: Get.isDarkMode
-                                                          ? Colors.white38
+                                                          ? Colors.white
                                                           : Colors.black,
                                                       fontFamily: 'Gotham',
                                                       fontSize: 14,

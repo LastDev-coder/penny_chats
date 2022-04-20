@@ -118,7 +118,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                               _notification.notification.toString(),
                                               style: TextStyle(
                                                   fontSize: 13,
-                                                  color:Get.isDarkMode ? Colors.white70 :
+                                                  color:Get.isDarkMode ? Colors.white :
                                                   AppColors.NOTIFICATION_HEADING,
                                                   fontFamily: 'Gotham',
                                                   fontWeight: FontWeight.normal ),
@@ -140,7 +140,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                           fontSize: 12,
-                                          color:Get.isDarkMode ? Colors.white38 :
+                                          color:Get.isDarkMode ? Colors.white :
                                                        AppColors.NOTIFICATION_NEWSDETAILS,
                                           fontFamily: 'Gotham',
                                           fontWeight: FontWeight.normal)),

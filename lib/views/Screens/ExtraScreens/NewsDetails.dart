@@ -112,7 +112,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                 "${widget.title}",
                 style: TextStyle(
                     color: Get.isDarkMode
-                        ? Colors.white70
+                        ? Colors.white
                         : AppColors.PROFILE_TAB_NORMAL_TEXT,
                     fontFamily: 'Gotham',
                     fontSize: 20,
@@ -128,7 +128,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                     "by PennyChats",
                     style: TextStyle(
                         fontSize: 13,
-                        color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                        color:Get.isDarkMode ? Colors.white: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                         fontFamily: 'Gotham',
                         fontWeight: FontWeight.w400),
                   ),
@@ -139,7 +139,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                     "|",
                     style: TextStyle(
                         fontSize: 13,
-                        color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                        color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                         fontFamily: 'Gotham',
                         fontWeight: FontWeight.bold),
                   ),
@@ -153,7 +153,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                       child: Text(
                         "${widget.time}",
                         style: TextStyle(
-                            color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                            color:Get.isDarkMode ? Colors.white: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                             fontFamily: 'Gotham',
                             fontSize: 14,
                             fontWeight: FontWeight.w400),

@@ -363,7 +363,7 @@ class _PostDetailsState extends State<PostDetails> {
                       'By',
                       style: TextStyle(
                           fontSize: 13,
-                          color: AppColors.FORGOT_PAGE_INPUT_TEXT,
+                          color: Get.isDarkMode ? Colors.white:AppColors.FORGOT_PAGE_INPUT_TEXT,
                           fontFamily: 'Gotham',
                           fontWeight: FontWeight.normal),
                     ),
@@ -389,7 +389,7 @@ class _PostDetailsState extends State<PostDetails> {
                       child: VerticalDivider(
                         thickness: 1,
                         width: 10,
-                        color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                        color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                       ),
                     ),
                     SizedBox(
@@ -397,7 +397,7 @@ class _PostDetailsState extends State<PostDetails> {
                     ),
                     SvgPicture.asset(
                       'assets/icon/clock.svg',
-                      color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                      color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                       height: 20,
                     ),
                     Padding(
@@ -407,7 +407,7 @@ class _PostDetailsState extends State<PostDetails> {
                         child: Text(
                           widget.time.toString(),
                           style: TextStyle(
-                              color:
+                              color:Get.isDarkMode ? Colors.white:
                               AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                               fontFamily: 'Gotham',
                               fontSize: 14,
@@ -425,7 +425,7 @@ class _PostDetailsState extends State<PostDetails> {
                 widget.title.toString(),
                 style: TextStyle(
                     fontSize: 15,
-                    color: Get.isDarkMode ? Colors.white70 : AppColors.POST_TAB_COMMENTS_COLOR,
+                    color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_COMMENTS_COLOR,
                     fontFamily: 'Gotham',
                     fontWeight: FontWeight.w600),
                 textAlign: TextAlign.start,
@@ -438,9 +438,9 @@ class _PostDetailsState extends State<PostDetails> {
                 widget.desc.toString(),
                 style: TextStyle(
                     fontSize: 14,
-                    color: Get.isDarkMode ? Colors.white70 : AppColors.POST_TAB_COMMENTS_COLOR_1,
+                    color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_COMMENTS_COLOR_1,
                     fontFamily: 'Gotham',
-                    fontWeight: FontWeight.w500),
+                    fontWeight: FontWeight.w400),
                 textAlign: TextAlign.start,
               ),
             ),
@@ -474,7 +474,7 @@ class _PostDetailsState extends State<PostDetails> {
                           ):  SvgPicture.asset(
                             'assets/icon/heart.svg',
                             height: 20,
-                            color: AppColors.POST_TAB_LIKE_COLOR,
+                            color: Get.isDarkMode ? Colors.white: AppColors.POST_TAB_LIKE_COLOR,
                           ),
                           SizedBox(
                             width: 10,
@@ -483,7 +483,7 @@ class _PostDetailsState extends State<PostDetails> {
                             (postLikes=="0" ||postLikes=="1") ? '${postLikes} Like' :   '${postLikes} Likes',
                             style: TextStyle(
                                 fontSize: 12,
-                                color: AppColors.POST_TAB_LIKE_COLOR,
+                                color:Get.isDarkMode ? Colors.white: AppColors.POST_TAB_LIKE_COLOR,
                                 fontFamily: 'Gotham',
                                 fontWeight: FontWeight.bold),
                           ),
@@ -497,7 +497,7 @@ class _PostDetailsState extends State<PostDetails> {
                         SvgPicture.asset(
                           'assets/icon/chat.svg',
                           height: 20,
-                          color: AppColors.POST_TAB_LIKE_COLOR,
+                          color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_LIKE_COLOR,
                         ),
                         SizedBox(
                           width: 10,
@@ -506,7 +506,7 @@ class _PostDetailsState extends State<PostDetails> {
                           (postComment=="0" || postComment=="1")?'${postComment} comment':    '${postComment} comments',
                           style: TextStyle(
                               fontSize: 12,
-                              color: AppColors.POST_TAB_LIKE_COLOR,
+                              color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_LIKE_COLOR,
                               fontFamily: 'Gotham',
                               fontWeight: FontWeight.bold),
                         ),
@@ -521,7 +521,7 @@ class _PostDetailsState extends State<PostDetails> {
               padding: const EdgeInsets.only(bottom: 10),
               child: Divider(
                 thickness: 1,
-                color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                color:Get.isDarkMode ? Colors.white: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
               ),
             ),
             Padding(
@@ -618,7 +618,7 @@ class _PostDetailsState extends State<PostDetails> {
               padding: const EdgeInsets.only(top: 10),
               child: Divider(
                 thickness: 1,
-                color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                color:Get.isDarkMode ? Colors.white: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
               ),
             ),
 
@@ -714,7 +714,7 @@ class _PostDetailsState extends State<PostDetails> {
                                             children: [
                                               SvgPicture.asset(
                                                 'assets/icon/clock.svg',
-                                                color: AppColors
+                                                color:Get.isDarkMode ? Colors.white: AppColors
                                                     .POST_DETAILS_ICONCOLOR,
                                                 height: 15,
                                               ),
@@ -724,7 +724,7 @@ class _PostDetailsState extends State<PostDetails> {
                                                 child: Text(
                                                   '${snapshot.data[i].created}',
                                                   style: TextStyle(
-                                                      color: AppColors
+                                                      color: Get.isDarkMode ? Colors.white:AppColors
                                                           .POST_DETAILS_ICONTEXT,
                                                       fontFamily: 'Gotham',
                                                       fontSize: 12,
