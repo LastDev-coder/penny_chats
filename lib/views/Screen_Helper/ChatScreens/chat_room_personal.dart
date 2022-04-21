@@ -98,7 +98,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                         color:Get.isDarkMode ? Colors.black12 : AppColors.white,
                         child: TextFormField(
                           controller: _messagesendController,
-                          keyboardType: TextInputType.emailAddress,
+                          keyboardType: TextInputType.text,
                           textAlignVertical: TextAlignVertical.center,
                           maxLines: 4,
                           minLines: 1,
@@ -160,7 +160,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                   radius: 27,
                   backgroundImage: user.profilePic == ''
                       ? NetworkImage(
-                          'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459')
+                          '${AppStrings.noProfilePicture}')
                       : NetworkImage(
                           '${AppStrings.profilePictureApi}/${user.profilePic}'),
                 ),
@@ -181,7 +181,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
           user.name!,
           style: TextStyle(
             fontSize: 9,
-            color: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+            color: Get.isDarkMode ? Colors.white :AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
             fontFamily: 'Gotham',
             fontWeight: FontWeight.bold,
           ),
@@ -340,7 +340,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                       radius: 27,
                       backgroundImage: user.pic == ''
                           ? NetworkImage(
-                              'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459')
+                              '${AppStrings.noProfilePicture}')
                           : NetworkImage(
                               '${AppStrings.profilePictureApi}/${user.pic}'),
                     ),
@@ -521,7 +521,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                       radius: 27,
                       backgroundImage: user.pic == ''
                           ? NetworkImage(
-                          'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459')
+                          '${AppStrings.noProfilePicture}')
                           : NetworkImage(
                           '${AppStrings.profilePictureApi}/${user.pic}'),
                     ),
