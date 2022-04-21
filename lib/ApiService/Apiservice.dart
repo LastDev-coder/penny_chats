@@ -175,6 +175,7 @@ class Apiservice {
       Dio dio = new Dio();
       var json = {"srch":text};
       dio.options.headers["authentication-token"] = token;
+      dio.options.headers["Content-Type"] =  "application/x-www-form-urlencoded";
 
       clint.Response response = await dio.post(url,data: json);
       return response.data;

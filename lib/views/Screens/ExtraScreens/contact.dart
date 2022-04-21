@@ -296,9 +296,14 @@ class _contactState extends State<contact> {
                             queryController.text.toString() == null ||
                             queryController.text.toString().isEmpty ||
                             queryController.text.toString() == '') {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  'All fields should be fill up. Please try again.')));
+
+                          ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+                            content: new Text(
+                              'All fields should be fill up. Please try again.',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            backgroundColor: Colors.red,
+                          ));
                         } else {
                           var _data = new Map<String, dynamic>();
                           _data['fname'] = firstController.text.toString();
@@ -312,7 +317,14 @@ class _contactState extends State<contact> {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                   content: Text(
-                                      data.toString())));
+                                      data['response'].toString(),
+                                    style: TextStyle(color: Colors.white),
+
+                                  ),
+                                backgroundColor: Colors.green,
+
+                              ));
+
                           firstController.clear();
                           lastController.clear();
                           emailController.clear();

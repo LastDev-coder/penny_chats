@@ -37,8 +37,8 @@ var data;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Get.isDarkMode
-          ?Colors.transparent: AppColors.POST_BACKGROUND_COLOR,
+      // backgroundColor: Get.isDarkMode
+      //     ?Colors.transparent: AppColors.POST_BACKGROUND_COLOR,
       body: _latestPostModel == null
           ? Center(
               child: CircularProgressIndicator(),
@@ -128,8 +128,8 @@ var data;
                                       child: VerticalDivider(
                                         thickness: 1,
                                         width: 10,
-                                        color: Get.isDarkMode ? Colors.white:AppColors
-                                            .POST_TAB_FAVOURITE_TIME_COLOR
+                                        color: AppColors
+                                            .POST_TAB_FAVOURITE_TIME_COLOR,
                                       ),
                                     ),
                                     SizedBox(
@@ -137,7 +137,7 @@ var data;
                                     ),
                                     SvgPicture.asset(
                                       'assets/icon/clock.svg',
-                                      color:Get.isDarkMode ? Colors.white: AppColors
+                                      color: AppColors
                                           .POST_TAB_FAVOURITE_TIME_COLOR,
                                       height: 20,
                                     ),
@@ -150,7 +150,7 @@ var data;
                                         child: Text(
                                           dateFormat.format(_post.created!),
                                           style: TextStyle(
-                                              color:Get.isDarkMode ? Colors.white: AppColors
+                                              color: AppColors
                                                   .POST_TAB_FAVOURITE_TIME_COLOR,
                                               fontFamily: 'Gotham',
                                               fontSize: 14,
@@ -169,7 +169,7 @@ var data;
                                 _post.title.toString(),
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_COMMENTS_COLOR,
+                                    color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
                                     fontFamily: 'Gotham',
                                     fontWeight: FontWeight.w600),
                                 textAlign: TextAlign.start,
@@ -187,7 +187,7 @@ var data;
                                 style: TextStyle(
                                   fontSize: 14,
                                   height: 1.4,
-                                  color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_COMMENTS_COLOR,
+                                  color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
                                   fontFamily: 'Gotham',
                                 ),
                               ),
@@ -196,35 +196,36 @@ var data;
                               padding: const EdgeInsets.only(top: 10),
                               child: Divider(
                                 thickness: 1,
-                                color:Get.isDarkMode ? Colors.white : AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                                color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                               ),
                             ),
-                            GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: (){
-                                String currentStatus= "1";
-                                int votes = int.parse(_post.votes!);
-                                if(_post.is_liked_ornot=="1"){
-                                  currentStatus = "0";
-                                  if(votes>0){
-                                    votes--;
-                                  }
-                                }else{
-                                  if(votes>0){
-                                    votes++;
-                                  }
-                                }
-                                _latestPostModel!.response![index].is_liked_ornot = currentStatus;
-                                _latestPostModel!.response![index].votes = votes.toString();
-                                likePost(_latestPostModel!.response![index].id!,currentStatus);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: (){
+                                      String currentStatus= "1";
+                                      int votes = int.parse(_post.votes!);
+
+                                      if(_post.is_liked_ornot=="1"){
+                                        currentStatus = "0";
+                                        if(votes>0){
+                                          votes--;
+                                        }
+                                      }else{
+                                        if(votes>=0){
+                                          votes++;
+                                        }
+                                      }
+                                      _latestPostModel!.response![index].is_liked_ornot = currentStatus;
+                                      _latestPostModel!.response![index].votes = votes.toString();
+                                      likePost(_latestPostModel!.response![index].id!,currentStatus);
+                                    },
+                                    child: Container(
                                       child: Row(
                                         children: [
                                           _post.is_liked_ornot=="1"?SvgPicture.asset(
@@ -233,12 +234,12 @@ var data;
                                             color: AppColors.red
                                             ,
                                           ):
-                                  SvgPicture.asset(
+                                SvgPicture.asset(
                                     'assets/icon/heart.svg',
                                     height: 20,
-                                    color: Get.isDarkMode ? Colors.white: AppColors.POST_TAB_LIKE_COLOR,
+                                    color: AppColors.POST_TAB_LIKE_COLOR,
 
-                                ),
+                              ),
 
                                           SizedBox(
                                             width: 10,
@@ -247,7 +248,7 @@ var data;
                                             _post.votes.toString(),
                                             style: TextStyle(
                                                 fontSize: 12,
-                                                color: Get.isDarkMode ? Colors.white :
+                                                color:
                                                     AppColors.POST_TAB_LIKE_COLOR,
                                                 fontFamily: 'Gotham',
                                                 fontWeight: FontWeight.bold),
@@ -255,31 +256,31 @@ var data;
                                         ],
                                       ),
                                     ),
-                                    Container(
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/icon/chat.svg',
-                                            height: 20,
-                                            color: Get.isDarkMode ? Colors.white: AppColors.POST_TAB_LIKE_COLOR,
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            _post.comments.toString(),
-                                            style: TextStyle(
-                                                fontSize: 12,
-                                                color: Get.isDarkMode ? Colors.white:
-                                                    AppColors.POST_TAB_LIKE_COLOR,
-                                                fontFamily: 'Gotham',
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ],
-                                      ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          'assets/icon/chat.svg',
+                                          height: 20,
+                                          color: AppColors.POST_TAB_LIKE_COLOR,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          _post.comments.toString(),
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color:
+                                                  AppColors.POST_TAB_LIKE_COLOR,
+                                              fontFamily: 'Gotham',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             )
                           ],

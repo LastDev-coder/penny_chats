@@ -107,10 +107,13 @@ class _PostDetailsState extends State<PostDetails> {
     print(_data);
 
     var data = await Apiservice().PostComment(_data);
-    ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content:
-            Text(data["response"].toString())));
+    ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+      content: new Text(
+        data["response"].toString(),
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.green,
+    ));
     // Navigator.of(context).pop();
   }
 
@@ -598,10 +601,18 @@ class _PostDetailsState extends State<PostDetails> {
                         child: Icon(Icons.send, size: 15,color: Colors.white,),
                         onPressed: () async {
                           if(textController.text.isNotEmpty && textController.text.toString() !=''){
-                            await    MyComment(widget.id.toString(),textController.text.toString());
+                            await    MyComment(widget.id.toString(),textController.text);
                             textController.clear();
                             PostDetail();
 
+                          }else{
+                            ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+                              content: new Text(
+                                'Please write your comments',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.red,
+                            ));
                           }
 
                         },

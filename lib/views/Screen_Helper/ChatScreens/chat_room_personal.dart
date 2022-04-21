@@ -98,7 +98,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                         color:Get.isDarkMode ? Colors.black12 : AppColors.white,
                         child: TextFormField(
                           controller: _messagesendController,
-                          keyboardType: TextInputType.multiline,
+                          keyboardType: TextInputType.emailAddress,
                           textAlignVertical: TextAlignVertical.center,
                           maxLines: 4,
                           minLines: 1,
@@ -122,6 +122,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
+
                               contentPadding: EdgeInsets.all(5)),
                         )),
                   )),

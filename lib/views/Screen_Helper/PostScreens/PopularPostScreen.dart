@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/Api/PostAPI/LatestPostApi.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
@@ -121,7 +122,7 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                       child: VerticalDivider(
                                         thickness: 1,
                                         width: 10,
-                                        color:Get.isDarkMode ? Colors.white: AppColors
+                                        color: AppColors
                                             .POST_TAB_FAVOURITE_TIME_COLOR,
                                       ),
                                     ),
@@ -130,7 +131,7 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                     ),
                                     SvgPicture.asset(
                                       'assets/icon/clock.svg',
-                                      color: Get.isDarkMode ? Colors.white:AppColors
+                                      color: AppColors
                                           .POST_TAB_FAVOURITE_TIME_COLOR,
                                       height: 20,
                                     ),
@@ -144,7 +145,7 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                           AppStrings.dateFormat
                                               .format(_post.created!),
                                           style: TextStyle(
-                                              color: Get.isDarkMode ? Colors.white: AppColors
+                                              color: AppColors
                                                   .POST_TAB_FAVOURITE_TIME_COLOR,
                                               fontFamily: 'Gotham',
                                               fontSize: 14,
@@ -162,7 +163,7 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                 _post.title.toString(),
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_COMMENTS_COLOR,
+                                    color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
                                     fontFamily: 'Gotham',
                                     fontWeight: FontWeight.w600),
                                 textAlign: TextAlign.start,
@@ -181,7 +182,7 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                 style: TextStyle(
                                   fontSize: 14,
                                   height: 1.4,
-                                  color: Get.isDarkMode ? Colors.white :AppColors.POST_TAB_COMMENTS_COLOR,
+                                  color: Get.isDarkMode ? Colors.white38 :AppColors.POST_TAB_COMMENTS_COLOR,
                                   fontFamily: 'Gotham',
                                 ),
                               ),
@@ -190,36 +191,65 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                               padding: const EdgeInsets.only(top: 10),
                               child: Divider(
                                 thickness: 1,
-                                color:Get.isDarkMode ? Colors.white: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                                color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/icon/heart.svg',
-                                          height: 20,
-                                          color:Get.isDarkMode ? Colors.white: AppColors.POST_TAB_LIKE_COLOR,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          _post.votes.toString(),
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color:Get.isDarkMode ? Colors.white:
-                                                  AppColors.POST_TAB_LIKE_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                                  GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: (){
+                                      String currentStatus= "1";
+                                      int votes = int.parse(_post.votes!);
+
+                                      if(_post.is_liked_ornot=="1"){
+                                        currentStatus = "0";
+                                        if(votes>0){
+                                          votes--;
+                                        }
+                                      }else{
+                                        if(votes>=0){
+                                          votes++;
+                                        }
+                                      }
+                                      _popularPostList!.response![index].is_liked_ornot = currentStatus;
+                                      _popularPostList!.response![index].votes = votes.toString();
+                                      likePost(_popularPostList!.response![index].id!,currentStatus);
+                                    },
+                                    child: Container(
+                                      child: Row(
+                                        children: [
+                                          _post.is_liked_ornot=="1"?SvgPicture.asset(
+                                            'assets/icon/heart-fill.svg',
+                                            height: 20,
+                                            color: AppColors.red
+                                            ,
+                                          ):
+                                          SvgPicture.asset(
+                                            'assets/icon/heart.svg',
+                                            height: 20,
+                                            color: AppColors.POST_TAB_LIKE_COLOR,
+
+                                          ),
+
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            _post.votes.toString(),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color:
+                                                AppColors.POST_TAB_LIKE_COLOR,
+                                                fontFamily: 'Gotham',
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Container(
@@ -228,7 +258,7 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                         SvgPicture.asset(
                                           'assets/icon/chat.svg',
                                           height: 20,
-                                          color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_LIKE_COLOR,
+                                          color: AppColors.POST_TAB_LIKE_COLOR,
                                         ),
                                         SizedBox(
                                           width: 10,
@@ -237,8 +267,8 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                           _post.comments.toString(),
                                           style: TextStyle(
                                               fontSize: 12,
-                                              color:Get.isDarkMode ? Colors.white:
-                                                  AppColors.POST_TAB_LIKE_COLOR,
+                                              color:
+                                              AppColors.POST_TAB_LIKE_COLOR,
                                               fontFamily: 'Gotham',
                                               fontWeight: FontWeight.bold),
                                         ),
@@ -258,4 +288,56 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
             ),
     );
   }
+  likePost(String postId,String currentStatus){
+    if(currentStatus=="1"){
+      makelike(postId);
+    }else{
+      makeDisLike(postId);
+    }
+
+  }
+
+
+  makelike(String postid) async {
+    print(postid);
+
+    var data = await Apiservice().getlike(postid);
+    print(data);
+    if(data["status"]==true){
+      String  msg= 'You liked this post';
+
+      setState(() {
+
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              msg)));
+    }
+
+
+    print("=============================");
+    print(data);
+   // print("post id -> $postid , like -> $isLike");
+
+  }
+
+  makeDisLike(String postid) async {
+    print(postid);
+    var data = await Apiservice().getdislike(postid);
+    print(data);
+    if(data["status"]==true){
+      String  msg= 'You disliked this post';
+
+      setState(() {
+
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(
+              msg)));
+    }
+
+
+  }
+
+
 }

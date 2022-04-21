@@ -70,7 +70,7 @@ class _appdrawerState extends State<appdrawer> {
                         ),
                         Text('Percent gain calculator',
                             style: TextStyle(
-                                color: Get.isDarkMode ? Colors.white70 : Colors.black,
+                                color: Get.isDarkMode ? Colors.white : Colors.black,
                                 fontFamily: 'Gotham',
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600)
@@ -80,7 +80,7 @@ class _appdrawerState extends State<appdrawer> {
                         ),
                         Text('From',
                             style: TextStyle(
-                                color: AppColors.FROMTO_TEXT,
+                                color: Get.isDarkMode ? Colors.white :AppColors.FROMTO_TEXT,
                                 fontFamily: 'Gotham',
                                 fontSize: 15,
                                 fontWeight: FontWeight.normal)),
@@ -91,7 +91,7 @@ class _appdrawerState extends State<appdrawer> {
                           padding: const EdgeInsets.only(left: 0, right: 0),
                           child: Container(
                             decoration: new BoxDecoration(
-                                color: Get.isDarkMode ? Colors.black12 :AppColors.INPUT_BOX,
+                                color: Get.isDarkMode ? Colors.black38 :AppColors.INPUT_BOX,
                                 borderRadius: new BorderRadius.only(
                                   topLeft: const Radius.circular(5.0),
                                   topRight: const Radius.circular(5.0),
@@ -103,11 +103,11 @@ class _appdrawerState extends State<appdrawer> {
                               child: TextFormField(
                                 controller: spController,
                                 keyboardType: TextInputType.number,
-                                style: TextStyle(color: AppColors.FROMTO_TEXT),
+                                style: TextStyle(color:Get.isDarkMode ? Colors.white : AppColors.FROMTO_TEXT),
                                 decoration: new InputDecoration.collapsed(
                                   hintText: 'Starting Price',
                                   hintStyle:
-                                  TextStyle(color: AppColors.FROMTO_TEXT),
+                                  TextStyle(color:Get.isDarkMode ? Colors.white : AppColors.FROMTO_TEXT),
                                 ),
                               ),
                             ),
@@ -118,7 +118,7 @@ class _appdrawerState extends State<appdrawer> {
                         ),
                         Text('To',
                             style: TextStyle(
-                                color: AppColors.FROMTO_TEXT,
+                                color: Get.isDarkMode ? Colors.white :AppColors.FROMTO_TEXT,
                                 fontFamily: 'Gotham',
                                 fontSize: 15,
                                 fontWeight: FontWeight.normal)),
@@ -129,7 +129,7 @@ class _appdrawerState extends State<appdrawer> {
                           padding: const EdgeInsets.only(left: 0, right: 0),
                           child: Container(
                             decoration: new BoxDecoration(
-                                color:Get.isDarkMode ? Colors.black12:  AppColors.INPUT_BOX,
+                                color:Get.isDarkMode ? Colors.black38:  AppColors.INPUT_BOX,
                                 borderRadius: new BorderRadius.only(
                                   topLeft: const Radius.circular(5.0),
                                   topRight: const Radius.circular(5.0),
@@ -141,11 +141,11 @@ class _appdrawerState extends State<appdrawer> {
                               child: TextFormField(
                                 controller: epController,
                                 keyboardType: TextInputType.number,
-                                style: TextStyle(color: AppColors.FROMTO_TEXT),
+                                style: TextStyle(color:Get.isDarkMode ? Colors.white : AppColors.FROMTO_TEXT),
                                 decoration: new InputDecoration.collapsed(
                                   hintText: 'Ending Price',
                                   hintStyle:
-                                  TextStyle(color: AppColors.FROMTO_TEXT),
+                                  TextStyle(color:Get.isDarkMode ? Colors.white : AppColors.FROMTO_TEXT),
                                 ),
                               ),
                             ),
@@ -299,6 +299,7 @@ class _appdrawerState extends State<appdrawer> {
                                 shrinkWrap: true,
                                 children: [
                                   ExpansionTile(
+
                                     title: Row(
                                       children: [
                                         SvgPicture.asset(
@@ -325,18 +326,24 @@ class _appdrawerState extends State<appdrawer> {
                                         onTap: (){
                                        Calculator();
                                         },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
-                                          child: Text(
-                                            'Gain Calculator',
-                                            style: TextStyle(
-                                                color:
-                                                Get.isDarkMode
-                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                                                fontFamily: 'Gotham',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
-                                          ),
+                                        child: Row(
+                                          mainAxisAlignment:MainAxisAlignment.start,
+
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 76,top: 6,right: 6,bottom: 6),
+                                              child: Text(
+                                                'Gain Calculator',
+                                                style: TextStyle(
+                                                    color:
+                                                    Get.isDarkMode
+                                                        ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                    fontFamily: 'Gotham',
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                       SizedBox(height: 5,),
@@ -380,16 +387,22 @@ class _appdrawerState extends State<appdrawer> {
                                                   builder: (context) => StocksToWatch(id: "2",)));
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
-                                          child: Text(
-                                            'Penny Play To Watch',
-                                            style: TextStyle(
-                                                color:
-                                                Get.isDarkMode
-                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                                                fontFamily: 'Gotham',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
+                                          padding: const EdgeInsets.only(left: 76,top: 6,right: 6,bottom: 6),
+                                          child: Row(
+                                            mainAxisAlignment:MainAxisAlignment.start,
+
+                                            children: [
+                                              Text(
+                                                'Penny Play To Watch',
+                                                style: TextStyle(
+                                                    color:
+                                                    Get.isDarkMode
+                                                        ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                    fontFamily: 'Gotham',
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -402,16 +415,22 @@ class _appdrawerState extends State<appdrawer> {
                                                   builder: (context) => StocksToWatch(id: "3",)));
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
-                                          child: Text(
-                                            'Penny Play Help',
-                                            style: TextStyle(
-                                                color:
-                                                Get.isDarkMode
-                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                                                fontFamily: 'Gotham',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
+                                          padding: const EdgeInsets.only(left: 76,top: 6,right: 6,bottom: 6),
+                                          child: Row(
+                                            mainAxisAlignment:MainAxisAlignment.start,
+
+                                            children: [
+                                              Text(
+                                                'Penny Play Help',
+                                                style: TextStyle(
+                                                    color:
+                                                    Get.isDarkMode
+                                                        ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                    fontFamily: 'Gotham',
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -424,16 +443,22 @@ class _appdrawerState extends State<appdrawer> {
                                                   builder: (context) => StocksToWatch(id: "4",)));
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
-                                          child: Text(
-                                            'Upcoming IPO Stocks',
-                                            style: TextStyle(
-                                                color:
-                                                Get.isDarkMode
-                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                                                fontFamily: 'Gotham',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
+                                          padding: const EdgeInsets.only(left: 76,top: 6,right: 6,bottom: 6),
+                                          child: Row(
+                                            mainAxisAlignment:MainAxisAlignment.start,
+
+                                            children: [
+                                              Text(
+                                                'Upcoming IPO Stocks',
+                                                style: TextStyle(
+                                                    color:
+                                                    Get.isDarkMode
+                                                        ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                    fontFamily: 'Gotham',
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -496,16 +521,22 @@ class _appdrawerState extends State<appdrawer> {
                                                   builder: (context) => ManageTestimonial()));
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
-                                          child: Text(
-                                            'Add Testimonial',
-                                            style: TextStyle(
-                                                color:
-                                                Get.isDarkMode
-                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                                                fontFamily: 'Gotham',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
+                                          padding: const EdgeInsets.only(left: 76,top: 6,right: 6,bottom: 6),
+                                          child: Row(
+                                            mainAxisAlignment:MainAxisAlignment.start,
+
+                                            children: [
+                                              Text(
+                                                'Add Testimonial',
+                                                style: TextStyle(
+                                                    color:
+                                                    Get.isDarkMode
+                                                        ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                    fontFamily: 'Gotham',
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -518,16 +549,22 @@ class _appdrawerState extends State<appdrawer> {
                                                   builder: (context) => MyTestimonials()));
                                         },
                                         child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
-                                          child: Text(
-                                            'My Testimonials',
-                                            style: TextStyle(
-                                                color:
-                                                Get.isDarkMode
-                                                    ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-                                                fontFamily: 'Gotham',
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400),
+                                          padding: const EdgeInsets.only(left: 76,top: 6,right: 6,bottom: 6),
+                                          child: Row(
+                                            mainAxisAlignment:MainAxisAlignment.start,
+
+                                            children: [
+                                              Text(
+                                                'My Testimonials',
+                                                style: TextStyle(
+                                                    color:
+                                                    Get.isDarkMode
+                                                        ?Colors.white: AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                    fontFamily: 'Gotham',
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),

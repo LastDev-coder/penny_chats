@@ -211,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.only(left: 0, right: 0),
                       child: Container(
                         decoration: new BoxDecoration(
-                            color: AppColors.INPUT_BOX,
+                            color: Get.isDarkMode ? Colors.black38 :AppColors.INPUT_BOX,
                             borderRadius: new BorderRadius.only(
                               topLeft: const Radius.circular(5.0),
                               topRight: const Radius.circular(5.0),
@@ -223,11 +223,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: TextFormField(
                             controller: nameController,
                             keyboardType: TextInputType.name,
-                            style: TextStyle(color: AppColors.FROMTO_TEXT),
+                            style: TextStyle(color: Get.isDarkMode ? Colors.white :AppColors.FROMTO_TEXT),
                             decoration: new InputDecoration.collapsed(
                               hintText: 'Enter your name',
                               hintStyle:
-                                  TextStyle(color: AppColors.FROMTO_TEXT),
+                                  TextStyle(color:Get.isDarkMode ? Colors.white : AppColors.FROMTO_TEXT),
                             ),
                           ),
                         ),
@@ -331,7 +331,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.only(left: 0, right: 0),
                       child: Container(
                         decoration: new BoxDecoration(
-                            color: AppColors.INPUT_BOX,
+                            color: Get.isDarkMode ? Colors.black38 :AppColors.INPUT_BOX,
                             borderRadius: new BorderRadius.only(
                               topLeft: const Radius.circular(5.0),
                               topRight: const Radius.circular(5.0),
@@ -343,11 +343,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: TextFormField(
                             controller: pController,
                             keyboardType: TextInputType.name,
-                            style: TextStyle(color: AppColors.FROMTO_TEXT),
+                            style: TextStyle(color:Get.isDarkMode ? Colors.white : AppColors.FROMTO_TEXT),
                             decoration: new InputDecoration.collapsed(
                               hintText: 'Enter your new password',
                               hintStyle:
-                                  TextStyle(color: AppColors.FROMTO_TEXT),
+                                  TextStyle(color:Get.isDarkMode ? Colors.white : AppColors.FROMTO_TEXT),
                             ),
                           ),
                         ),
@@ -360,7 +360,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: const EdgeInsets.only(left: 0, right: 0),
                       child: Container(
                         decoration: new BoxDecoration(
-                            color: AppColors.INPUT_BOX,
+                            color:Get.isDarkMode ? Colors.black38 : AppColors.INPUT_BOX,
                             borderRadius: new BorderRadius.only(
                               topLeft: const Radius.circular(5.0),
                               topRight: const Radius.circular(5.0),
@@ -372,11 +372,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: TextFormField(
                             controller: confirmpController,
                             keyboardType: TextInputType.name,
-                            style: TextStyle(color: AppColors.FROMTO_TEXT),
+                            style: TextStyle(color:Get.isDarkMode ? Colors.white : AppColors.FROMTO_TEXT),
                             decoration: new InputDecoration.collapsed(
                               hintText: 'Confirm your new password',
                               hintStyle:
-                                  TextStyle(color: AppColors.FROMTO_TEXT),
+                                  TextStyle(color:Get.isDarkMode ? Colors.white : AppColors.FROMTO_TEXT),
                             ),
                           ),
                         ),
@@ -554,7 +554,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             return Container(
                                               height: 200,
                                               width: double.infinity,
-                                              color: Colors.white,
+                                              color:Get.isDarkMode ? Colors.black38 : Colors.white,
                                               child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
@@ -567,7 +567,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                         'Choose an option',
                                                         style: TextStyle(
                                                             fontSize: 18,
-                                                            color: AppColors
+                                                            color:Get.isDarkMode ? Colors.white : AppColors
                                                                 .POST_TAB_COMMENTS_COLOR,
                                                             fontFamily:
                                                                 'Gotham',
@@ -593,7 +593,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           children: [
                                                             Icon(
                                                               Icons.camera,
-                                                              color: AppColors
+                                                              color: Get.isDarkMode ? Colors.white :AppColors
                                                                   .CHAT_ROOM_DATEOFMESSAGE,
                                                               size: 25,
                                                             ),
@@ -604,7 +604,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                 style: TextStyle(
                                                                     fontSize:
                                                                         15,
-                                                                    color: AppColors
+                                                                    color:Get.isDarkMode ? Colors.white : AppColors
                                                                         .CHAT_ROOM_DATEOFMESSAGE,
                                                                     fontFamily:
                                                                         'Gotham',
@@ -634,7 +634,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           children: [
                                                             Icon(
                                                               Icons.photo_album,
-                                                              color: AppColors
+                                                              color: Get.isDarkMode ? Colors.white :AppColors
                                                                   .CHAT_ROOM_DATEOFMESSAGE,
                                                               size: 25,
                                                             ),
@@ -645,7 +645,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                                 style: TextStyle(
                                                                     fontSize:
                                                                         15,
-                                                                    color: AppColors
+                                                                    color:Get.isDarkMode ? Colors.white : AppColors
                                                                         .CHAT_ROOM_DATEOFMESSAGE,
                                                                     fontFamily:
                                                                         'Gotham',

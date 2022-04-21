@@ -45,8 +45,15 @@ class _NewsDetailsState extends State<NewsDetails> {
     nameController.clear();
     commentController.clear();
     var data = await Apiservice().PostCommentPennyPlay(_data);
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(data["response"].toString())));
+
+
+    ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+      content: new Text(
+        data["response"].toString(),
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Colors.green,
+    ));
     // Navigator.of(context).pop();
   }
 
@@ -296,9 +303,14 @@ class _NewsDetailsState extends State<NewsDetails> {
                               commentController.text.toString() == null ||
                               commentController.text.toString().isEmpty ||
                               commentController.text.toString() == '') {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    'All fields should be fill up. Please try again.')));
+
+                            ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+                              content: new Text(
+                                'All fields should be fill up. Please try again.',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.red,
+                            ));
                           } else {
                             MyComment(
                                 nameController.text.toString(),
@@ -391,7 +403,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                     fontSize: 12,
-                                                    color: AppColors
+                                                    color: Get.isDarkMode ? Colors.white :AppColors
                                                         .POST_TAB_COMMENTS_COLOR,
                                                     fontFamily: 'Gotham',
                                                     fontWeight:
@@ -413,7 +425,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                                       child: Text(
                                                         'Posted on :',
                                                         style: TextStyle(
-                                                            color: AppColors
+                                                            color:Get.isDarkMode ? Colors.white : AppColors
                                                                 .POST_DETAILS_ICONTEXT,
                                                             fontFamily:
                                                                 'Gotham',
@@ -430,7 +442,7 @@ class _NewsDetailsState extends State<NewsDetails> {
                                                       child: Text(
                                                         '${snapshot.data[i].created}',
                                                         style: TextStyle(
-                                                            color: AppColors
+                                                            color: Get.isDarkMode ? Colors.white :AppColors
                                                                 .POST_DETAILS_ICONTEXT,
                                                             fontFamily:
                                                                 'Gotham',

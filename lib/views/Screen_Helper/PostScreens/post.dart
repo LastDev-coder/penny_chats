@@ -60,7 +60,7 @@ class _PostState extends State<Post>  with SingleTickerProviderStateMixin{
                           padding: const EdgeInsets.only(left: 0, right: 0),
                           child: Container(
                             decoration: new BoxDecoration(
-                                color: AppColors.INPUT_BOX,
+                                color: Get.isDarkMode ? Colors.black38 :AppColors.INPUT_BOX,
                                 borderRadius: new BorderRadius.only(
                                   topLeft: const Radius.circular(5.0),
                                   topRight: const Radius.circular(5.0),
@@ -72,11 +72,11 @@ class _PostState extends State<Post>  with SingleTickerProviderStateMixin{
                               child: TextFormField(
                                 controller: spController,
                                 keyboardType: TextInputType.multiline,
-                                style: TextStyle(color: Colors.black87),
+                                style: TextStyle(color:Get.isDarkMode ? Colors.white : Colors.black87),
                                 decoration: new InputDecoration.collapsed(
                                   hintText: 'Enter post title',
                                   hintStyle:
-                                  TextStyle(color: AppColors.FROMTO_TEXT),
+                                  TextStyle(color: Get.isDarkMode ? Colors.white :AppColors.FROMTO_TEXT),
                                 ),
                               ),
                             ),
@@ -89,7 +89,7 @@ class _PostState extends State<Post>  with SingleTickerProviderStateMixin{
                           padding: const EdgeInsets.only(left: 0, right: 0),
                           child: Container(
                             decoration: new BoxDecoration(
-                                color: AppColors.INPUT_BOX,
+                                color: Get.isDarkMode ? Colors.black38 :AppColors.INPUT_BOX,
                                 borderRadius: new BorderRadius.only(
                                   topLeft: const Radius.circular(5.0),
                                   topRight: const Radius.circular(5.0),
@@ -103,11 +103,11 @@ class _PostState extends State<Post>  with SingleTickerProviderStateMixin{
                                 maxLines: 10,
                                 minLines: 5,
                                 keyboardType: TextInputType.multiline,
-                                style: TextStyle(color: Colors.black87),
+                                style: TextStyle(color:Get.isDarkMode ? Colors.white : Colors.black87),
                                 decoration: new InputDecoration.collapsed(
                                   hintText: 'Enter post description...',
                                   hintStyle:
-                                  TextStyle(color: AppColors.FROMTO_TEXT),
+                                  TextStyle(color: Get.isDarkMode ? Colors.white :AppColors.FROMTO_TEXT),
                                 ),
                               ),
                             ),
@@ -175,8 +175,8 @@ class _PostState extends State<Post>  with SingleTickerProviderStateMixin{
                                   });
                                 } else {
                                   var _data = new Map<String, dynamic>();
-                                  _data['title'] = spController.text.toString();
-                                  _data['content'] = epController.text.toString();
+                                  _data['title'] = spController.text;
+                                  _data['content'] = epController.text;
                                   var data = await Apiservice().UploadPost(_data);
 
                                   ScaffoldMessenger.of(context)

@@ -63,7 +63,11 @@ class _ManageTestimonialState extends State<ManageTestimonial> {
                                 border: OutlineInputBorder(
                                     borderSide:
                                         BorderSide(color: Colors.white)),
-                                focusedBorder: InputBorder.none),
+                                // focusedBorder: InputBorder.none,
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                  borderSide: BorderSide(color: Colors.transparent)),
+                            ),
                             style: TextStyle(
                                 color: Get.isDarkMode ? Colors.white : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                 fontFamily: 'Gotham',
@@ -87,19 +91,27 @@ class _ManageTestimonialState extends State<ManageTestimonial> {
                                 if (textController.text.toString() == null ||
                                     textController.text.toString().isEmpty ||
                                     textController.text.toString() == '') {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              'Testimonial should not be blanked.')));
+
+                                  ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+                                    content: new Text(
+                                      'Testimonial should not be blanked.',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    backgroundColor: Colors.red,
+                                  ));
                                 } else {
                                   print("not null --------> " +
                                       textController.text.toString());
                                   var data = await Apiservice().postTestimonial(
                                       textController.text.toString());
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              data["response"].toString())));
+
+                                  ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
+                                    content: new Text(
+                                      data["response"].toString(),
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    backgroundColor: Colors.green,
+                                  ));
                                   textController.clear();
                                 }
                               },
