@@ -96,7 +96,7 @@ var data;
                                           backgroundImage: _post.profilePic ==
                                                   ''
                                               ? NetworkImage(
-                                              'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459'
+                                              '${AppStrings.noProfilePicture}'
                                           )
                                               : NetworkImage(
                                                   '${AppStrings.profilePictureApi}/${_post.profilePic}'),
@@ -137,7 +137,7 @@ var data;
                                     ),
                                     SvgPicture.asset(
                                       'assets/icon/clock.svg',
-                                      color: AppColors
+                                      color: Get.isDarkMode ? Colors.white : AppColors
                                           .POST_TAB_FAVOURITE_TIME_COLOR,
                                       height: 20,
                                     ),
@@ -150,7 +150,7 @@ var data;
                                         child: Text(
                                           dateFormat.format(_post.created!),
                                           style: TextStyle(
-                                              color: AppColors
+                                              color: Get.isDarkMode ? Colors.white : AppColors
                                                   .POST_TAB_FAVOURITE_TIME_COLOR,
                                               fontFamily: 'Gotham',
                                               fontSize: 14,
@@ -169,7 +169,7 @@ var data;
                                 _post.title.toString(),
                                 style: TextStyle(
                                     fontSize: 15,
-                                    color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
+                                    color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_COMMENTS_COLOR,
                                     fontFamily: 'Gotham',
                                     fontWeight: FontWeight.w600),
                                 textAlign: TextAlign.start,
@@ -187,7 +187,7 @@ var data;
                                 style: TextStyle(
                                   fontSize: 14,
                                   height: 1.4,
-                                  color: Get.isDarkMode ? Colors.white38 : AppColors.POST_TAB_COMMENTS_COLOR,
+                                  color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_COMMENTS_COLOR,
                                   fontFamily: 'Gotham',
                                 ),
                               ),
@@ -196,7 +196,7 @@ var data;
                               padding: const EdgeInsets.only(top: 10),
                               child: Divider(
                                 thickness: 1,
-                                color: AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
+                                color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_FAVOURITE_TIME_COLOR,
                               ),
                             ),
                             Padding(
@@ -237,7 +237,7 @@ var data;
                                 SvgPicture.asset(
                                     'assets/icon/heart.svg',
                                     height: 20,
-                                    color: AppColors.POST_TAB_LIKE_COLOR,
+                                    color:Get.isDarkMode ? Colors.white :  AppColors.POST_TAB_LIKE_COLOR,
 
                               ),
 
@@ -248,8 +248,8 @@ var data;
                                             _post.votes.toString(),
                                             style: TextStyle(
                                                 fontSize: 12,
-                                                color:
-                                                    AppColors.POST_TAB_LIKE_COLOR,
+                                                color:Get.isDarkMode ? Colors.white :
+                                                AppColors.POST_TAB_LIKE_COLOR,
                                                 fontFamily: 'Gotham',
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -263,7 +263,7 @@ var data;
                                         SvgPicture.asset(
                                           'assets/icon/chat.svg',
                                           height: 20,
-                                          color: AppColors.POST_TAB_LIKE_COLOR,
+                                          color: Get.isDarkMode ? Colors.white : AppColors.POST_TAB_LIKE_COLOR,
                                         ),
                                         SizedBox(
                                           width: 10,
@@ -272,8 +272,8 @@ var data;
                                           _post.comments.toString(),
                                           style: TextStyle(
                                               fontSize: 12,
-                                              color:
-                                                  AppColors.POST_TAB_LIKE_COLOR,
+                                              color:Get.isDarkMode ? Colors.white :
+                                              AppColors.POST_TAB_LIKE_COLOR,
                                               fontFamily: 'Gotham',
                                               fontWeight: FontWeight.bold),
                                         ),

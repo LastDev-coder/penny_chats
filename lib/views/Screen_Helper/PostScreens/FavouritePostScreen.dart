@@ -88,7 +88,7 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                           backgroundImage: _post.profilePic ==
                                                   ''
                                               ? NetworkImage(
-                                                  'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg')
+                                                  '${AppStrings.noProfilePicture}')
                                               : NetworkImage(
                                                   '${AppStrings.profilePictureApi}/${_post.profilePic}'),
                                         ),
