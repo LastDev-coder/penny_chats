@@ -45,8 +45,8 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: InkWell(
-                    onTap: () {
-                      Navigator.push(
+                    onTap: () async{
+                      final result = await  Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => PostDetails(
@@ -62,6 +62,12 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                     postUserId: _post.userId,
                                 title: _post.title,
                                   )));
+                      print('--------------------result -> ${result.toString()}');
+                      print('--------------------result -> ${index.toString()}');
+                      setState(() {
+                        _favouritePostList!.response![index].votes =result[0].toString();
+                        _favouritePostList!.response![index].comments = result[1].toString();
+                      });
                     },
                     // splashColor: AppColors.DASHBOARD_SELECTED_ICON_COLOR,
                     child: Card(

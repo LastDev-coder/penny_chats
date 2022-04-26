@@ -80,6 +80,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   //   ),
                   // ),
                   ListView.builder(
+                    reverse: true,
                       itemCount: _notificationsList!.response!.length,
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,

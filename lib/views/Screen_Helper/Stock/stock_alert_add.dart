@@ -400,11 +400,13 @@ class _NoStocksState extends State<NoStocks> {
     int i = 0;
     for (var x in dataresponse) {
       date = getFormattedDate(dataresponse[i]["created"]);
+      double formattedDouble = double.parse(dataresponse[i]["price_start"].toString());
+      var num2 = double.parse(formattedDouble.toStringAsFixed(4));
 
       StockAlertModel model = StockAlertModel(
           dataresponse[i]["stock"],
           dataresponse[i]["alert"],
-          dataresponse[i]["price_start"],
+          num2.toString(),
           dataresponse[i]["display_order"],
           dataresponse[i]["effect"],
           dataresponse[i]["gain"],

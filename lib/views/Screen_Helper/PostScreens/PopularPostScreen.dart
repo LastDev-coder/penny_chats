@@ -49,8 +49,8 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: InkWell(
-                    onTap: () {
-                      Navigator.push(
+                    onTap: () async{
+                      final result = await  Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => PostDetails(
@@ -65,6 +65,14 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                 postUserId: _post.userId,
                                 title: _post.title,
                               )));
+                      print('--------------------result -> ${result.toString()}');
+                      print('--------------------result -> ${index.toString()}');
+                      setState(() {
+
+                        _popularPostList!.response![index].votes =result[0].toString();
+                        _popularPostList!.response![index].comments = result[1].toString();
+                        _popularPostList!.response![index].is_liked_ornot=result[2].toString();
+                      });
                     },
                     // splashColor: AppColors.DASHBOARD_SELECTED_ICON_COLOR,
                     child: Card(

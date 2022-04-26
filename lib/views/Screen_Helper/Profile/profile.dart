@@ -889,60 +889,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             thickness: 1,
                             color: AppColors.PROFILE_TAB_DIVIDER,
                           ),
-                          Container(
-                            width: double.infinity,
-                            color: Get.isDarkMode
-                                ? Colors.black12
-                                : AppColors.PROFILE_TAB_CONTAINER1_COLOR,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 30, right: 30, top: 30, bottom: 30),
-                              child: Text('GENERAL',
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                      fontSize: 13,
-                                      color: AppColors
-                                          .PROFILE_TAB_GENERALTEXT_COLOR,
-                                      fontFamily: 'Gotham',
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          NotificationSetting()));
-                            },
-                            splashColor: Colors.black38,
-                            child: Container(
-                                child: Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 30, top: 40, right: 30, bottom: 30),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Chat Settings',
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Get.isDarkMode
-                                            ? Colors.white
-                                            : AppColors.PROFILE_TAB_NORMAL_TEXT,
-                                        fontFamily: 'Gotham',
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                  Icon(
-                                    Icons.chevron_right,
-                                    size: 25,
-                                    color: AppColors.PROFILE_TAB_NORMAL_TEXT,
-                                  )
-                                ],
-                              ),
-                            )),
-                          ),
+                          // Container(
+                          //   width: double.infinity,
+                          //   color: Get.isDarkMode
+                          //       ? Colors.black12
+                          //       : AppColors.PROFILE_TAB_CONTAINER1_COLOR,
+                          //   child: Padding(
+                          //     padding: const EdgeInsets.only(
+                          //         left: 30, right: 30, top: 30, bottom: 30),
+                          //     child: Text('GENERAL',
+                          //         textAlign: TextAlign.start,
+                          //         style: TextStyle(
+                          //             fontSize: 13,
+                          //             color: AppColors
+                          //                 .PROFILE_TAB_GENERALTEXT_COLOR,
+                          //             fontFamily: 'Gotham',
+                          //             fontWeight: FontWeight.bold)),
+                          //   ),
+                          // ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     Navigator.push(
+                          //         context,
+                          //         MaterialPageRoute(
+                          //             builder: (context) =>
+                          //                 NotificationSetting()));
+                          //   },
+                          //   splashColor: Colors.black38,
+                          //   child: Container(
+                          //       child: Padding(
+                          //     padding: const EdgeInsets.only(
+                          //         left: 30, top: 40, right: 30, bottom: 30),
+                          //     child: Row(
+                          //       mainAxisAlignment:
+                          //           MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         Text(
+                          //           'Chat Settings',
+                          //           style: TextStyle(
+                          //               fontSize: 14,
+                          //               color: Get.isDarkMode
+                          //                   ? Colors.white
+                          //                   : AppColors.PROFILE_TAB_NORMAL_TEXT,
+                          //               fontFamily: 'Gotham',
+                          //               fontWeight: FontWeight.w500),
+                          //         ),
+                          //         Icon(
+                          //           Icons.chevron_right,
+                          //           size: 25,
+                          //           color: AppColors.PROFILE_TAB_NORMAL_TEXT,
+                          //         )
+                          //       ],
+                          //     ),
+                          //   )),
+                          // ),
                         ],
                       ),
                     );
