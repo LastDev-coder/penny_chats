@@ -17,6 +17,34 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreenState extends State<NotificationScreen> {
   NotificationsModel? _notificationsList;
 
+  Future<bool> onDelete(int no) async {
+    final shouldPop = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Are you sure?'),
+        content: Text('Do you want to delete this notification?'),
+        actions: <Widget>[
+          FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('No'),
+          ),
+          FlatButton(
+            onPressed: () {
+              print("${no.toString()}");
+              setState(() {
+                _notificationsList!.response!.removeAt(no);
+              });
+              Navigator.of(context).pop(false);
+            },
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+
+    return shouldPop ?? false;
+  }
+
   @override
   void initState() {
     NotificationsApi.getNotification(context, AppStrings.getNotificationApi)
@@ -31,7 +59,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Get.isDarkMode ? Colors.white12 :AppColors.white,
+      backgroundColor: Get.isDarkMode ? Colors.white12 : AppColors.white,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: true,
@@ -80,7 +108,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                   //   ),
                   // ),
                   ListView.builder(
-                    reverse: true,
+                      reverse: true,
                       itemCount: _notificationsList!.response!.length,
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -91,80 +119,98 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           margin: EdgeInsets.symmetric(
                             vertical: 5.0,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 30, right: 30),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 30, right: 30),
+                                child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Expanded(
                                       child: Text.rich(
                                         TextSpan(
                                           children: [
-
                                             TextSpan(
                                               text: 'ⓘ ',
                                               style: TextStyle(
                                                   fontSize: 18,
-                                                  color:Get.isDarkMode ? Colors.white : AppColors
-                                                      .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                                                  color: Get.isDarkMode
+                                                      ? Colors.white
+                                                      : AppColors
+                                                          .LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                                                   fontFamily: 'Gotham',
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             TextSpan(
-                                              text:
-                                              _notification.notification.toString(),
+                                              text: _notification.notification
+                                                  .toString(),
                                               style: TextStyle(
                                                   fontSize: 13,
-                                                  color:Get.isDarkMode ? Colors.white :
-                                                  AppColors.NOTIFICATION_HEADING,
+                                                  color: Get.isDarkMode
+                                                      ? Colors.white
+                                                      : AppColors
+                                                          .NOTIFICATION_HEADING,
                                                   fontFamily: 'Gotham',
-                                                  fontWeight: FontWeight.normal ),
-
-
+                                                  fontWeight:
+                                                      FontWeight.normal),
                                             ),
                                           ],
                                         ),
                                       ),
                                     ),
-
-
-
                                   ],
                                 ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Text(_notification.c_date.toString(),
-                                      textAlign: TextAlign.start,
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color:Get.isDarkMode ? Colors.white :
-                                                       AppColors.NOTIFICATION_NEWSDETAILS,
-                                          fontFamily: 'Gotham',
-                                          fontWeight: FontWeight.normal)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 30, right: 20, top: 5),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(_notification.c_date.toString(),
+                                        textAlign: TextAlign.start,
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: Get.isDarkMode
+                                                ? Colors.white
+                                                : AppColors
+                                                    .NOTIFICATION_NEWSDETAILS,
+                                            fontFamily: 'Gotham',
+                                            fontWeight: FontWeight.normal)),
+                                    GestureDetector(
+                                        onTap: () {
+                                          onDelete(index);
+                                        },
+                                        child: Icon(
+                                          Icons.delete_forever,
+                                          color: Colors.red,
+                                          size: 20,
+                                        ))
+                                  ],
                                 ),
-                                // ReadMoreText(
-                                //     AppStrings.parseHtmlString(
-                                //         '${_notification.notification.toString()}'),
-                                //     trimLines: 2,
-                                //     style: TextStyle(
-                                //         fontSize: 12,
-                                //         color:Get.isDarkMode ? Colors.white38 :
-                                //             AppColors.NOTIFICATION_NEWSDETAILS,
-                                //         fontFamily: 'Gotham',
-                                //         fontWeight: FontWeight.w500),
-                                //     colorClickableText: Colors.pink,
-                                //     trimMode: TrimMode.Line,
-                                //     trimCollapsedText: 'Show more',
-                                //     trimExpandedText: 'Show less',
-                                //     moreStyle: TextStyle(
-                                //         fontSize: 14,
-                                //         fontWeight: FontWeight.bold)),
-                              ],
-                            ),
+                              ),
+                              // ReadMoreText(
+                              //     AppStrings.parseHtmlString(
+                              //         '${_notification.notification.toString()}'),
+                              //     trimLines: 2,
+                              //     style: TextStyle(
+                              //         fontSize: 12,
+                              //         color:Get.isDarkMode ? Colors.white38 :
+                              //             AppColors.NOTIFICATION_NEWSDETAILS,
+                              //         fontFamily: 'Gotham',
+                              //         fontWeight: FontWeight.w500),
+                              //     colorClickableText: Colors.pink,
+                              //     trimMode: TrimMode.Line,
+                              //     trimCollapsedText: 'Show more',
+                              //     trimExpandedText: 'Show less',
+                              //     moreStyle: TextStyle(
+                              //         fontSize: 14,
+                              //         fontWeight: FontWeight.bold)),
+                            ],
                           ),
                         );
                       }),
