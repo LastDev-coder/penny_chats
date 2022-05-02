@@ -500,5 +500,17 @@ print("id -> $id");
       print('Error : $e');
     }
   }
-
+  Future getDeleteNotification(String nid) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    // print("id => $id ");
+    late String url =
+        "${AppStrings.baseUrl}/users/user_del_notification/$id/$nid";
+    // https://pennychats.com/pennychatapi/users/user_del_notification/$userid/$notification_id
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
 }

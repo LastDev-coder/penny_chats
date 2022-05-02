@@ -27,9 +27,15 @@ class AppStrings {
   static const getNotificationApi =
       '$baseUrl/users/notification_list';
 
+  static const getMainNotificationApi =
+      '$baseUrl/dashboard/notification';
+
   static const getWeeklyWatchApi =
       '$baseUrl/dashboard/weeklywatch';
 
+  static const getUserPostApi =
+      '$baseUrl/post/user_post/';
+  // https://pennychats.com/pennychatapi/
   static const profilePictureApi =
       'https://www.pennychats.com/beta/uploads/profile_pictures';
   static const noProfilePicture =

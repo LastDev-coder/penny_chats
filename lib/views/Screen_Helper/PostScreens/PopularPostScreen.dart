@@ -67,11 +67,17 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                               )));
                       print('--------------------result -> ${result.toString()}');
                       print('--------------------result -> ${index.toString()}');
-                      setState(() {
+                      var arr = result.split('-');
 
-                        _popularPostList!.response![index].votes =result[0].toString();
-                        _popularPostList!.response![index].comments = result[1].toString();
-                        _popularPostList!.response![index].is_liked_ornot=result[2].toString();
+                      // print(arr[0]);
+                      // print('**************** ${result.toString().substring( 0,split)}');
+
+
+                      setState(() {
+                        _popularPostList!.response![index].votes =arr[0].toString();
+                        _popularPostList!.response![index].comments = arr[1].toString();
+                        _popularPostList!.response![index].is_liked_ornot=arr[2].toString();
+
                       });
                     },
                     // splashColor: AppColors.DASHBOARD_SELECTED_ICON_COLOR,

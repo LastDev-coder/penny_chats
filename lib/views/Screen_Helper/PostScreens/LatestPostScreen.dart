@@ -70,13 +70,16 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
                                   )));
                 print('--------------------result -> ${result.toString()}');
                 print('--------------------result -> ${index.toString()}');
-                print('**************** ${result[0]}');
+                var arr = result.split('-');
+
+                // print(arr[0]);
+                // print('**************** ${result.toString().substring( 0,split)}');
 
 
                 setState(() {
-                  _latestPostModel!.response![index].votes =result[0].toString();
-                  _latestPostModel!.response![index].comments = result[1].toString();
-                  _latestPostModel!.response![index].is_liked_ornot=result[2].toString();
+                  _latestPostModel!.response![index].votes =arr[0].toString();
+                  _latestPostModel!.response![index].comments = arr[1].toString();
+                  _latestPostModel!.response![index].is_liked_ornot=arr[2].toString();
 
                 });
                     },

@@ -313,7 +313,7 @@ class _PostDetailsState extends State<PostDetails> {
               _resultisLike = '0';
             }
 
-            Navigator.pop(context, '$postLikes$postComment$_resultisLike}');
+            Navigator.pop(context, '$postLikes-$postComment-$_resultisLike');
           },
           child: Icon(
             Icons.close,
@@ -341,7 +341,7 @@ class _PostDetailsState extends State<PostDetails> {
             _resultisLike = '0';
           }
 
-          Navigator.pop(context, '$postLikes$postComment$_resultisLike}');
+          Navigator.pop(context, '$postLikes-$postComment-$_resultisLike');
           return true;
         },
         child: SingleChildScrollView(

@@ -90,6 +90,7 @@ class _MydashboardState extends State<Mydashboard> {
 
 
   NotificationsModel? _notificationData;
+  NotificationsModel? _mainnotificationData;
 
   @override
   void initState() {
@@ -98,6 +99,13 @@ class _MydashboardState extends State<Mydashboard> {
       setState(() {
         _notificationData = value;
         _currentIndex = widget.number;
+
+      });
+    });
+    NotificationsApi.getNotification(context, AppStrings.getMainNotificationApi)
+        .then((value) {
+      setState(() {
+        _mainnotificationData = value;
       });
     });
     super.initState();
@@ -127,7 +135,7 @@ class _MydashboardState extends State<Mydashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return _notificationData == null
+    return _mainnotificationData == null
         ? Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
@@ -168,7 +176,7 @@ class _MydashboardState extends State<Mydashboard> {
                   width: 20,
                 ),
                 GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     // ScaffoldMessenger.of(context)
                     //     .showSnackBar(SnackBar(
                     //   content: Text(
@@ -177,15 +185,24 @@ class _MydashboardState extends State<Mydashboard> {
                     //   ),
                     //   // backgroundColor: Colors.green,
                     // ));
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NotificationScreen()));
+                    if(_notificationData==null){
+
+                    }else{
+                      final result = await  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => NotificationScreen()));
+                      setState(() {
+                        _notificationData!.response!.length = int.tryParse(result)!;
+                      });
+                    }
+
                   },
                   child: Badge(
-                    position: BadgePosition.topEnd(top: -50, end: -5),
+                    position: BadgePosition.topEnd(top: 5, end: -5),
                     badgeContent: Text(
-                      _notificationData!.response!.length.toString(),
+                      // _notificationData!.response!.length.toString(),
+                      _notificationData==null ? '0' : _notificationData!.response!.length.toString(),
                       style: TextStyle(
                         fontSize: 7.93,
                         color: AppColors.DASHBOARD_SELECTED_ICON_COLOR,

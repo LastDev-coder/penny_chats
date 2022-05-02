@@ -64,9 +64,18 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                   )));
                       print('--------------------result -> ${result.toString()}');
                       print('--------------------result -> ${index.toString()}');
+
+                      var arr = result.split('-');
+
+                      // print(arr[0]);
+                      // print('**************** ${result.toString().substring( 0,split)}');
+
+
                       setState(() {
-                        _favouritePostList!.response![index].votes =result[0].toString();
-                        _favouritePostList!.response![index].comments = result[1].toString();
+                        _favouritePostList!.response![index].votes =arr[0].toString();
+                        _favouritePostList!.response![index].comments = arr[1].toString();
+                        _favouritePostList!.response![index].is_liked_ornot=arr[2].toString();
+
                       });
                     },
                     // splashColor: AppColors.DASHBOARD_SELECTED_ICON_COLOR,
