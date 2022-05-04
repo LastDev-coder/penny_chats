@@ -237,17 +237,22 @@ class _SarchState extends State<Sarch> {
                               padding: const EdgeInsets.all(15.0),
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.end,
                                 children: [
                                   GestureDetector(
                                     onTap: () async {
-                                         await   Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => UserPost(
-                                                id: _post.id,
+                                      if(_post.pcount.toString() == '0'){
+                                        print('no post available');
+                                      }else{
+                                        await   Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => UserPost(
+                                                  id: _post.id,
 
-                                              )));
+                                                )));
+                                      }
+
                                     },
                                     child: Container(
                                       child: Row(
@@ -275,31 +280,31 @@ class _SarchState extends State<Sarch> {
                                       ),
                                     ),
                                   ),
-                                  Container(
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          'assets/icon/chat.svg',
-                                          height: 20,
-                                          color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_LIKE_COLOR,
-                                        ),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text("${_post.tcount.toString()} Testimonial",
-
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color:Get.isDarkMode
-                                                  ? Colors.white
-                                                  :
-                                              AppColors.POST_TAB_LIKE_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  // Container(
+                                  //   child: Row(
+                                  //     children: [
+                                  //       SvgPicture.asset(
+                                  //         'assets/icon/chat.svg',
+                                  //         height: 20,
+                                  //         color: Get.isDarkMode ? Colors.white:AppColors.POST_TAB_LIKE_COLOR,
+                                  //       ),
+                                  //       SizedBox(
+                                  //         width: 10,
+                                  //       ),
+                                  //       Text("${_post.tcount.toString()} Testimonial",
+                                  //
+                                  //         style: TextStyle(
+                                  //             fontSize: 12,
+                                  //             color:Get.isDarkMode
+                                  //                 ? Colors.white
+                                  //                 :
+                                  //             AppColors.POST_TAB_LIKE_COLOR,
+                                  //             fontFamily: 'Gotham',
+                                  //             fontWeight: FontWeight.bold),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             )

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
+import 'package:penny_chats/views/Screens/Auth/permission.dart';
 import 'package:penny_chats/views/Screens/Auth/welcome_first.dart';
 
 class Splash extends StatefulWidget {
@@ -17,7 +18,7 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
     Timer(Duration(seconds: 3), () {
-      Route route = MaterialPageRoute(builder: (context) => WelcomeFirst());
+      Route route = MaterialPageRoute(builder: (context) => Permission());
       Navigator.pushReplacement(context, route);
     });
   }
@@ -39,7 +40,7 @@ class _SplashState extends State<Splash> {
               child: Container(
                 width: double.infinity,
                 child: Text(
-                  'PennyChats.com',
+                  'PennyChats',
                   textAlign: TextAlign.center,
                   style: GoogleFonts.doHyeon(
                     color: AppColors.white,

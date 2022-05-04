@@ -54,7 +54,7 @@ class _WelcomeFirstState extends State<WelcomeFirst> {
                           ),
                         ),
                         Text(
-                          'PennyChats.com',
+                          'PennyChats',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.doHyeon(
                             color: AppColors.PENNY_TEXT_COLOR,

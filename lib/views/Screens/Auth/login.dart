@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -19,11 +22,37 @@ class _LoginState extends State<Login> {
   TextEditingController _password = TextEditingController();
   bool _isHidden = true;
 
+  String device_id = '';
+  Future<String?> _getId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) { // import 'dart:io'
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      setState(() {
+        device_id = '${iosDeviceInfo.identifierForVendor}';
+      });
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else if(Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      print('androidDeviceInfo.androidId------> ${androidDeviceInfo.androidId}');
+      setState(() {
+        device_id = '${androidDeviceInfo.androidId}';
+      });
+      return androidDeviceInfo.androidId; // unique ID on Android
+    }
+  }
+
   @override
   void dispose() {
     _userName.dispose();
     _password.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getId();
   }
 
   @override
@@ -80,7 +109,7 @@ class _LoginState extends State<Login> {
                                       });
                                       await AuthServices.login(context,
                                               userName: _userName.text.trim(),
-                                              password: _password.text.trim())
+                                              password: _password.text.trim(), device_id: device_id)
                                           .whenComplete(() {
                                         setState(() {
                                           _isLoading = false;
@@ -153,7 +182,7 @@ class _LoginState extends State<Login> {
                                                     userName:
                                                         _userName.text.trim(),
                                                     password:
-                                                        _password.text.trim())
+                                                        _password.text.trim(), device_id: device_id)
                                                 .whenComplete(() {
                                               setState(() {
                                                 _isLoading = false;
@@ -266,7 +295,7 @@ class _LoginState extends State<Login> {
                                                   userName:
                                                       _userName.text.trim(),
                                                   password:
-                                                      _password.text.trim())
+                                                      _password.text.trim(), device_id: device_id)
                                               .whenComplete(() {
                                             setState(() {
                                               _isLoading = false;

@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:penny_chats/controllers/AppStrings.dart';
@@ -7,14 +9,19 @@ import 'package:penny_chats/views/Screens/mydashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthServices {
+
+
   static Future login(context,
-      {required String userName, required String password}) async {
+      {required String userName, required String password,required String device_id}) async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
+
 
     var _data = new Map<String, dynamic>();
     _data['username'] = '$userName';
     _data['password'] = '$password';
-print("-------------------");
+    _data['device_id'] = '$device_id';
+
+    print("-------------------");
     var response = await http.post(
       Uri.parse(
         'https://pennychats.com/pennychatapi/login/index',

@@ -37,7 +37,7 @@ class AppStrings {
       '$baseUrl/post/user_post/';
   // https://pennychats.com/pennychatapi/
   static const profilePictureApi =
-      'https://www.pennychats.com/beta/uploads/profile_pictures';
+      'https://www.pennychats.com/uploads/profile_pictures';
   static const noProfilePicture =
       'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459';
   static const stockNewsPicture =
