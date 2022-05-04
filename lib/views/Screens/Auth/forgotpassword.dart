@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
+import 'package:penny_chats/views/Screens/Auth/login.dart';
 
 import '../../../ApiService/Apiservice.dart';
 
@@ -22,11 +23,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           child: Column(
         children: [
           Image.asset(
-            'assets/images/forgot-image.png',
+            'assets/images/forgot-image.jpg',
           ),
           Expanded(
               child: Container(
             width: double.infinity,
+            color: Colors.white,
             child: Center(
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
@@ -55,7 +57,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
-                        height: 130,
+                        height: 90,
                       ),
                       TextFormField(
                         controller: textController,
@@ -120,6 +122,43 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                   fontFamily: 'Gotham',
                                   fontWeight: FontWeight.bold),
                             )),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'LOGIN YOUR ACCOUNT ?',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors
+                                    .REGISTER_PAGE_ALREADY_TEXT,
+                                fontFamily: 'Gotham',
+                                fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Login()));
+                            },
+                            child: Text(
+                              'SIGN IN',
+                              style: TextStyle(
+                                  decoration:
+                                  TextDecoration.underline,
+                                  fontSize: 13,
+                                  color:
+                                  AppColors.LOGIN_PAGE_LOGINBOX,
+                                  fontFamily: 'Gotham',
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
