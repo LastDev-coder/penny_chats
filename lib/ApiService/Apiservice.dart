@@ -513,4 +513,16 @@ print("id -> $id");
     clint.Response response = await dio.get(url);
     return response.data;
   }
+  Future getNotificationEnable() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    // print("id => $id ");
+    late String url =
+        "${AppStrings.baseUrl}/users/user_notienabledisable/$id";
+       Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
 }

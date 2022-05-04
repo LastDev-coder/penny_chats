@@ -26,7 +26,7 @@ class _PermissionState extends State<Permission> {
               fontWeight: FontWeight.bold
           ),
         ),
-        content: Text('PennyChats uses the local network to connect with other people and need to access to your photo library to send photos.',
+        content: Text('PennyChats uses the local network to connect with other people and need to access to your photo library to upload photos for profile picture.',
           textAlign: TextAlign.center,
 
         ),
