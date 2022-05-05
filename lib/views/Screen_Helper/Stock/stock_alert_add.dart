@@ -562,7 +562,7 @@ class _NoStocksState extends State<NoStocks> {
                                                                   .effect ==
                                                               "Up"
                                                           ? Colors.green
-                                                          : Colors.red,
+                                                          : Colors.green,
                                                       fontFamily: 'Gotham',
                                                       fontSize: 14,
                                                       fontWeight:
