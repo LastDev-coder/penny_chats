@@ -12,7 +12,7 @@ class AuthServices {
 
 
   static Future login(context,
-      {required String userName, required String password,required String device_id}) async {
+      {required String userName, required String password,required String device_id,required String device_type }) async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
 
 
@@ -20,8 +20,11 @@ class AuthServices {
     _data['username'] = '$userName';
     _data['password'] = '$password';
     _data['device_id'] = '$device_id';
+    _data['device_type'] = '$device_type';
 
     print("-------------------");
+    print(_data);
+
     var response = await http.post(
       Uri.parse(
         'https://pennychats.com/pennychatapi/login/index',
@@ -71,6 +74,8 @@ class AuthServices {
     print("=========================>>${response.body}");
     var responseData = json.decode(response.body);
     if (responseData['status'] == true) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Please Check your email')));
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Login()));
     } else {
