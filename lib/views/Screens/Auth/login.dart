@@ -35,7 +35,17 @@ class _LoginState extends State<Login> {
       return iosDeviceInfo.identifierForVendor; // unique ID on iOS
     } else if(Platform.isAndroid) {
       var androidDeviceInfo = await deviceInfo.androidInfo;
-      print('androidDeviceInfo.androidId------> ${androidDeviceInfo.androidId}');
+      // print('androidDeviceInfo.androidId------> ${androidDeviceInfo.androidId}');
+      print('androidDeviceInfoid ------> ${androidDeviceInfo.id}');
+      print('androidDeviceInfo android id------> ${androidDeviceInfo.androidId}');
+      print('android device ------> ${androidDeviceInfo.device}');
+      print('android device brand ------> ${androidDeviceInfo.brand}');
+      print('android device display ------> ${androidDeviceInfo.display}');
+      print('android device fingerprint ------> ${androidDeviceInfo.fingerprint}');
+      print('android device hardware------> ${androidDeviceInfo.hardware}');
+      print('android device manufacturer------> ${androidDeviceInfo.manufacturer}');
+      print('android device model------> ${androidDeviceInfo.model}');
+
 
       setState(() {
         device_id = '${androidDeviceInfo.androidId}';

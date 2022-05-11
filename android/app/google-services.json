@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "534258978421",
+    "project_id": "pennychats1",
+    "storage_bucket": "pennychats1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534258978421:android:74da5fa863c8a6eeaa323c",
+        "android_client_info": {
+          "package_name": "app.penny.chats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534258978421-i225f913jnisa4p1lgtnsdcjkehfvsga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGg4n4GuEheTqbwxM7GpMCeI-HjV0V0-I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534258978421-i225f913jnisa4p1lgtnsdcjkehfvsga.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "534258978421-3nbqbqch1su7dog4v9pm6ljsvti1mm1t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "super.pennychats.application"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
