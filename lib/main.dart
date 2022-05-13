@@ -1,30 +1,82 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:penny_chats/controllers/Api/AuthServices/Authenticate.dart';
-import 'NotificationService/LocalNotificationService.dart';
-import 'package:firebase_core/firebase_core.dart';
 
-
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   // If you're going to use other Firebase services in the background, such as Firestore,
-//   // make sure you call `initializeApp` before using other Firebase services.
-//   // await Firebase.initializeApp();
+// Future<void> _messageHandler(RemoteMessage message) async {
+//   print('background message ${message.notification!.body}');
+//     print('Handling a background message ${message.messageId}');
+//   print('Handling a background message $message');
+//   try {
+//     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+//     FlutterLocalNotificationsPlugin();
+//     const AndroidInitializationSettings initializationSettingsAndroid =
+//     AndroidInitializationSettings('@mipmap/ic_launcher');
 //
-//   print("Handling a background message: ${message.messageId}");
+//     final IOSInitializationSettings initializationSettingsIOS =
+//     IOSInitializationSettings(
+//       requestSoundPermission: false,
+//       requestBadgePermission: false,
+//       requestAlertPermission: false,
+//     );
+//     final InitializationSettings initializationSettings =
+//     InitializationSettings(
+//         android: initializationSettingsAndroid,
+//         iOS: initializationSettingsIOS);
+//     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+//     var androidDetails = AndroidNotificationDetails(
+//       "12345",
+//       "flutterfcm",
+//       // "flutterfcm",
+//       importance: Importance.max,
+//       priority: Priority.high,
+//       autoCancel: false,
+//       sound: RawResourceAndroidNotificationSound("sound3"),
+//       playSound: true,
+//     );
+//     var iosDetails = IOSNotificationDetails();
+//
+//     var generateNotification =
+//     NotificationDetails(android: androidDetails, iOS: iosDetails);
+//     // print("--------------");
+//     // final player = AudioPlayer();
+//     // await player.setAsset('assets/sound/sound3.wav').whenComplete(() {
+//     //   player.play();
+//     // });
+//     //
+//     // print("--------------");
+//
+//     flutterLocalNotificationsPlugin
+//         .show(
+//       DateTime.now().second + DateTime.now().minute + DateTime.now().hour,
+//       message.notification!.title,
+//       message.notification!.body,
+//       generateNotification,
+//       payload: 'Default_Sound',
+//     )
+//         .then((value) {
+//       // final player = AudioPlayer();
+//       // player.setAsset('assets/sound/sound3.wav').whenComplete(() {
+//       //   player.play();
+//       // });
+//     });
+//   } catch (e) {
+//     print(e);
+//   }
 // }
 //
 //
-//
-// void main() async{
+// Future<void> main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
+//   print("----------------------------------------");
 //   await Firebase.initializeApp();
+//   print("----------------------------------------");
+//   FirebaseMessaging messaging = FirebaseMessaging.instance;
 //
-//   NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
+//   NotificationSettings settings = await messaging.requestPermission(
 //     alert: true,
 //     announcement: false,
 //     badge: true,
@@ -33,29 +85,15 @@ import 'package:firebase_core/firebase_core.dart';
 //     provisional: false,
 //     sound: true,
 //   );
-//   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//     print('Got a message whilst in the foreground!');
-//     print('Message data: ${message.data}');
-//
-//     if (message.notification != null) {
-//       print('Message also contained a notification: ${message.notification}');
-//     }
-//   });
 //
 //   print('User granted permission: ${settings.authorizationStatus}');
-//   final fcmToken = await FirebaseMessaging.instance.getToken();
+//   FirebaseMessaging.instance.getToken().then((value){
+//     print("my firebase token -> $value");
+//   });
 //
-//   // FirebaseInstanceId.getInstance().getToken('old-sender-id', FirebaseMessaging.INSTANCE_ID_SCOPE)
-// print('FCM Token -> $fcmToken');
-//
-//
-//   final  appInstanceId = await FirebaseInstanceId.appInstanceId ?? 'Unknown instance Id';
-//
-//   print('*********************** $appInstanceId');
-//
-//   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-//   // LocalNotificationService.initialize();
-//   runApp(MyApp());
+//   FirebaseMessaging.onBackgroundMessage(_messageHandler);
+//   LocalNotificationService.initialize();
+//   runApp( MyApp());
 // }
 
 // void main() async{
@@ -90,15 +128,14 @@ import 'package:firebase_core/firebase_core.dart';
 //   runApp(MyApp());
 // }
 
-
-
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
     // 'This channel is used for important notifications.', // description
     importance: Importance.high,
     playSound: true,
-    sound: RawResourceAndroidNotificationSound("sound3"));
+    sound: RawResourceAndroidNotificationSound("notification."));
+
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase servic
@@ -108,20 +145,20 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message $message');
   try {
     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+        FlutterLocalNotificationsPlugin();
     const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
     final IOSInitializationSettings initializationSettingsIOS =
-    IOSInitializationSettings(
+        IOSInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
       requestAlertPermission: false,
     );
     final InitializationSettings initializationSettings =
-    InitializationSettings(
-        android: initializationSettingsAndroid,
-        iOS: initializationSettingsIOS);
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
     var androidDetails = AndroidNotificationDetails(
       "12345",
@@ -136,14 +173,14 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     var iosDetails = IOSNotificationDetails();
 
     var generateNotification =
-    NotificationDetails(android: androidDetails, iOS: iosDetails);
-    // print("--------------");
-    // final player = AudioPlayer();
-    // await player.setAsset('assets/sound/sound3.wav').whenComplete(() {
-    //   player.play();
-    // });
-    //
-    // print("--------------");
+        NotificationDetails(android: androidDetails, iOS: iosDetails);
+    print("--------------");
+    final player = AudioPlayer();
+    await player.setAsset('assets/sound/notification.mp3').whenComplete(() {
+      player.play();
+    });
+
+    print("--------------");
 
     flutterLocalNotificationsPlugin
         .show(
@@ -154,24 +191,25 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
       payload: 'Default_Sound',
     )
         .then((value) {
-      // final player = AudioPlayer();
-      // player.setAsset('assets/sound/sound3.wav').whenComplete(() {
-      //   player.play();
-      // });
+      final player = AudioPlayer();
+      player.setAsset('assets/sound/notification.mp3').whenComplete(() {
+        player.play();
+      });
     });
   } catch (e) {
     print(e);
   }
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-    final fcmToken = await FirebaseMessaging.instance.getToken();
-print('FCM Token -> $fcmToken');
-  print('-------------------------------------------------------------------------------');
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  print('FCM Token ->$fcmToken');
+  print(
+      '-------------------------------------------------------------------------------');
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  runApp(MyApp(
-  ));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

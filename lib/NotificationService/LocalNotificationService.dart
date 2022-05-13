@@ -2,14 +2,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:penny_chats/controllers/AppStrings.dart';
 
-class LocalNotificationService{
+class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   static void initialize() {
     // initializationSettings  for Android
     const InitializationSettings initializationSettings =
-    InitializationSettings(
+        InitializationSettings(
       android: AndroidInitializationSettings("@mipmap/ic_launcher"),
     );
 
@@ -18,13 +18,12 @@ class LocalNotificationService{
       onSelectNotification: (String? id) async {
         print("onSelectNotification");
         if (id!.isNotEmpty) {
-          print("Router Value1234 $id");
-
-
+          print("Router Value $id");
         }
       },
     );
   }
+
   static void createanddisplaynotification(RemoteMessage message) async {
     try {
       final id = DateTime.now().millisecondsSinceEpoch ~/ 1000;
@@ -35,6 +34,7 @@ class LocalNotificationService{
           importance: Importance.max,
           priority: Priority.high,
         ),
+        iOS: IOSNotificationDetails(),
       );
 
       await _notificationsPlugin.show(
