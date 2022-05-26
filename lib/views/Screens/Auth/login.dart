@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -25,33 +26,36 @@ class _LoginState extends State<Login> {
   String device_id = '',device_type='';
   Future<String?> _getId() async {
     var deviceInfo = DeviceInfoPlugin();
+    final fcmToken = await FirebaseMessaging.instance.getToken();
+    print('FCM Token ->$fcmToken');
     if (Platform.isIOS) { // import 'dart:io'
-      var iosDeviceInfo = await deviceInfo.iosInfo;
+      // var iosDeviceInfo = await deviceInfo.iosInfo;
       setState(() {
-        device_id = '${iosDeviceInfo.identifierForVendor}';
+        device_id = '${fcmToken}';
         device_type='ios';
 
       });
-      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
-    } else if(Platform.isAndroid) {
-      var androidDeviceInfo = await deviceInfo.androidInfo;
+      return fcmToken; // unique ID on iOS
+    }
+    else if(Platform.isAndroid) {
+      // var androidDeviceInfo = await deviceInfo.androidInfo;
       // print('androidDeviceInfo.androidId------> ${androidDeviceInfo.androidId}');
-      print('androidDeviceInfoid ------> ${androidDeviceInfo.id}');
-      print('androidDeviceInfo android id------> ${androidDeviceInfo.androidId}');
-      print('android device ------> ${androidDeviceInfo.device}');
-      print('android device brand ------> ${androidDeviceInfo.brand}');
-      print('android device display ------> ${androidDeviceInfo.display}');
-      print('android device fingerprint ------> ${androidDeviceInfo.fingerprint}');
-      print('android device hardware------> ${androidDeviceInfo.hardware}');
-      print('android device manufacturer------> ${androidDeviceInfo.manufacturer}');
-      print('android device model------> ${androidDeviceInfo.model}');
+      // print('androidDeviceInfoid ------> ${androidDeviceInfo.id}');
+      // print('androidDeviceInfo android id------> ${androidDeviceInfo.androidId}');
+      // print('android device ------> ${androidDeviceInfo.device}');
+      // print('android device brand ------> ${androidDeviceInfo.brand}');
+      // print('android device display ------> ${androidDeviceInfo.display}');
+      // print('android device fingerprint ------> ${androidDeviceInfo.fingerprint}');
+      // print('android device hardware------> ${androidDeviceInfo.hardware}');
+      // print('android device manufacturer------> ${androidDeviceInfo.manufacturer}');
+      // print('android device model------> ${androidDeviceInfo.model}');
 
 
       setState(() {
-        device_id = '${androidDeviceInfo.androidId}';
+        device_id = '${fcmToken}';
         device_type='android';
       });
-      return androidDeviceInfo.androidId; // unique ID on Android
+      return fcmToken; // unique ID on Android
     }
   }
 

@@ -372,7 +372,7 @@ class _PostDetailsState extends State<PostDetails> {
                               radius: 25,
                               backgroundImage: widget.image == ''
                                   ? NetworkImage(
-                                  'https://image.freepik.com/free-vector/profile-icon-male-avatar-hipster-man-wear-headphones_48369-8728.jpg')
+                                  '${AppStrings.noProfilePicture}')
                                   : NetworkImage(
                                   '${AppStrings.profilePictureApi}/${widget.image}'),
                             ),

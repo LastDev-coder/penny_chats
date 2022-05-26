@@ -134,7 +134,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
     // 'This channel is used for important notifications.', // description
     importance: Importance.high,
     playSound: true,
-    sound: RawResourceAndroidNotificationSound("notification."));
+    sound: RawResourceAndroidNotificationSound("notification"));
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -163,11 +163,11 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     var androidDetails = AndroidNotificationDetails(
       "12345",
       "flutterfcm",
-      // "flutterfcm",
+       // "flutterfcm",
       importance: Importance.max,
       priority: Priority.high,
       autoCancel: false,
-      sound: RawResourceAndroidNotificationSound("sound3"),
+      sound: RawResourceAndroidNotificationSound("notification"),
       playSound: true,
     );
     var iosDetails = IOSNotificationDetails();
@@ -208,6 +208,13 @@ void main() async {
   print('FCM Token ->$fcmToken');
   print(
       '-------------------------------------------------------------------------------');
+  await FirebaseMessaging.instance.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      sound: true
+  );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(MyApp());
 }

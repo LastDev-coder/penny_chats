@@ -153,7 +153,7 @@ else{
                     //   ),
                     // ),
                     ListView.builder(
-                        reverse: true,
+                        reverse: false,
                         itemCount: _notificationsList!.response!.length,
                         physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
