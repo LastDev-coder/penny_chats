@@ -32,8 +32,9 @@ class Messages {
   String? message;
   String? pic;
   String?  uid;
+  String? isReport ;
 
-  Messages({this.iD, this.user, this.time, this.message, this.pic});
+  Messages({this.iD, this.user, this.time, this.message, this.pic,  this.isReport});
 
   Messages.fromJson(Map<String, dynamic> json) {
     iD = json['ID'];
@@ -42,6 +43,7 @@ class Messages {
     message = json['Message'];
     pic = json['pic'];
     uid = json['uid'];
+    isReport = json['report'];
   }
 
   Map<String, dynamic> toJson() {
@@ -52,6 +54,8 @@ class Messages {
     data['Message'] = this.message;
     data['pic'] = this.pic;
     data['uid'] = this.uid;
+    data['report'] = this.isReport;
+
     return data;
   }
 }

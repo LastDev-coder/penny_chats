@@ -36,7 +36,6 @@ class AppStrings {
 
   static const getUserPostApi =
       '$baseUrl/post/user_post/';
-  // https://pennychats.com/pennychatapi/
   static const profilePictureApi =
       'https://www.pennychats.com/uploads/profile_pictures';
   static const noProfilePicture =

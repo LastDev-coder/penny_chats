@@ -94,20 +94,26 @@ class _MydashboardState extends State<Mydashboard> {
 
   @override
   void initState() {
-    NotificationsApi.getNotification(context, AppStrings.getNotificationApi)
-        .then((value) {
-      setState(() {
-        _notificationData = value;
-        _currentIndex = widget.number;
-
-      });
-    });
     NotificationsApi.getNotification(context, AppStrings.getMainNotificationApi)
         .then((value) {
       setState(() {
         _mainnotificationData = value;
+        _currentIndex = widget.number;
+
       });
     });
+    setState(() {
+      print('(((((((((((((((()))))))))))))))))))))))))))))))))))))))))))))))');
+    });
+    NotificationsApi.getNotification(context, AppStrings.getNotificationApi)
+        .then((value) {
+      setState(() {
+        print('-------------current index = $_currentIndex');
+        _notificationData = value;
+
+      });
+    });
+
     super.initState();
   }
   Future<bool> onWillPop() async {

@@ -11,6 +11,7 @@ import 'package:penny_chats/views/Screens/ExtraScreens/StocksToWatch.dart';
 import 'package:penny_chats/views/Screens/ExtraScreens/contact.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../ApiService/Apiservice.dart';
 import 'ExtraScreens/Tradng.dart';
 import 'ExtraScreens/disclaimerScreen.dart';
 import 'dashboard.dart';
@@ -40,6 +41,14 @@ class _appdrawerState extends State<appdrawer> {
     });
 
     return r;
+  }
+
+  makeLogout() async {
+   var data = await Apiservice().getLogout();
+   print("--------------Logout----------------");
+   print(data);
+   print('------------------------------------');
+
   }
 
   Future<bool> Calculator() async {
@@ -682,6 +691,7 @@ class _appdrawerState extends State<appdrawer> {
                           alignment: Alignment.bottomCenter,
                           child: InkWell(
                             onTap: () async {
+                              makeLogout();
                               SharedPreferences _prefs =
                                   await SharedPreferences.getInstance();
                               _prefs.clear();

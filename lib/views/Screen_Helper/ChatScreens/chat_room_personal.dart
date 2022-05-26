@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
 
-import 'package:badges/badges.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
@@ -14,9 +11,6 @@ import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/online_user_list_model.dart';
 import 'package:penny_chats/models/user_chat_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'chat_room_personal.dart';
-import 'chat_room_personal.dart';
 
 class ChatRoomPersonal extends StatefulWidget {
   ChatRoomPersonal({Key? key}) : super(key: key);
@@ -32,17 +26,16 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
   String lastMessageId = "";
   String firstMessageId = "";
   String uID = "";
-  bool isBottom= true;
-  ScrollController _scrollController= ScrollController();
-  
+  bool isBottom = true;
+  ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _scrollController= ScrollController();
+    _scrollController = ScrollController();
     getMessage();
-   // callTimer();
+    // callTimer();
   }
 
   @override
@@ -54,7 +47,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
         child: Column(
           children: [
             Container(
-              height: 90,
+              height: 100,
               padding:
                   const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
               child: FutureBuilder(
@@ -77,10 +70,9 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
               flex: 1,
               child: Container(
                   margin: EdgeInsets.only(bottom: 10),
-                  padding: EdgeInsets.only(left: 10,right: 10),
+                  padding: EdgeInsets.only(left: 10, right: 10),
                   child: ListView.builder(
-
-                    controller: _scrollController,
+                      controller: _scrollController,
                       itemCount: _listMessages.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
@@ -95,7 +87,8 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                   child: Padding(
                     padding: const EdgeInsets.only(top: 1),
                     child: Container(
-                        color:Get.isDarkMode ? Colors.black12 : AppColors.white,
+                        color:
+                            Get.isDarkMode ? Colors.black12 : AppColors.white,
                         child: TextFormField(
                           controller: _messagesendController,
                           keyboardType: TextInputType.text,
@@ -103,7 +96,9 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                           maxLines: 4,
                           minLines: 1,
                           style: GoogleFonts.openSans(
-                            color:Get.isDarkMode ? Colors.white : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                            color: Get.isDarkMode
+                                ? Colors.white
+                                : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
                           ),
@@ -118,11 +113,12 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                                   )),
                               hintText: 'Type in your message...',
                               hintStyle: GoogleFonts.openSans(
-                                color: Get.isDarkMode ? Colors.white :Colors.black,
+                                color: Get.isDarkMode
+                                    ? Colors.white
+                                    : Colors.black,
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
                               ),
-
                               contentPadding: EdgeInsets.all(5)),
                         )),
                   )),
@@ -159,8 +155,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                 child: CircleAvatar(
                   radius: 27,
                   backgroundImage: user.profilePic == ''
-                      ? NetworkImage(
-                          '${AppStrings.noProfilePicture}')
+                      ? NetworkImage('${AppStrings.noProfilePicture}')
                       : NetworkImage(
                           '${AppStrings.profilePictureApi}/${user.profilePic}'),
                 ),
@@ -177,13 +172,21 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
             ),
           ],
         ),
-        Text(
-          user.name!,
-          style: TextStyle(
-            fontSize: 9,
-            color: Get.isDarkMode ? Colors.white :AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
-            fontFamily: 'Gotham',
-            fontWeight: FontWeight.bold,
+        Expanded(
+          child: SizedBox(
+            width: 55,
+            child: Text(
+              user.username!,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 9,
+                color: Get.isDarkMode
+                    ? Colors.white
+                    : AppColors.LOGIN_PAGE_INPUTBOX_INPUTTEXT,
+                fontFamily: 'Gotham',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ],
@@ -191,7 +194,6 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
   }
 
   sendmessage() async {
-
     String msg = _messagesendController.text;
     print("======================$msg");
     FocusScopeNode currentFocus = FocusScope.of(context);
@@ -205,37 +207,33 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
       return;
     }
 
-
     var data = await Apiservice().sendMessage(msg);
     _messagesendController.text = "";
     currentFocus.focusedChild?.unfocus();
 
     print("======================$data");
     gatLastMessage();
-
   }
 
   getMessage() async {
     final prefs = await SharedPreferences.getInstance();
-     uID = prefs.getString('id') ?? '';
-    bool iisf= false;
+    uID = prefs.getString('id') ?? '';
+    bool iisf = false;
 
     print(lastMessageId);
     var data = await Apiservice().getMessages(lastMessageId);
-    if(_listMessages.isEmpty){
-        iisf= true;
+    if (_listMessages.isEmpty) {
+      iisf = true;
     }
 
     print(data);
     UserChatModel userChatModel = UserChatModel.fromJson(data);
     for (Messages me in userChatModel.messages!) {
       _listMessages.insert(0, me);
-
     }
-    if(iisf){
-      print("------------xx-----${ _scrollController.hasClients}");
-      print("------------xx-----${ _scrollController.position.maxScrollExtent}");
-
+    if (iisf) {
+      print("------------xx-----${_scrollController.hasClients}");
+      print("------------xx-----${_scrollController.position.maxScrollExtent}");
 
       if (_scrollController.hasClients) {
         Future.delayed(const Duration(milliseconds: 500)).then((value) {
@@ -246,49 +244,47 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
           );
         });
       }
-     if( _scrollController.hasClients)
-       _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent+10,
-        duration: const Duration(milliseconds: 1),
-        curve: Curves.bounceInOut,
-      );
+      if (_scrollController.hasClients)
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent + 10,
+          duration: const Duration(milliseconds: 1),
+          curve: Curves.bounceInOut,
+        );
     }
     lastMessageId = _listMessages.first.iD.toString();
     setState(() {});
   }
 
   getMessagesView(Messages user, int index) {
-
     bool Visiibility = false;
     String md = "";
     try {
-      md =user.time!.split(" ")[0] +" "+user.time!.split(" ")[1];
-    } catch (e) {
-
-    }
-    if(md==""){
+      md = user.time!.split(" ")[0] + " " + user.time!.split(" ")[1];
+    } catch (e) {}
+    if (md == "") {
       Visiibility = false;
-    }else
-    if (index == 0) {
+    } else if (index == 0) {
       Visiibility = true;
     } else if (index > 0) {
       try {
-        String md1 =_listMessages[index - 1].time!.split(" ")[0] +" "+ _listMessages[index - 1].time!.split(" ")[1];
-        String  md2 =_listMessages[index].time!.split(" ")[0] +" "+ _listMessages[index].time!.split(" ")[1];
-        if(md1!=md2){
+        String md1 = _listMessages[index - 1].time!.split(" ")[0] +
+            " " +
+            _listMessages[index - 1].time!.split(" ")[1];
+        String md2 = _listMessages[index].time!.split(" ")[0] +
+            " " +
+            _listMessages[index].time!.split(" ")[1];
+        if (md1 != md2) {
           Visiibility = true;
         }
-      } catch (e) {
-
-      }
-    }else{
+      } catch (e) {}
+    } else {
       Visiibility = false;
     }
 
     return Padding(
       padding: const EdgeInsets.only(top: 15),
       child: Visibility(
-        visible: uID!=user.uid,
+        visible: uID != user.uid,
         child: Column(
           children: [
             Visibility(
@@ -308,9 +304,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    md
-                  ),
+                  Text(md),
                   SizedBox(
                     width: 10,
                   ),
@@ -318,7 +312,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                     child: Container(
                         width: MediaQuery.of(context).size.width / 2,
                         child: Divider(
-                          color:Get.isDarkMode
+                          color: Get.isDarkMode
                               ? Colors.white38
                               : AppColors.CHAT_ROOM_DATEOFMESSAGE_DIVIDER,
                           thickness: 1,
@@ -339,8 +333,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                     child: CircleAvatar(
                       radius: 27,
                       backgroundImage: user.pic == ''
-                          ? NetworkImage(
-                              '${AppStrings.noProfilePicture}')
+                          ? NetworkImage('${AppStrings.noProfilePicture}')
                           : NetworkImage(
                               '${AppStrings.profilePictureApi}/${user.pic}'),
                     ),
@@ -383,17 +376,68 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                           ),
                         ],
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, right: 70),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Get.isDarkMode ? Colors.black38 : Color(0xfff1f2f6),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                            )),
-                        child: Text(user.message.toString(),),
+                      Row(
+                        children: [
+                          user.isReport != '1'
+                              ?
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                                        margin: EdgeInsets.only(top: 5, right: 10),
+                                        padding: EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                            color: Get.isDarkMode
+                                                ? Colors.black38
+                                                : Color(0xfff1f2f6),
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(10),
+                                              bottomLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10),
+                                            )),
+                                        child: Text(
+                                          user.message.toString(),
+                                        ),
+                                      ),
+                          )
+                              : Container(
+                            margin: EdgeInsets.only(top: 5, right: 10),
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: Get.isDarkMode
+                                    ? Colors.black38
+                                    : Color(0xfff1f2f6),
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(10),
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                )),
+                            child: Text('Blocked Content',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.red,
+                                    fontStyle: FontStyle.italic,
+                                    fontFamily: 'Gotham',
+                                    fontWeight: FontWeight.normal)),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              onDelete(index, user.iD.toString(), user);
+                            },
+                            child: Align(
+                                alignment: Alignment.topLeft,
+
+                                child: user.isReport != '1'
+                                    ? Container(
+                                  margin: EdgeInsets.only( right: 45),
+
+                                  child: Icon(Icons.report,size: 15,
+                                color: Get.isDarkMode
+                                      ? Colors.black54
+                                      : Colors.black26,),
+                                    )
+                                    : Container()),
+                          )
+                        ],
                       ),
                     ],
                   ),
@@ -446,16 +490,13 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
-
                         children: [
-
                           Text(
                             user.time.toString(),
                             style: TextStyle(
@@ -481,7 +522,6 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                                 fontFamily: 'Gotham',
                                 fontWeight: FontWeight.w600),
                           ),
-
                         ],
                         mainAxisAlignment: MainAxisAlignment.end,
                       ),
@@ -520,14 +560,12 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                     child: CircleAvatar(
                       radius: 27,
                       backgroundImage: user.pic == ''
-                          ? NetworkImage(
-                          '${AppStrings.noProfilePicture}')
+                          ? NetworkImage('${AppStrings.noProfilePicture}')
                           : NetworkImage(
-                          '${AppStrings.profilePictureApi}/${user.pic}'),
+                              '${AppStrings.profilePictureApi}/${user.pic}'),
                     ),
                   ),
                 ),
-
               ],
             ),
           ],
@@ -536,8 +574,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
     );
   }
 
-
-  gatLastMessage() async{
+  gatLastMessage() async {
     firstMessageId = _listMessages.last.iD.toString();
     var data = await Apiservice().getCurrentMessages(firstMessageId);
     UserChatModel userChatModel = UserChatModel.fromJson(data);
@@ -546,23 +583,21 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
     for (Messages me in userChatModel.messages!) {
       _listMessages.add(me);
       print("------------------>>$isBottom");
-      print("------------------>>${_scrollController.position.maxScrollExtent}");
-      if(isBottom){
+      print(
+          "------------------>>${_scrollController.position.maxScrollExtent}");
+      if (isBottom) {
         setState(() {});
         _scrollController.animateTo(
-          _scrollController.position.maxScrollExtent+100,
+          _scrollController.position.maxScrollExtent + 100,
           duration: const Duration(milliseconds: 100),
           curve: Curves.bounceInOut,
         );
       }
     }
-
-
-    
   }
 
-  callTimer(){
-    Timer.periodic(Duration(seconds: 10), (timer) =>gatLastMessage());
+  callTimer() {
+    Timer.periodic(Duration(seconds: 10), (timer) => gatLastMessage());
     _scrollController.addListener(() {
       print("------------------<>");
       print(_scrollController.position.pixels);
@@ -571,16 +606,96 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
       if (_scrollController.position.atEdge) {
         print("------------------end");
         isBottom = true;
-      }else{
+      } else {
         print("------------------top");
         isBottom = false;
-
-      }if(_scrollController.position.pixels<0.1){
+      }
+      if (_scrollController.position.pixels < 0.1) {
         getMessage();
       }
     });
-
-
   }
 
+  Future<bool> onDelete(int index, String mid, Messages user) async {
+    bool _loading = false;
+
+    final shouldPop = await showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                    title: Text('Are you sure?'),
+                    content: Text('Do you want to report this message ?'),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: Text('No'),
+                      ),
+                      FlatButton(
+                        onPressed: () async {
+                          setState(() {
+                            _loading = true;
+                            // _listMessages.removeAt(index);
+                            refresh(user);
+                          });
+
+                          print('-------------$index--------------');
+                          print('*************${mid}***********');
+                          var _data = new Map<String, dynamic>();
+                          _data['msg_id'] = mid;
+                          print(_data);
+
+                          var data =
+                              await Apiservice().postReportMessage(_data);
+
+                          print("***********************-------------------" +
+                              data.toString());
+                          print(
+                              "delete message index no --> ${index.toString()}");
+                          print("message id --> ${mid.toString()}");
+
+                          if (data["status"].toString() == "true") {
+                            setState(() {
+                              _listMessages.removeAt(index);
+                            });
+
+                            Navigator.of(context).pop(false);
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(new SnackBar(
+                              content: new Text(
+                                data["message"].toString(),
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.green,
+                            ));
+                          } else {
+                            Navigator.of(context).pop(false);
+
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(new SnackBar(
+                              content: new Text(
+                                data["message"].toString(),
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              backgroundColor: Colors.red,
+                            ));
+                          }
+                        },
+                        child: _loading
+                            ? CupertinoActivityIndicator(
+                                animating: true, radius: 10)
+                            : Text('Yes'),
+                      ),
+                    ],
+                  ));
+        });
+
+    return shouldPop ?? false;
+  }
+
+  refresh(user) {
+    setState(() {
+      user.isReport = '1';
+    });
+  }
 }

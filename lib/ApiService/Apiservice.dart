@@ -525,4 +525,52 @@ print("id -> $id");
     clint.Response response = await dio.get(url);
     return response.data;
   }
+  Future postReportMessage(var _data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+    Dio dio = new Dio();
+    clint.Response response;
+
+    try {
+      response = await dio.post(
+          "${AppStrings.baseUrl}/chat/report_msg/",
+          data: _data,
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authentication-token": token
+          }));
+
+      print('response : ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('Error : $e');
+    }
+  }
+  Future getLogout() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    // print("id => $id ");
+    late String url =
+        "${AppStrings.baseUrl}/login/logout/$id";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+
+  Future getCommentDelete(String mid) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    // print("id => $id ");
+    late String url =
+        "${AppStrings.baseUrl}/post/Delete_comment/$mid ";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
 }
