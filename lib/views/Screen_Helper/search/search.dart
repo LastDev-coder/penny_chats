@@ -58,9 +58,9 @@ class _SarchState extends State<Sarch> {
           onTap: () {
             Navigator.pop(context, 'back');
           },
-          child: Icon(
-            Icons.close,
-            size: 30,
+          child:  Icon(
+            Icons.arrow_back_ios,
+            size: 25,
           ),
         ),
       ),

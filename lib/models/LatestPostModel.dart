@@ -33,6 +33,7 @@ class LatestPostModel {
         "status": status,
         "response": List<dynamic>.from(response!.map((x) => x.toJson())),
       };
+
 }
 
 class Response {
@@ -56,7 +57,7 @@ class Response {
   String? id;
   String? userId;
   String? title;
-  String? content;
+  var content;
   String? comments;
   String? votes;
   String? favourites;

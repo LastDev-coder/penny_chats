@@ -54,8 +54,8 @@ class _FavouritePostScreenState extends State<FavouritePostScreen> {
                                     name: _post.name,
                                     time: AppStrings.dateFormat
                                         .format(_post.created!),
-                                    desc: AppStrings.parseHtmlString(
-                                        _post.content!),
+                                    desc:
+                                        _post.content!,
                                     likes: _post.votes,
                                     comments: _post.comments,
                                     image: _post.profilePic,

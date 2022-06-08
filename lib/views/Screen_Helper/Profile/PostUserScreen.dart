@@ -53,8 +53,8 @@ class _PostUserScreenState extends State<PostUserScreen> {
             Navigator.pop(context, 'back');
           },
           child: Icon(
-            Icons.close,
-            size: 30,
+            Icons.arrow_back_ios,
+            size: 25,
           ),
         ),
       ),

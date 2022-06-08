@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:url_launcher/url_launcher.dart';
@@ -31,7 +33,15 @@ class NewsDetails extends StatefulWidget {
 class _NewsDetailsState extends State<NewsDetails> {
   TextEditingController nameController = TextEditingController();
   TextEditingController commentController = TextEditingController();
+  String getFormattedDate(String date) {
+    var localDate = DateTime.parse(date).toLocal();
+    var inputFormat = DateFormat('yyyy-MM-dd hh:mm:ss');
+    var inputDate = inputFormat.parse(localDate.toString());
+    var outputFormat = DateFormat('yyyy-MM-dd');
+    var outputDate = outputFormat.format(inputDate);
 
+    return "${outputDate.toString()}";
+  }
   MyComment(
       String name, String comment, String news_id, String url_title) async {
     String title = url_title.replaceAll(' ', '-');
@@ -75,7 +85,8 @@ class _NewsDetailsState extends State<NewsDetails> {
           data["response"]["comment"][i]["cmt_name"],
           data["response"]["comment"][i]["cmt_email"],
           data["response"]["comment"][i]["comment"],
-          data["response"]["comment"][i]["created"],
+          getFormattedDate(
+              data["response"]["comment"][i]["created"]),
           data["response"]["comment"][i]["status"]);
       postmodel.add(model);
       i++;
@@ -84,8 +95,47 @@ class _NewsDetailsState extends State<NewsDetails> {
 // setState(() {
 //
 // });
+    print(widget.content);
     return postmodel;
   }
+  List<TextSpan> extractText(String rawString) {
+    List<TextSpan> textSpan = [];
+
+    final urlRegExp = new RegExp(
+        r"((https?:www\.)|(https?:\/\/)|(www\.))[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9]{1,6}(\/[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)?");
+
+    getLink(String linkString) {
+      textSpan.add(
+        TextSpan(
+          text: linkString,
+          style: new TextStyle(color: Colors.blue),
+          recognizer: new TapGestureRecognizer()
+            ..onTap = () {
+              launch(linkString!);
+
+            },
+        ),
+      );
+      return linkString;
+    }
+
+    getNormalText(String normalText) {
+      textSpan.add(
+        TextSpan(
+          text: normalText,
+          style: new TextStyle(color:Get.isDarkMode ? Colors.white : Colors.black),
+        ),
+      );
+      return normalText;
+    }
+
+    rawString.splitMapJoin(
+      urlRegExp,
+      onMatch: (m) => getLink("${m.group(0)}"),
+      onNonMatch: (n) => getNormalText("${n.substring(0)}"),
+    );
+
+    return textSpan;}
 
   @override
   Widget build(BuildContext context) {
@@ -189,6 +239,17 @@ class _NewsDetailsState extends State<NewsDetails> {
                   top: 0, left: 15, right: 15, bottom: 10),
               child: Html(
                 data: '${widget.content}',
+                  style: {
+                    "span": Style(
+                      color: Get.isDarkMode ? Colors.white : Colors.black
+                    ),
+                    "p": Style(
+                        color: Get.isDarkMode ? Colors.white : Colors.black
+                    ),
+                    "div": Style(
+                        color: Get.isDarkMode ? Colors.black : Colors.white
+                    ),
+                  },
                 onLinkTap: (String? url, RenderContext context,
                     Map<String, String> attributes, dom.Element? element) {
                   //open URL in webview, or launch URL in browser, or any other logic here
@@ -397,18 +458,23 @@ class _NewsDetailsState extends State<NewsDetails> {
                                               SizedBox(
                                                 height: 10,
                                               ),
-                                              Text(
-                                                snapshot.data[i].comment
-                                                    .toString(),
-                                                textAlign: TextAlign.start,
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Get.isDarkMode ? Colors.white :AppColors
-                                                        .POST_TAB_COMMENTS_COLOR,
-                                                    fontFamily: 'Gotham',
-                                                    fontWeight:
-                                                        FontWeight.w500),
+                                              RichText(
+                                                text: TextSpan(
+                                                  children: extractText(snapshot.data[i].comment),
+                                                ),
                                               ),
+                                              // Text(
+                                              //   snapshot.data[i].comment
+                                              //       .toString(),
+                                              //   textAlign: TextAlign.start,
+                                              //   style: TextStyle(
+                                              //       fontSize: 12,
+                                              //       color: Get.isDarkMode ? Colors.white :AppColors
+                                              //           .POST_TAB_COMMENTS_COLOR,
+                                              //       fontFamily: 'Gotham',
+                                              //       fontWeight:
+                                              //           FontWeight.w500),
+                                              // ),
                                               Padding(
                                                 padding: const EdgeInsets.only(
                                                     right: 15,

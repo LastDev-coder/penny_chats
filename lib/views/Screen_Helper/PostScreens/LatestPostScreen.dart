@@ -60,8 +60,8 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
                                     id: _post.id,
                                     name: _post.name,
                                     time: dateFormat.format(_post.created!),
-                                    desc: AppStrings.parseHtmlString(
-                                        _post.content!),
+                                    desc:
+                                        _post.content!,
                                     likes: _post.votes,
                                     comments: _post.comments,
                                     image: _post.profilePic,

@@ -34,8 +34,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     File? result = await FlutterImageCompress.compressAndGetFile(
       image!.path,
       tempPath + "/" + _basename(image.path),
-      minWidth: (MediaQuery.of(context).size.width - 50).toInt(),
-      minHeight: 300,
+      minWidth: 100,
+      minHeight: 100,
       autoCorrectionAngle: true,
     );
     ScaffoldMessenger.of(context)

@@ -154,7 +154,7 @@ class Apiservice {
     final token = prefs.getString('token') ?? '';
     final id = prefs.getString('id') ?? '';
 
-  //  late String url = "https://pennychats.com/pennychatapi/chat/send_msg/$id";
+    //  late String url = "https://pennychats.com/pennychatapi/chat/send_msg/$id";
     late String url = "https://pennychats.com/pennychatapi/chat/send_msg/  ";
     Dio dio = new Dio();
 
@@ -171,7 +171,7 @@ class Apiservice {
       final token = prefs.getString('token') ?? '';
       final id = prefs.getString('id') ?? '';
       late String url =
-              "https://pennychats.com/pennychatapi/users/search/$id";
+          "https://pennychats.com/pennychatapi/users/search/$id";
       Dio dio = new Dio();
       var json = {"srch":text};
       dio.options.headers["authentication-token"] = token;
@@ -249,14 +249,14 @@ class Apiservice {
     Dio dio = new Dio();
     clint.Response response;
     try {
-    response = await dio.post(
-        "${AppStrings.baseUrl}/users/edit_profile/$id",
-    data: _data,
-    options: Options(headers: {
-    "Accept": "application/json",
-    "Content-Type": "application/x-www-form-urlencoded",
-    "authentication-token": token
-    }));
+      response = await dio.post(
+          "${AppStrings.baseUrl}/users/edit_profile/$id",
+          data: _data,
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authentication-token": token
+          }));
 
       print('response : ${response.data}');
       return response.data;
@@ -367,7 +367,7 @@ class Apiservice {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final id = prefs.getString('id') ?? '';
-  print("=============p==========");
+    print("=============p==========");
     late String url =
         "${AppStrings.baseUrl}/post/details/$postid/$id";
     Dio dio = new Dio();
@@ -438,7 +438,7 @@ class Apiservice {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
     final id = prefs.getString('id') ?? '';
-print("id -> $id");
+    print("id -> $id");
     var request =
     http.MultipartRequest('POST', Uri.parse('${AppStrings.baseUrl}/users/img_upload/$id'));
     request.files.add(http.MultipartFile('profile_pic',
@@ -520,7 +520,66 @@ print("id -> $id");
     // print("id => $id ");
     late String url =
         "${AppStrings.baseUrl}/users/user_notienabledisable/$id";
-       Dio dio = new Dio();
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+  Future postReportMessage(var _data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+    Dio dio = new Dio();
+    clint.Response response;
+
+    try {
+      response = await dio.post(
+          "${AppStrings.baseUrl}/chat/report_msg/",
+          data: _data,
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authentication-token": token
+          }));
+
+      print('response : ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('Error : $e');
+    }
+  }
+  Future getLogout() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    // print("id => $id ");
+    late String url =
+        "${AppStrings.baseUrl}/login/logout/$id";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+
+  Future getCommentDelete(String mid) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    // print("id => $id ");
+    late String url =
+        "${AppStrings.baseUrl}/post/Delete_comment/$mid ";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+  Future getPostdetails(String pid) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    late String url =
+        "https://pennychats.com/pennychatapi/chat/Chat_online_user";
+    Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);
     return response.data;

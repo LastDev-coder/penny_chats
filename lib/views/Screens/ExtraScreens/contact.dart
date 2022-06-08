@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../appdrawer.dart';
 
@@ -71,12 +72,23 @@ class _contactState extends State<contact> {
                     SizedBox(
                       width: 3,
                     ),
-                    Text("Call us :",
+                    Text("Call us : ",
                         style: TextStyle(
                             color:Get.isDarkMode ? Colors.white : AppColors.Button_TEXT_COLOR,
                             fontFamily: 'Gotham',
                             fontSize: 18,
                             fontWeight: FontWeight.bold)),
+                    GestureDetector(
+                      onTap: (){
+                        launch(('tel://1800-990-9806'));
+                      },
+                      child: Text("1800-990-9806",
+                          style: TextStyle(
+                              color: Colors.blue ,
+                              fontFamily: 'Gotham',
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold)),
+                    ),
                   ],
                 ),
               ),
@@ -332,7 +344,7 @@ class _contactState extends State<contact> {
                         }
                       },
                       child: Text(
-                        'Add Testimonial',
+                        'Contact Us',
                         style: TextStyle(
                             color: AppColors.white,
                             fontFamily: 'Gotham',
