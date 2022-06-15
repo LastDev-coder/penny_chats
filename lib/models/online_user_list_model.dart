@@ -83,6 +83,7 @@ class UserList {
     emailVerifyCode = json['email_verify_code'];
     isOnline = json['is_online'];
     isLogin = json['is_login'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -105,6 +106,7 @@ class UserList {
     data['email_verify_code'] = this.emailVerifyCode;
     data['is_online'] = this.isOnline;
     data['is_login'] = this.isLogin;
+
     return data;
   }
 }

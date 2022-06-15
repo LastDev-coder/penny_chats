@@ -584,4 +584,42 @@ class Apiservice {
     clint.Response response = await dio.get(url);
     return response.data;
   }
+
+  Future postDeleteMessage(var _data) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print("id => $id ");
+    Dio dio = new Dio();
+    clint.Response response;
+
+    try {
+      response = await dio.post(
+          "${AppStrings.baseUrl}/chat/delete_msg",
+          data: _data,
+          options: Options(headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "authentication-token": token
+          }));
+
+      print('response : ${response.data}');
+      return response.data;
+    } catch (e) {
+      print('Error : $e');
+    }
+  }
+  Future getUserActivity(String status) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    // print("id => $id ");
+    // https://pennychats.com/pennychatapi/users/user_idletimeupdate/$user_id/$status(1 or 2) ----- get
+    late String url =
+        "${AppStrings.baseUrl}/users/user_idletimeupdate/$id/$status";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
 }

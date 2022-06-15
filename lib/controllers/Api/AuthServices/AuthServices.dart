@@ -41,6 +41,7 @@ class AuthServices {
 
       _prefs.setString('token', responseData['response']['token']);
       _prefs.setString('id', responseData['response']['pid']);
+      _prefs.setString('idleTime', DateTime.now().toString());
 
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Mydashboard(number: 0,)));

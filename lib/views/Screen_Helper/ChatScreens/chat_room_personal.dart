@@ -28,7 +28,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
   String uID = "";
   bool isBottom = true;
   ScrollController _scrollController = ScrollController();
-
+  bool _sloading = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -106,7 +106,10 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                               border: InputBorder.none,
                               suffixIcon: IconButton(
                                   onPressed: sendmessage,
-                                  icon: Icon(
+                                  icon:_sloading
+                                      ? CupertinoActivityIndicator(
+                                      animating: true, radius: 10)
+                                      :  Icon(
                                     Icons.send,
                                     size: 30,
                                     color: AppColors.LOGIN_PAGE_LOGINBOX,
@@ -134,9 +137,13 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
     var data = await Apiservice().getOnlineUser();
 
     OnlineUsers onlineUsers = OnlineUsers.fromJson(data);
+
+
     if (onlineUsers.status as bool) {
       list = onlineUsers.response as List<UserList>;
+
     }
+
     return list;
   }
 
@@ -163,7 +170,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
             ),
             Card(
               elevation: 0,
-              color: AppColors.LOGIN_PAGE_LOGINBOX,
+              color: user.isOnline=="2"? Colors.orange:AppColors.LOGIN_PAGE_LOGINBOX ,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50)),
               child: Padding(
@@ -206,9 +213,14 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
 
       return;
     }
-
+setState(() {
+  _sloading = true;
+});
     var data = await Apiservice().sendMessage(msg);
     _messagesendController.text = "";
+    setState(() {
+      _sloading=false;
+    });
     currentFocus.focusedChild?.unfocus();
 
     print("======================$data");
@@ -430,7 +442,7 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                                     ? Container(
                                   margin: EdgeInsets.only( right: 45),
 
-                                  child: Icon(Icons.report,size: 15,
+                                  child: Icon(Icons.report_problem,size: 15,
                                     color: Get.isDarkMode
                                         ? Colors.black54
                                         : Colors.black26,),
@@ -525,25 +537,45 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
                         ],
                         mainAxisAlignment: MainAxisAlignment.end,
                       ),
-                      Container(
-                        margin: EdgeInsets.only(top: 5, left: 70),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: Color(0xfff6ec68d),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                            )),
-                        child: Text(user.message.toString(),
-                            style: TextStyle(
-                                fontSize: 14,
-                                height: 1.4,
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              onMyMessageDelete(index,user.iD.toString(),user);
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only( left: 45),
+
+                              child: Icon(Icons.delete,size: 15,
                                 color: Get.isDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
-                                fontFamily: 'Gotham',
-                                fontWeight: FontWeight.normal)),
+                                    ? Colors.red
+                                    : Colors.red,),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: EdgeInsets.only(top: 5, left: 10),
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color: Color(0xfff6ec68d),
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                  )),
+                              child: Text(user.message.toString(),
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      height: 1.4,
+                                      color: Get.isDarkMode
+                                          ? Colors.white
+                                          : Colors.black,
+                                      fontFamily: 'Gotham',
+                                      fontWeight: FontWeight.normal)),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -692,10 +724,56 @@ class _ChatRoomPersonalState extends State<ChatRoomPersonal> {
 
     return shouldPop ?? false;
   }
+  Future<bool> onMyMessageDelete(int index, String mid, Messages user) async {
+    bool _loading = false;
+
+    final shouldPop = await showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                title: Text('Are you sure?'),
+                content: Text('Do you want to delete your message ?'),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: Text('No'),
+                  ),
+                  FlatButton(
+                    onPressed: () async {
+                      setState(() {
+                        _loading = true;
+                      });
+                      await refreshList(index,user.iD);
+                      Navigator.of(context).pop(false);
+
+                    },
+                    child: _loading
+                        ? CupertinoActivityIndicator(
+                        animating: true, radius: 10)
+                        : Text('Yes'),
+                  ),
+                ],
+              ));
+        });
+
+    return shouldPop ?? false;
+  }
+
 
   refresh(user) {
     setState(() {
       user.isReport = '1';
+    });
+  }
+  refreshList(index,msgid) async {
+    var _data = new Map<String, dynamic>();
+    _data['msg_id'] = msgid;
+    print(_data);
+    var data = await Apiservice().postDeleteMessage(_data);
+    print('$msgid');
+    setState(() {
+      _listMessages.removeAt(index);
     });
   }
 }

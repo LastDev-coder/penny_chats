@@ -37,8 +37,7 @@ class _PostState extends State<Post>  with SingleTickerProviderStateMixin{
 
     return r;
   }
-  TextEditingController titleController = TextEditingController();
-  TextEditingController despController = TextEditingController();
+
 
   Future<bool> doPost() async {
     String CalculateResult = '';

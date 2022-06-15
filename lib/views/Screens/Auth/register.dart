@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:penny_chats/controllers/Api/AuthServices/AuthServices.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/views/Screen_Helper/Captcha/Captcha.dart';
@@ -82,6 +83,8 @@ class _RegisterState extends State<Register> {
                         children: [
                           TextFormField(
                             controller: _fullName,
+                            keyboardType: TextInputType.name,
+                          inputFormatters: [ FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")), ],
                             style: TextStyle(
                                 color: AppColors.REGISTER_PAGE_INPUT_TEXT,
                                 fontFamily: 'Gotham',

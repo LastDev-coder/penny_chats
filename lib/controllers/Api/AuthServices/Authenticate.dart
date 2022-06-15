@@ -4,35 +4,59 @@ import 'package:penny_chats/views/Screens/mydashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
+import '../../../ApiService/Apiservice.dart';
 import '../../../NotificationService/LocalNotificationService.dart';
+
 
 class Authenticate extends StatefulWidget {
   @override
   _AuthenticateState createState() => _AuthenticateState();
 }
 
-class _AuthenticateState extends State<Authenticate> {
+class _AuthenticateState extends State<Authenticate> with WidgetsBindingObserver{
+
   checkLogin() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
-    if (_prefs.getString('token') == null) {
+
+    try{
+      final time = _prefs.getString('idleTime') ?? '';
+      DateTime dt1 = DateTime.parse(time);
+      DateTime dt2 = DateTime.now();
+
+      Duration diff = dt2.difference(dt1);
+      // print("Difference in Hours: " + diff.inHours.toString());
+      if( int.parse(diff.inHours.toString())<10){
+        if (_prefs.getString('token') == null) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Splash()));
+        } else {
+          print("token => "+_prefs.getString('token').toString());
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Mydashboard(number: 0,)));
+        }
+      }else{
+        _prefs.setString('idleTime', DateTime.now().toString());
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Splash()));
+      }
+    }catch(e){
+      _prefs.setString('idleTime', DateTime.now().toString());
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => Splash()));
-    } else {
-      print("token => "+_prefs.getString('token').toString());
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Mydashboard(number: 0,)));
     }
+
+
+
   }
 
   @override
   void initState() {
     checkLogin();
     super.initState();
+    WidgetsBinding.instance!.addObserver(this);
+    print("-----------------------initstate done");
 
-    // 1. This method call when app in terminated state and you get a notification
-    // when you click on notification app open from terminated state and you can get notification data in this method
-
-    FirebaseMessaging.instance.getInitialMessage().then(
+       FirebaseMessaging.instance.getInitialMessage().then(
           (message) {
         print("FirebaseMessaging.instance.getInitialMessage");
         if (message != null) {
@@ -74,6 +98,46 @@ class _AuthenticateState extends State<Authenticate> {
         }
       },
     );
+  }
+
+  // @override
+  // void dispose() {
+  //   WidgetsBinding.instance!.removeObserver(this);
+  //   print("-----------------------dispose done");
+  //
+  //   super.dispose();
+  // }
+
+  @override
+  Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) return;
+
+    final isBackground = state == AppLifecycleState.paused;
+
+    if (isBackground) {
+    var data =  await Apiservice().getUserActivity('2');
+    print(data['response']);
+
+      print("--------------------------->> background true");
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      _prefs.setString('idleTime', DateTime.now().toString());
+
+
+    }
+    final isForeground = state== AppLifecycleState.resumed;
+    if(isForeground){
+
+      var data = await Apiservice().getUserActivity('1');
+      print(data['response']);
+
+      print('-------------------->>>>> active');
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      _prefs.setString('idleTime', DateTime.now().toString());
+
+    }
   }
 
   @override

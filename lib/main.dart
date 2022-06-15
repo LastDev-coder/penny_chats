@@ -1,10 +1,18 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:penny_chats/controllers/Api/AuthServices/Authenticate.dart';
+import 'package:penny_chats/views/Screens/Auth/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'ApiService/Apiservice.dart';
 
 // Future<void> _messageHandler(RemoteMessage message) async {
 //   print('background message ${message.notification!.body}');
@@ -200,6 +208,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     print(e);
   }
 }
+Timer? _rootTimer;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -216,19 +225,98 @@ void main() async {
       sound: true
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
+  Widget build(BuildContext context) => AppRoot();
+  // {
+  //   return GetMaterialApp(
+  //     debugShowCheckedModeBanner: false,
+  //     title: 'PennyChats',
+  //     // theme: ThemeData(
+  //     //   primarySwatch: Colors.blue,
+  //     // ),
+  //     home: Authenticate(),
+  //   );
+  // }
+}
+
+class AppRoot extends StatefulWidget {
+  // This widget is the root of your application.
+  @override
+  AppRootState createState() => AppRootState();
+}
+
+class AppRootState extends State<AppRoot> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    initializeTimer();
+  }
+  void initializeTimer() {
+    if (_rootTimer != null) _rootTimer!.cancel();
+    const time = const Duration(minutes:  20 );
+    _rootTimer = Timer(time, () {
+      logOutUser();
+    });
+  }
+  void logOutUser() async {
+    // Log out the user if they're logged in, then cancel the timer.
+
+print('-------------------->> logout user');
+await Apiservice().getUserActivity('2');
+
+SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+// _prefs.setString('idleTime', DateTime.now().toString());
+final time = _prefs.getString('idleTime') ?? '';
+
+DateTime dt1 = DateTime.parse(time);
+DateTime dt2 = DateTime.now();
+
+Duration diff = dt2.difference(dt1);
+print("Difference in minutes: " + diff.inMinutes.toString());
+
+
+    _rootTimer?.cancel();
+    // initializeTimer();
+
+  }
+
+
+// You'll probably want to wrap this function in a debounce
+  void _handleUserInteraction([_]) {
+    if (_rootTimer != null && !_rootTimer!.isActive) {
+      // This means the user has been logged out
+      return;
+    }
+
+
+    _rootTimer?.cancel();
+
+    initializeTimer();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'PennyChats',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      // ),
-      home: Authenticate(),
+    return Listener(
+      behavior: HitTestBehavior.translucent,
+      onPointerDown: _handleUserInteraction,
+      onPointerMove: _handleUserInteraction,
+      onPointerUp: _handleUserInteraction,
+      child:MaterialApp(
+
+          debugShowCheckedModeBanner: false,
+
+          home: Authenticate()
+      ),
     );
   }
 }
