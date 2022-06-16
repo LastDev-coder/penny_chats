@@ -12,8 +12,10 @@ import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/ProfileModel.dart';
 import 'package:penny_chats/views/Screen_Helper/Notification/notification_setting.dart';
 import 'package:penny_chats/views/Screens/mydashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../controllers/AppStrings.dart';
+import '../../Screens/Auth/splash.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
@@ -943,6 +945,57 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             )),
                           ),
+
+                          Divider(
+                            thickness: 1,
+                            color: AppColors.PROFILE_TAB_DIVIDER,
+                          ),
+                          Container(
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 30, top: 40, right: 30, bottom: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Delete Account',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Get.isDarkMode
+                                              ? Colors.white
+                                              : AppColors.PROFILE_TAB_NORMAL_TEXT,
+                                          fontFamily: 'Gotham',
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    ElevatedButton(
+                                      child: Text("Delete"),
+                                      onPressed: () => DeleteMyAccount(),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.red,
+                                        onPrimary: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(32.0),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0,left: 20,right: 20,bottom: 20),
+                            child: Text(
+                              '* If you delete your account you will permanently lose your account from everywhere. After delete your account, you will be able to create new account with the same email address.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Gotham',
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+
+
                         ],
                       ),
                     );
@@ -951,4 +1004,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         )));
   }
+
+  Future<bool> DeleteMyAccount() async {
+    bool _loading = false;
+
+    final shouldPop = await showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                title: Text('Warning',
+                    style: TextStyle(color: Colors.red)
+
+                ),
+                content: Text('Account will be permanently delete and cannot be recovered, Are you sure ?'),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: Text('No'),
+                  ),
+                  _loading
+                      ? CupertinoActivityIndicator(
+                      animating: true, radius: 10)
+                      : ElevatedButton(
+                    child: Text("Delete",
+
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        _loading = true;
+                      });
+                      await Apiservice().getLogout();
+                      await Apiservice().getUserDelete();
+
+                      SharedPreferences _prefs =
+                      await SharedPreferences.getInstance();
+                      _prefs.clear();
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Splash()));
+                      Navigator.of(context).pop(false);
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                      onPrimary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ));
+        });
+
+    return shouldPop ?? false;
+  }
+
 }

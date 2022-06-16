@@ -622,4 +622,17 @@ class Apiservice {
     clint.Response response = await dio.get(url);
     return response.data;
   }
+  //https://pennychats.com/pennychatapi/users/user_del_profile/$userid  ------- get
+
+  Future getUserDelete() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+        late String url =
+        "${AppStrings.baseUrl}/users/user_del_profile/$id";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
 }
