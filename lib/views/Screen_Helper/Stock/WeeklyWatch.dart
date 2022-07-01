@@ -371,46 +371,7 @@ class _WeeklyWatchScreenState extends State<WeeklyWatchScreen> {
                             padding: const EdgeInsets.all(10.0),
                             child: Column(
                               children: [
-                                // Row(
-                                //   mainAxisAlignment:
-                                //   MainAxisAlignment.end,
-                                //   children: [
-                                //     TextButton(
-                                //       //      color: AppColors.WeeklyWatch_SORTBUTTON,
-                                //       onPressed: () {
-                                //         AddAlert();
-                                //       },
-                                //       child: Padding(
-                                //         padding: const EdgeInsets.only(
-                                //             left: 10,
-                                //             right: 10,
-                                //             top: 5,
-                                //             bottom: 5),
-                                //         child: Row(
-                                //           children: [
-                                //             Icon(
-                                //               Icons.add_circle_outline,
-                                //               color: AppColors.STOCKALERT_TEXTBOLD,
-                                //             ),
-                                //             SizedBox(
-                                //               width: 5,
-                                //             ),
-                                //             Text('ADD',
-                                //                 style: TextStyle(
-                                //                     fontSize: 12,
-                                //                     color: AppColors.STOCKALERT_TEXTBOLD,
-                                //                     fontFamily: 'Gotham',
-                                //                     fontWeight:
-                                //                     FontWeight.w500)),
-                                //           ],
-                                //         ),
-                                //       ),
-                                //     ),
-                                //   ],
-                                // ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
+
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,

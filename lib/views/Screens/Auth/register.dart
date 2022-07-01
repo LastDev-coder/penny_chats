@@ -6,6 +6,7 @@ import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/views/Screen_Helper/Captcha/Captcha.dart';
 import 'package:penny_chats/views/Screens/Auth/login.dart';
 import 'package:penny_chats/views/Screens/ExtraScreens/terms&condition.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Register extends StatefulWidget {
   Register({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class _RegisterState extends State<Register> {
   bool _isChecked = false;
   bool _isLoading = false;
   bool _isHidden = true;
+  String _isRegister = 'false';
 
   TextEditingController _userName = TextEditingController();
   TextEditingController _pass = TextEditingController();
@@ -65,14 +67,14 @@ class _RegisterState extends State<Register> {
           ? Center(
         child: CircularProgressIndicator(),
       )
-          : Form(
+          :  Form(
         child: Column(
           children: [
             Container(
               height: 30,
             ),
             Expanded(
-              child: Container(
+              child:  Container(
                 height: double.infinity,
                 child: Center(
                   child: SingleChildScrollView(
@@ -84,7 +86,7 @@ class _RegisterState extends State<Register> {
                           TextFormField(
                             controller: _fullName,
                             keyboardType: TextInputType.name,
-                          inputFormatters: [ FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")), ],
+                          inputFormatters: [ FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")), ],
                             style: TextStyle(
                                 color: AppColors.REGISTER_PAGE_INPUT_TEXT,
                                 fontFamily: 'Gotham',
@@ -344,7 +346,7 @@ class _RegisterState extends State<Register> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => Captcha()));
-                                    AuthServices.createAccount(context,
+                              AuthServices.createAccount(context,
                                         userName:
                                         _userName.text.trim(),
                                         password: _pass.text.trim(),
@@ -360,6 +362,7 @@ class _RegisterState extends State<Register> {
                                         _isLoading = false;
                                       });
                                     });
+
 
                                   }
                                 },

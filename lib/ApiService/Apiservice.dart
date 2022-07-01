@@ -85,9 +85,14 @@ class Apiservice {
   }
 
   Future getTestimonial() async {
-    late String url = "${AppStrings.baseUrl}/cms/testimonial";
+    // https://pennychats.com/pennychatapi/testimonial/lists/$userid – get
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token') ?? '';
+    final id = prefs.getString('id') ?? '';
+    print('my id -> $id');
+    print('my token -> $token');
+
+    late String url = "${AppStrings.baseUrl}/testimonial/lists/$id";
 
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
@@ -622,7 +627,6 @@ class Apiservice {
     clint.Response response = await dio.get(url);
     return response.data;
   }
-  //https://pennychats.com/pennychatapi/users/user_del_profile/$userid  ------- get
 
   Future getUserDelete() async {
     final prefs = await SharedPreferences.getInstance();
@@ -630,6 +634,26 @@ class Apiservice {
     final id = prefs.getString('id') ?? '';
         late String url =
         "${AppStrings.baseUrl}/users/user_del_profile/$id";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+  Future getSearchUserDetails(String userid) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    late String url =
+        "${AppStrings.baseUrl}/users/userprofile/$userid";
+    Dio dio = new Dio();
+    dio.options.headers["authentication-token"] = token;
+    clint.Response response = await dio.get(url);
+    return response.data;
+  }
+  Future getPostDelete(String postid) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+    late String url =
+        "${AppStrings.baseUrl}/post/Delete_post/$postid";
     Dio dio = new Dio();
     dio.options.headers["authentication-token"] = token;
     clint.Response response = await dio.get(url);

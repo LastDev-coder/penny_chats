@@ -311,10 +311,13 @@ print("Difference in minutes: " + diff.inMinutes.toString());
       onPointerDown: _handleUserInteraction,
       onPointerMove: _handleUserInteraction,
       onPointerUp: _handleUserInteraction,
-      child:MaterialApp(
+
+      child:GetMaterialApp(
 
           debugShowCheckedModeBanner: false,
-
+              // theme: ThemeData(
+              //   // primarySwatch: Colors.blue,
+              // ),
           home: Authenticate()
       ),
     );

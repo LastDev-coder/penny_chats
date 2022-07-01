@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,9 @@ import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/LatestPostModel.dart';
 import 'package:penny_chats/views/Screen_Helper/PostScreens/PostDetailsScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Screens/mydashboard.dart';
 
 class LatestPostScreen extends StatefulWidget {
   LatestPostScreen({Key? key}) : super(key: key);
@@ -20,11 +24,22 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
   LatestPostModel? _latestPostModel;
   DateFormat dateFormat = DateFormat('yyyy-MM-dd – kk:mm');
   String isLike = "true";
-
+  String? userId;
   var data;
+  var dropdown;
+
+  checkUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final id = prefs.getString('id') ?? '';
+    print('user id ---> $id');
+    setState(() {
+      userId = id.toString();
+    });
+  }
 
   @override
   void initState() {
+    checkUserId();
     LatestPostApi.getLatestPost(context, AppStrings.getLatestPostApi)
         .then((value) {
       setState(() {
@@ -52,36 +67,38 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
                   width: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: InkWell(
-                    onTap: () async{
-                final result =    await   Navigator.push(
+                    onTap: () async {
+                      final result = await Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => PostDetails(
                                     id: _post.id,
                                     name: _post.name,
                                     time: dateFormat.format(_post.created!),
-                                    desc:
-                                        _post.content!,
+                                    desc: _post.content!,
                                     likes: _post.votes,
                                     comments: _post.comments,
                                     image: _post.profilePic,
                                     postUserId: _post.userId,
                                     title: _post.title,
                                   )));
-                print('--------------------result -> ${result.toString()}');
-                print('--------------------result -> ${index.toString()}');
-                var arr = result.split('-');
+                      print(
+                          '--------------------result -> ${result.toString()}');
+                      print(
+                          '--------------------result -> ${index.toString()}');
+                      var arr = result.split('-');
 
-                // print(arr[0]);
-                // print('**************** ${result.toString().substring( 0,split)}');
+                      // print(arr[0]);
+                      // print('**************** ${result.toString().substring( 0,split)}');
 
-
-                setState(() {
-                  _latestPostModel!.response![index].votes =arr[0].toString();
-                  _latestPostModel!.response![index].comments = arr[1].toString();
-                  _latestPostModel!.response![index].is_liked_ornot=arr[2].toString();
-
-                });
+                      setState(() {
+                        _latestPostModel!.response![index].votes =
+                            arr[0].toString();
+                        _latestPostModel!.response![index].comments =
+                            arr[1].toString();
+                        _latestPostModel!.response![index].is_liked_ornot =
+                            arr[2].toString();
+                      });
                     },
                     // splashColor: AppColors.DASHBOARD_SELECTED_ICON_COLOR,
                     child: Card(
@@ -160,16 +177,63 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.3,
-                                        child: Text(
-                                          dateFormat.format(_post.created!),
-                                          style: TextStyle(
-                                              color: Get.isDarkMode
-                                                  ? Colors.white
-                                                  : AppColors
-                                                      .POST_TAB_FAVOURITE_TIME_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                dateFormat
+                                                    .format(_post.created!),
+                                                style: TextStyle(
+                                                    color: Get.isDarkMode
+                                                        ? Colors.white
+                                                        : AppColors
+                                                            .POST_TAB_FAVOURITE_TIME_COLOR,
+                                                    fontFamily: 'Gotham',
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                            ),
+                                            userId != _post.userId
+                                                ? Container()
+                                                : DropdownButton(
+                                                    underline: SizedBox(),
+                                                    icon: Icon(
+                                                      Icons.more_vert,
+                                                      size: 20,
+                                                      color: Get.isDarkMode
+                                                          ? Colors.white
+                                                          : AppColors
+                                                              .POST_TAB_LIKE_COLOR,
+                                                    ),
+                                                    items: [
+                                                      DropdownMenuItem(
+                                                        onTap: () {
+                                                          print('delete');
+                                                        },
+                                                        value: 'Delete',
+                                                        child:
+                                                            // Text('Delete'),
+                                                            Icon(
+                                                          Icons.delete,
+                                                          color: Get.isDarkMode
+                                                              ? Colors.white
+                                                              : AppColors
+                                                                  .POST_TAB_LIKE_COLOR,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                    onChanged: (String? value) {
+                                                      print('$value');
+                                                      if (value == 'Delete') {
+                                                        onPostDelete(
+                                                            index,
+                                                            _post.id
+                                                                .toString());
+                                                      }
+                                                    },
+                                                  )
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -346,7 +410,10 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
       String msg = 'You liked this post';
 
       setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(msg),
+        backgroundColor: Colors.green,
+      ));
     }
 
     print("=============================");
@@ -364,5 +431,53 @@ class _LatestPostScreenState extends State<LatestPostScreen> {
       setState(() {});
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
     }
+  }
+
+  Future<bool> onPostDelete(int index, String postid) async {
+    bool _loading = false;
+
+    final shouldPop = await showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                    title: Text('Delete Post'),
+                    content: Text('Do you really want to delete your post ?'),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: Text('No'),
+                      ),
+                      FlatButton(
+                        onPressed: () async {
+                          setState(() {
+                            _loading = true;
+                          });
+                          print(postid);
+                          var data = await Apiservice().getPostDelete(postid);
+                          print(data);
+                          if (data["status"] == true) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(data['response']),
+                              backgroundColor: Colors.green,
+                            ));
+                          }
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Mydashboard(
+                                        number: 3,
+                                      )));
+                        },
+                        child: _loading
+                            ? CupertinoActivityIndicator(
+                                animating: true, radius: 10)
+                            : Text('Yes'),
+                      ),
+                    ],
+                  ));
+        });
+
+    return shouldPop ?? false;
   }
 }

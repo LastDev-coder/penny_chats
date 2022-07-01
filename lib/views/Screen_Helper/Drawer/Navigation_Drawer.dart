@@ -108,16 +108,18 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                               child: CupertinoSwitch(
                                 value: _SwitchValue,
                                 onChanged: (value) {
+
                                   setState(() {
                                     _SwitchValue = value;
                                     Get.isDarkMode
                                         ? Get.changeTheme(ThemeData.light())
                                         : Get.changeTheme(ThemeData.dark());
+
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => Mydashboard(
-                                                  number: 0,
+                                                  number: 1,
                                                 )));
                                   });
                                 },

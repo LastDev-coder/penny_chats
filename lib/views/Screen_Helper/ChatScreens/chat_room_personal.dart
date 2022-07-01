@@ -388,68 +388,67 @@ setState(() {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          user.isReport != '1'
-                              ?
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              margin: EdgeInsets.only(top: 5, right: 10),
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  color: Get.isDarkMode
-                                      ? Colors.black38
-                                      : Color(0xfff1f2f6),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                  )),
-                              child: Text(
-                                user.message.toString(),
-                              ),
-                            ),
-                          )
-                              : Container(
-                            margin: EdgeInsets.only(top: 5, right: 10),
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: Get.isDarkMode
-                                    ? Colors.black38
-                                    : Color(0xfff1f2f6),
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                )),
-                            child: Text('Blocked Content',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.red,
-                                    fontStyle: FontStyle.italic,
-                                    fontFamily: 'Gotham',
-                                    fontWeight: FontWeight.normal)),
+                      user.isReport == '0'
+                          ?
+                      GestureDetector(
+                       onLongPress: (){
+                         onReport(index, user.iD.toString(), user);
+                       },
+                          child: Container(
+                          margin: EdgeInsets.only(top: 5, right: 10),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Get.isDarkMode
+                                  ? Colors.black38
+                                  : Color(0xfff1f2f6),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                              )),
+                          child: Text(
+                            user.message.toString(),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              onDelete(index, user.iD.toString(), user);
-                            },
-                            child: Align(
-                                alignment: Alignment.topLeft,
-
-                                child: user.isReport != '1'
-                                    ? Container(
-                                  margin: EdgeInsets.only( right: 45),
-
-                                  child: Icon(Icons.report_problem,size: 15,
-                                    color: Get.isDarkMode
-                                        ? Colors.black54
-                                        : Colors.black26,),
-                                )
-                                    : Container()),
-                          )
-                        ],
+                        ),
+                      )
+                          : user.isReport == '1'?  Container(
+                        margin: EdgeInsets.only(top: 5, right: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Get.isDarkMode
+                                ? Colors.black38
+                                : Color(0xfff1f2f6),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            )),
+                        child: Text('Blocked Content',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.red,
+                                fontStyle: FontStyle.italic,
+                                fontFamily: 'Gotham',
+                                fontWeight: FontWeight.normal)),
+                      ) : Container(
+                        margin: EdgeInsets.only(top: 5, right: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Get.isDarkMode
+                                ? Colors.black38
+                                : Color(0xfff1f2f6),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            )),
+                        child: Text('This Message Was Deleted',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.red,
+                                fontStyle: FontStyle.italic,
+                                fontFamily: 'Gotham',
+                                fontWeight: FontWeight.normal)),
                       ),
                     ],
                   ),
@@ -537,45 +536,70 @@ setState(() {
                         ],
                         mainAxisAlignment: MainAxisAlignment.end,
                       ),
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: (){
-                              onMyMessageDelete(index,user.iD.toString(),user);
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only( left: 45),
-
-                              child: Icon(Icons.delete,size: 15,
-                                color: Get.isDarkMode
-                                    ? Colors.red
-                                    : Colors.red,),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              margin: EdgeInsets.only(top: 5, left: 10),
-                              padding: EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                  color: Color(0xfff6ec68d),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                  )),
-                              child: Text(user.message.toString(),
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      height: 1.4,
-                                      color: Get.isDarkMode
-                                          ? Colors.white
-                                          : Colors.black,
-                                      fontFamily: 'Gotham',
-                                      fontWeight: FontWeight.normal)),
-                            ),
-                          ),
-                        ],
+                      user.isReport == '0'
+                          ?
+                      GestureDetector(
+                        onLongPress: (){
+                          onMyMessageDelete(index,user.iD.toString(),user);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(top: 5, left: 75),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Color(0xfff6ec68d),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                              )),
+                          child: Text(user.message.toString(),
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  height: 1.4,
+                                  color: Get.isDarkMode
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontFamily: 'Gotham',
+                                  fontWeight: FontWeight.normal)),
+                        ),
+                      )  : user.isReport == '1'?  Container(
+                        margin: EdgeInsets.only(top: 5, right: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Get.isDarkMode
+                                ? Colors.black38
+                                : Color(0xfff1f2f6),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            )),
+                        child: Text('Admin Blocked Your Content',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.red,
+                                fontStyle: FontStyle.italic,
+                                fontFamily: 'Gotham',
+                                fontWeight: FontWeight.normal)),
+                      ) : Container(
+                        margin: EdgeInsets.only(top: 5, right: 10),
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Get.isDarkMode
+                                ? Colors.black38
+                                : Color(0xfff1f2f6),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(10),
+                              bottomLeft: Radius.circular(10),
+                              bottomRight: Radius.circular(10),
+                            )),
+                        child: Text('You Deleted This Message',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.red,
+                                fontStyle: FontStyle.italic,
+                                fontFamily: 'Gotham',
+                                fontWeight: FontWeight.normal)),
                       ),
                     ],
                   ),
@@ -648,7 +672,7 @@ setState(() {
     });
   }
 
-  Future<bool> onDelete(int index, String mid, Messages user) async {
+  Future<bool> onReport(int index, String mid, Messages user) async {
     bool _loading = false;
 
     final shouldPop = await showDialog(
@@ -656,8 +680,8 @@ setState(() {
         builder: (context) {
           return StatefulBuilder(
               builder: (context, setState) => AlertDialog(
-                title: Text('Are you sure?'),
-                content: Text('Do you want to report this message ?'),
+                title: Text('Report Message'),
+                content: Text('Do you really want to report this message ?'),
                 actions: <Widget>[
                   FlatButton(
                     onPressed: () => Navigator.of(context).pop(false),
@@ -668,7 +692,7 @@ setState(() {
                       setState(() {
                         _loading = true;
                         // _listMessages.removeAt(index);
-                        refresh(user);
+                        // refresh(user);
                       });
 
                       print('-------------$index--------------');
@@ -687,9 +711,9 @@ setState(() {
                       print("message id --> ${mid.toString()}");
 
                       if (data["status"].toString() == "true") {
-                        setState(() {
-                          _listMessages.removeAt(index);
-                        });
+                        // setState(() {
+                        //   _listMessages.removeAt(index);
+                        // });
 
                         Navigator.of(context).pop(false);
                         ScaffoldMessenger.of(context)
@@ -732,8 +756,8 @@ setState(() {
         builder: (context) {
           return StatefulBuilder(
               builder: (context, setState) => AlertDialog(
-                title: Text('Are you sure?'),
-                content: Text('Do you want to delete your message ?'),
+                title: Text('Delete Message'),
+                content: Text('Do you really want to delete your message ?'),
                 actions: <Widget>[
                   FlatButton(
                     onPressed: () => Navigator.of(context).pop(false),
@@ -744,7 +768,7 @@ setState(() {
                       setState(() {
                         _loading = true;
                       });
-                      await refreshList(index,user.iD);
+                      await refreshList(index,user.iD,user);
                       Navigator.of(context).pop(false);
 
                     },
@@ -763,17 +787,18 @@ setState(() {
 
   refresh(user) {
     setState(() {
-      user.isReport = '1';
+      user.isReport = '3';
     });
   }
-  refreshList(index,msgid) async {
+  refreshList(index,msgid,Messages user) async {
     var _data = new Map<String, dynamic>();
     _data['msg_id'] = msgid;
     print(_data);
     var data = await Apiservice().postDeleteMessage(_data);
     print('$msgid');
     setState(() {
-      _listMessages.removeAt(index);
+      user.isReport = '2';
+      // _listMessages.removeAt(index);
     });
   }
 }

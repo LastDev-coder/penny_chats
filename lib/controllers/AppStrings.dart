@@ -39,7 +39,7 @@ class AppStrings {
   static const profilePictureApi =
       'https://www.pennychats.com/uploads/profile_pictures';
   static const noProfilePicture =
-      'https://static.wikia.nocookie.net/itstabletoptime/images/b/b5/Default.jpg/revision/latest?cb=20210606184459';
+      'https://pennychats.com/uploads/profile_pictures/no-image.png';
   static const stockNewsPicture =
       'https://www.pennychats.com/beta/uploads/stocknews';
 

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:penny_chats/ApiService/Apiservice.dart';
@@ -15,7 +16,7 @@ class ManageTestimonial extends StatefulWidget {
 class _ManageTestimonialState extends State<ManageTestimonial> {
   TextEditingController textController = TextEditingController();
   String myTestimonial = "null";
-
+  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -102,9 +103,17 @@ class _ManageTestimonialState extends State<ManageTestimonial> {
                                 } else {
                                   print("not null --------> " +
                                       textController.text.toString());
+                                  setState(() {
+                                    _isLoading = true;
+                                  });
                                   var data = await Apiservice().postTestimonial(
                                       textController.text.toString());
 
+
+                                  textController.clear();
+                                  setState(() {
+                                    _isLoading = false;
+                                  });
                                   ScaffoldMessenger.of(context).showSnackBar(new SnackBar(
                                     content: new Text(
                                       data["response"].toString(),
@@ -112,10 +121,10 @@ class _ManageTestimonialState extends State<ManageTestimonial> {
                                     ),
                                     backgroundColor: Colors.green,
                                   ));
-                                  textController.clear();
                                 }
                               },
-                              child: Text(
+                              child: _isLoading ? CupertinoActivityIndicator(
+                                  animating: true, radius: 13,color: Colors.white,) : Text(
                                 'Add Testimonial',
                                 style: TextStyle(
                                     color: AppColors.white,
@@ -130,6 +139,7 @@ class _ManageTestimonialState extends State<ManageTestimonial> {
               ),
             ),
           ),
-        ));
+        )
+    );
   }
 }

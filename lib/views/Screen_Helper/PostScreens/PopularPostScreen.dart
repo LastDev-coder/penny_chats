@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,9 @@ import 'package:penny_chats/controllers/Api/PostAPI/LatestPostApi.dart';
 import 'package:penny_chats/controllers/colors/colors.dart';
 import 'package:penny_chats/models/LatestPostModel.dart';
 import 'package:penny_chats/views/Screen_Helper/PostScreens/PostDetailsScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../Screens/mydashboard.dart';
 
 class PopularPostScreen extends StatefulWidget {
   PopularPostScreen({Key? key}) : super(key: key);
@@ -19,9 +23,20 @@ class PopularPostScreen extends StatefulWidget {
 class _PopularPostScreenState extends State<PopularPostScreen> {
   LatestPostModel? _popularPostList;
   DateFormat dateFormat = DateFormat('yyyy-MM-dd – kk:mm');
+  String? userId;
+
+  checkUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    final id = prefs.getString('id') ?? '';
+    print('user id ---> $id');
+    setState(() {
+      userId = id.toString();
+    });
+  }
 
   @override
   void initState() {
+    checkUserId();
     LatestPostApi.getLatestPost(context, AppStrings.getPopularPostApi)
         .then((value) {
       setState(() {
@@ -154,15 +169,60 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.3,
-                                        child: Text(
-                                          AppStrings.dateFormat
-                                              .format(_post.created!),
-                                          style: TextStyle(
-                                              color:Get.isDarkMode ? Colors.white :  AppColors
-                                                  .POST_TAB_FAVOURITE_TIME_COLOR,
-                                              fontFamily: 'Gotham',
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.w400),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                AppStrings.dateFormat
+                                                    .format(_post.created!),
+                                                style: TextStyle(
+                                                    color:Get.isDarkMode ? Colors.white :  AppColors
+                                                        .POST_TAB_FAVOURITE_TIME_COLOR,
+                                                    fontFamily: 'Gotham',
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w400),
+                                              ),
+                                            ),
+                                            userId != _post.userId
+                                                ? Container()
+                                                : DropdownButton(
+                                              underline: SizedBox(),
+                                              icon: Icon(
+                                                Icons.more_vert,
+                                                size: 20,
+                                                color: Get.isDarkMode
+                                                    ? Colors.white
+                                                    : AppColors
+                                                    .POST_TAB_LIKE_COLOR,
+                                              ),
+                                              items: [
+                                                DropdownMenuItem(
+                                                  onTap: () {
+                                                    print('delete');
+                                                  },
+                                                  value: 'Delete',
+                                                  child:
+                                                  // Text('Delete'),
+                                                  Icon(
+                                                    Icons.delete,
+                                                    color: Get.isDarkMode
+                                                        ? Colors.white
+                                                        : AppColors
+                                                        .POST_TAB_LIKE_COLOR,
+                                                  ),
+                                                ),
+                                              ],
+                                              onChanged: (String? value) {
+                                                print('$value');
+                                                if (value == 'Delete') {
+                                                  onPostDelete(
+                                                      index,
+                                                      _post.id
+                                                          .toString());
+                                                }
+                                              },
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ),
@@ -352,5 +412,52 @@ class _PopularPostScreenState extends State<PopularPostScreen> {
 
   }
 
+  Future<bool> onPostDelete(int index, String postid) async {
+    bool _loading = false;
+
+    final shouldPop = await showDialog(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (context, setState) => AlertDialog(
+                title: Text('Delete Post'),
+                content: Text('Do you really want to delete your post ?'),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: Text('No'),
+                  ),
+                  FlatButton(
+                    onPressed: () async {
+                      setState(() {
+                        _loading = true;
+                      });
+                      print(postid);
+                      var data = await Apiservice().getPostDelete(postid);
+                      print(data);
+                      if (data["status"] == true) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(data['response']),
+                          backgroundColor: Colors.green,
+                        ));
+                      }
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Mydashboard(
+                                number: 3,
+                              )));
+                    },
+                    child: _loading
+                        ? CupertinoActivityIndicator(
+                        animating: true, radius: 10)
+                        : Text('Yes'),
+                  ),
+                ],
+              ));
+        });
+
+    return shouldPop ?? false;
+  }
 
 }

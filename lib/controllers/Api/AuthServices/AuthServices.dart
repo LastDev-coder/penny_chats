@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:penny_chats/controllers/AppStrings.dart';
 import 'package:penny_chats/views/Screens/Auth/login.dart';
+import 'package:penny_chats/views/Screens/Auth/thankyou.dart';
 import 'package:penny_chats/views/Screens/mydashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -75,13 +76,20 @@ class AuthServices {
     print("=========================>>${response.body}");
     var responseData = json.decode(response.body);
     if (responseData['status'] == true) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Please Check your email')));
+      // ScaffoldMessenger.of(context)
+      //     .showSnackBar(SnackBar(content: Text('Please Check your email')));
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login()));
+          context, MaterialPageRoute(builder: (context) => Thankyou()));
+
+
     } else {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('User already exist')));
+          .showSnackBar(SnackBar(content: Text('User already exist',
+        style: TextStyle(
+            fontSize: 16,
+           ),
+      ),backgroundColor: Colors.red,duration: const Duration(seconds: 5),));
+
     }
   }
 }

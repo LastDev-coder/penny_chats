@@ -549,12 +549,7 @@ class _PostDetailsState extends State<PostDetails> {
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
                 child:
-                // RichText(
-                //   text: TextSpan(
-                //     children: extractText(widget.desc.toString()),
-                //   ),
-                // ),
-                Html(
+              Html(
                   data: widget.desc,
                   onLinkTap: (String? url, RenderContext context,
                       Map<String, String> attributes, dom.Element? element) {

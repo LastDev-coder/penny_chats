@@ -1,3 +1,4 @@
+
 // To parse this JSON data, do
 //
 //     final weeklyWatchModel = weeklyWatchModelFromJson(jsonString);
@@ -27,9 +28,9 @@ class WeeklyWatchModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "status": status,
-        "response": List<dynamic>.from(response!.map((x) => x.toJson())),
-      };
+    "status": status,
+    "response": List<dynamic>.from(response!.map((x) => x.toJson())),
+  };
 }
 
 class Response {
@@ -54,27 +55,27 @@ class Response {
   DateTime? modified;
 
   factory Response.fromJson(Map<String, dynamic> json) => Response(
-        id: json["id"],
-        userId: json["user_id"],
-        stock: json["stock"],
-        alert: DateTime.parse(json["alert"]),
-        description: json["description"],
-        status: json["status"],
-        created: DateTime.parse(json["created"]),
-        modified: DateTime.parse(json["modified"]),
-      );
+    id: json["id"],
+    userId: json["user_id"],
+    stock: json["stock"],
+    alert: DateTime.parse(json["alert"]),
+    description: json["description"],
+    status: json["status"],
+    created: DateTime.parse(json["created"]),
+    modified: DateTime.parse(json["modified"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "user_id": userId,
-        "stock": stock,
-        "alert":
-            "${alert?.year.toString().padLeft(4, '0')}-${alert?.month.toString().padLeft(2, '0')}-${alert?.day.toString().padLeft(2, '0')}",
-        "description": description,
-        "status": status,
-        "created":
-            "${created?.year.toString().padLeft(4, '0')}-${created?.month.toString().padLeft(2, '0')}-${created?.day.toString().padLeft(2, '0')}",
-        "modified":
-            "${modified?.year.toString().padLeft(4, '0')}-${modified?.month.toString().padLeft(2, '0')}-${modified?.day.toString().padLeft(2, '0')}",
-      };
+    "id": id,
+    "user_id": userId,
+    "stock": stock,
+    "alert":
+    "${alert?.year.toString().padLeft(4, '0')}-${alert?.month.toString().padLeft(2, '0')}-${alert?.day.toString().padLeft(2, '0')}",
+    "description": description,
+    "status": status,
+    "created":
+    "${created?.year.toString().padLeft(4, '0')}-${created?.month.toString().padLeft(2, '0')}-${created?.day.toString().padLeft(2, '0')}",
+    "modified":
+    "${modified?.year.toString().padLeft(4, '0')}-${modified?.month.toString().padLeft(2, '0')}-${modified?.day.toString().padLeft(2, '0')}",
+  };
 }
